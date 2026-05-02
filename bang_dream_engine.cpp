@@ -99,6 +99,7 @@ public:
         worldMap.push_back(Venue("Drum Be-1", "Fukuoka"));
 
         // 2. Setup Full Band Members (5 per band)
+        bands.reserve(10);
         bands.push_back(Band("Poppin'Party", {
             {"Kasumi", "Vo/Gt", 25, 20}, {"Otae", "Gt", 30, 15}, {"Rimi", "Ba", 18, 25}, {"Saaya", "Dr", 22, 22}, {"Arisa", "Key", 20, 20}
         }));
@@ -124,37 +125,6 @@ public:
             // Logic: If Poppin'Party and Roselia have been Rivals, they become Friends at turn 6
             return t >= 6; 
         }});
-    }
-
-    void executeEvent(string id) {
-        cout << "\n>>>> EVENT TRIGGERED: " << id << " <<<<" << endl;
-
-        if (id == "RAS_RAID") {
-            cout << "RAS enters! CHU2 scouts Otae." << endl;
-            Band* popipa = findBand("Poppin'Party");
-            if (popipa) {
-                popipa->removeMember("Otae");
-                // Add RAS to the game dynamically
-                Band ras("RAISE A SUILEN", {});
-                ras.addMember("CHU2", "Prod", 45, 10);
-                ras.addMember("Otae", "Gt", 40, 25);
-                bands.push_back(ras);
-                
-                // Set Rivalries
-                popipa->relations["RAISE A SUILEN"] = "Rival";
-                ras.relations["Poppin'Party"] = "Rival";
-            }
-        } 
-        else if (id == "ROSELIA_FRIENDSHIP") {
-            cout << "The war is over! Poppin'Party and Roselia acknowledge each other." << endl;
-            Band* popipa = findBand("Poppin'Party");
-            Band* roselia = findBand("Roselia");
-            if (popipa && roselia) {
-                popipa->relations["Roselia"] = "Allied";
-                roselia->relations["Poppin'Party"] = "Allied";
-                cout << "Status: ALLIED. You can now perform Joint Lives!" << endl;
-            }
-        }
     }
 
     Band* findBand(string name) {
@@ -302,7 +272,8 @@ public:
         cout << "Select your Band:\n";
         for(int i=0; i<4; ++i) cout << i+1 << ". " << bands[i].name << endl;
         int choice; cin >> choice; player = &bands[choice-1];
-
+        bands.push_back(Band("RAISE A SUILEN", {}));
+        Band& ras = bands.back();
         bool gaming = true;
         while (gaming) {
             // 1. Process Flexible Story Events
