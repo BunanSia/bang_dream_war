@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <functional>
 #include <map>
 #include <ctime>
 #include <cstdlib>
@@ -66,10 +67,13 @@ public:
 
 // --- Game Engine ---
 struct Event {
-    string id;
-    bool triggered = false;
-    // Functional condition: returns true if the event should fire
-    bool (*condition)(int turn, const vector<Band>& bands); 
+    std::string id;
+    bool triggered;
+    std::function<bool(int, const std::vector<Band>&)> condition;
+
+    // Add this explicit constructor
+    Event(std::string name, bool isTriggered, std::function<bool(int, const std::vector<Band>&)> cond)
+        : id(name), triggered(isTriggered), condition(cond) {}
 };
 
 class GameEngine {
@@ -120,15 +124,6 @@ public:
             // Logic: If Poppin'Party and Roselia have been Rivals, they become Friends at turn 6
             return t >= 6; 
         }});
-    }
-
-    void processEvents() {
-        for (auto& ev : eventPool) {
-            if (!ev.triggered && ev.condition(turn, bands)) {
-                executeEvent(ev.id);
-                ev.triggered = true;
-            }
-        }
     }
 
     void executeEvent(string id) {
@@ -276,7 +271,7 @@ public:
     }
 
     void executeEvent(Event& ev) {
-        cout << "\n[!] STORY EVENT: " << ev.description << endl;
+        cout << "\n[!] STORY EVENT: " << ev.id << endl;
         if (ev.id == "RAS_RAID") {
             Band* popipa = findBand("Poppin'Party");
             if (popipa) {
@@ -338,10 +333,10 @@ public:
                     break;
 
                 case 2: // Status & Training
-                    showMemberStatus();
+                    checkMemberStatus();
                     cout << "Train a member? (y/n): ";
                     char t; cin >> t;
-                    if (t == 'y') trainMember();
+                    if (t == 'y') trainMembers();
                     break;
 
                 case 3: // Diplomacy
@@ -407,6 +402,72 @@ public:
         player->addMember(n, p, 20, 20);
         turn++;
     }
+
+    void setDiplomacy() {
+    cout << "\n--- DIPLOMACY OFFICE ---" << endl;
+    
+    // 1. Filter out the player's own band
+    vector<Band*> otherBands;
+    for (auto& b : bands) {
+        if (b.name != player->name) {
+            otherBands.push_back(&b);
+        }
+    }
+
+    if (otherBands.empty()) {
+        cout << "No other bands found in the scene." << endl;
+        return;
+    }
+
+    // 2. Display current relations
+    cout << "Select a band to change relations:" << endl;
+    for (int i = 0; i < otherBands.size(); ++i) {
+        string currentRel = player->relations[otherBands[i]->name];
+        if (currentRel == "") currentRel = "Neutral";
+        cout << i + 1 << ". " << otherBands[i]->name << " (Current: " << currentRel << ")" << endl;
+    }
+
+    int choice;
+    cout << "Choice: ";
+    cin >> choice;
+
+    if (choice < 1 || choice > otherBands.size()) {
+        cout << "Invalid selection." << endl;
+        return;
+    }
+
+    Band* target = otherBands[choice - 1];
+
+    // 3. Select New Stance
+    cout << "\nChoose new stance for " << target->name << ":" << endl;
+    cout << "1. Declare Rival (Allows Invasion)" << endl;
+    cout << "2. Propose Alliance (Requires 'Neutral' or better)" << endl;
+    cout << "3. Reset to Neutral" << endl;
+    int stance;
+    cin >> stance;
+
+    if (stance == 1) {
+        player->relations[target->name] = "Rival";
+        target->relations[player->name] = "Rival"; // Rivalry is mutual
+        cout << "!!! War declared! You can now invade " << target->name << "'s venues." << endl;
+    } 
+    else if (stance == 2) {
+        // Simple logic: Can't ally if currently rivals without a plot event
+        if (player->relations[target->name] == "Rival") {
+            cout << "[!] They hate you too much! You must wait for a story event to befriend a Rival." << endl;
+        } else {
+            player->relations[target->name] = "Allied";
+            target->relations[player->name] = "Allied";
+            cout << ">> You are now Allies! Your fanbases will merge for bigger shows." << endl;
+        }
+    } 
+    else {
+        player->relations[target->name] = "Neutral";
+        target->relations[player->name] = "Neutral";
+        cout << "Relations normalized." << endl;
+    }
+}
+    
 };
 
 int main() { GameEngine().run(); return 0; }
