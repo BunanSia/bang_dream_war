@@ -65,15 +65,25 @@ public:
     }
 };
 
+// 1. FORWARD DECLARATION (The fix!)
+class GameEngine; 
+
 // --- Game Engine ---
 struct Event {
-    std::string id;
-    bool triggered;
-    std::function<bool(int, const std::vector<Band>&)> condition;
+    string id;
+    string description;
+    bool triggered = false;
+    
+    // Condition: Should this happen?
+    std::function<bool(int turn, const vector<Band>& bands)> condition;
+    
+    // Action: What happens? (Passes reference to engine to modify state)
+    std::function<void(GameEngine& engine)> action;
 
-    // Add this explicit constructor
-    Event(std::string name, bool isTriggered, std::function<bool(int, const std::vector<Band>&)> cond)
-        : id(name), triggered(isTriggered), condition(cond) {}
+    Event(string name, string desc, 
+          std::function<bool(int, const vector<Band>&)> cond,
+          std::function<void(GameEngine&)> act)
+        : id(name), description(desc), condition(cond), action(act) {}
 };
 
 class GameEngine {
@@ -119,14 +129,61 @@ public:
             bands[i].addVenue(&worldMap[i*2 + 1]);
             for(int j=0; j<4; ++j) if(i != j) bands[i].relations[bands[j].name] = "Neutral";
         }
-        // Define flexible events
-        eventPool.push_back({"RAS_RAID", false, [](int t, const vector<Band>& b) { return t == 3; }});
-        eventPool.push_back({"ROSELIA_FRIENDSHIP", false, [](int t, const vector<Band>& b) {
-            // Logic: If Poppin'Party and Roselia have been Rivals, they become Friends at turn 6
-            return t >= 6; 
-        }});
+        setupEvents();
+    }
+// --- The new, ultra-clean executeEvent ---
+    void executeEvent(Event& ev) {
+        cout << "\n[!] STORY EVENT: " << ev.description << endl;
+        if (ev.action) {
+            ev.action(*this); // "Hey event, do your thing to this engine"
+        }
     }
 
+    void setupEvents() {
+        // Example: RAS_RAID
+        eventPool.emplace_back(
+            "RAS_RAID", 
+            "RAISE A SUILEN disrupts the peace!",
+            [](int t, const vector<Band>& b) { return t == 3; },
+            [](GameEngine& eng) {
+                Band* popipa = eng.findBand("Poppin'Party");
+                if (popipa) {
+                    popipa->removeMember("Otae");
+                    
+                    // Create RAS
+                    Band ras("RAISE A SUILEN", {});
+                    ras.addMember("CHU2", "Prod", 45, 10);
+                    ras.addMember("Otae", "Gt", 40, 25);
+                    
+                    eng.bands.push_back(ras);
+                    
+                    // Set Relations
+                    eng.setRelations("Poppin'Party", "RAISE A SUILEN", "Rival");
+                }
+            }
+        );
+
+        // Example: FRIENDSHIP_PACT
+        eventPool.emplace_back(
+            "FRIENDSHIP", 
+            "Roselia and Poppin'Party find common ground.",
+            [](int t, const vector<Band>& b) { return t >= 5; },
+            [](GameEngine& eng) {
+                eng.setRelations("Poppin'Party", "Roselia", "Allied");
+            }
+        );
+    }
+
+    // Helper to keep code clean
+    void setRelations(string b1, string b2, string status) {
+        Band* band1 = findBand(b1);
+        Band* band2 = findBand(b2);
+        if (band1 && band2) {
+            band1->relations[b2] = status;
+            band2->relations[b1] = status;
+            cout << ">> " << b1 << " and " << b2 << " are now " << status << "!" << endl;
+        }
+    }
     Band* findBand(string name) {
         for (auto& b : bands) if (b.name == name) return &b;
         return nullptr;
@@ -221,47 +278,17 @@ public:
         resetHP(attacker);
         resetHP(defender);
     }
-// --- Dynamic Event Engine ---
+
     void processEvents() {
         for (auto& ev : eventPool) {
+            // 1. Skip if already done
             if (ev.triggered) continue;
-
-            bool conditionMet = false;
-            if (ev.id == "RAS_RAID" && turn == 3) conditionMet = true;
-            if (ev.id == "FRIENDSHIP_PACT" && turn >= 5) {
-                // Only if they've met or were rivals
-                conditionMet = true; 
-            }
-
-            if (conditionMet) {
+    
+            // 2. Check the condition (passing turn and current bands)
+            // This runs the lambda logic we defined in setupEvents()
+            if (ev.condition(turn, bands)) {
                 executeEvent(ev);
-                ev.triggered = true;
-            }
-        }
-    }
-
-    void executeEvent(Event& ev) {
-        cout << "\n[!] STORY EVENT: " << ev.id << endl;
-        if (ev.id == "RAS_RAID") {
-            Band* popipa = findBand("Poppin'Party");
-            if (popipa) {
-                popipa->removeMember("Otae");
-                bands.push_back(Band("RAISE A SUILEN", {}));
-                Band& ras = bands.back();
-                ras.addMember("CHU2", "Prod", 45, 10);
-                ras.addMember("Otae", "Gt", 40, 25);
-                ras.addMember("Layer", "Vo", 35, 30);
-                // Force Rivalry
-                popipa->relations["RAISE A SUILEN"] = "Rival";
-                ras.relations["Poppin'Party"] = "Rival";
-            }
-        } else if (ev.id == "FRIENDSHIP_PACT") {
-            Band* p1 = findBand("Poppin'Party");
-            Band* p2 = findBand("Roselia");
-            if (p1 && p2) {
-                p1->relations["Roselia"] = "Allied";
-                p2->relations["Poppin'Party"] = "Allied";
-                cout << ">> Poppin'Party and Roselia are now ALLIED!" << endl;
+                ev.triggered = true; // Ensure it only fires once
             }
         }
     }
