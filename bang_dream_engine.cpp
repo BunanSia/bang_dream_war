@@ -65,6 +65,43 @@ public:
     }
 };
 
+// --- GameState: The Single Source of Truth ---
+class GameState {
+public:
+    vector<Band> bands;
+    vector<Venue> worldMap;
+    int turn = 1;
+    int playerIdx = -1;
+    bool isRunning = true;
+
+    // Helper to get a pointer to the player band safely
+    Band* getPlayer() {
+        if (playerIdx < 0 || playerIdx >= bands.size()) return nullptr;
+        return &bands[playerIdx];
+    }
+
+    void nextTurn() {
+        turn++;
+        cout << "\n[SYSTEM] Passing the day... Welcome to Turn " << turn << endl;
+    }
+
+    // Centralized Win/Loss Logic
+    void checkGameConditions() {
+        Band* player = getPlayer();
+        if (!player) return;
+
+        if (player->venues.empty()) {
+            cout << "\n[GAME OVER] " << player->name << " has no venues left to play.\n";
+            isRunning = false;
+        } 
+        else if (player->venues.size() == worldMap.size()) {
+            cout << "\n[VICTORY] You have conquered the entire Japanese music scene!\n";
+            isRunning = false;
+        }
+    }
+};
+
+
 // 1. FORWARD DECLARATION (The fix!)
 class GameEngine; 
 
