@@ -105,6 +105,8 @@ public:
 // 1. FORWARD DECLARATION (The fix!)
 class GameEngine; 
 
+enum PlotMode { STORY, FREE };
+
 // --- Game Engine ---
 struct Event {
     string id;
@@ -130,6 +132,8 @@ private:
     Band* player = nullptr;
     int turn = 1;
     vector<Event> eventPool;
+    GameState state; 
+    PlotMode currentMode;
 
 public:
     GameEngine() {
@@ -330,83 +334,92 @@ public:
         }
     }
 
-    // --- The Modified Run Loop ---
-    void run() {
+    Band* chooseBand(){
         cout << "=== BanG Dream! Conquest Engine ===\n";
         cout << "Select your Band:\n";
         for(int i=0; i<4; ++i) cout << i+1 << ". " << bands[i].name << endl;
         int choice; cin >> choice; player = &bands[choice-1];
-        bands.push_back(Band("RAISE A SUILEN", {}));
-        Band& ras = bands.back();
+        return player;
+    }
+
+    // --- The Modified Run Loop ---
+    void storyMode(Band* player) {
         bool gaming = true;
         while (gaming) {
             // 1. Process Flexible Story Events
             processEvents();
-
-            // 2. Display HUD
-            cout << "\n==========================================" << endl;
-            cout << " TURN: " << turn << " | BAND: " << player->name << endl;
-            cout << " VENUES HELD: " << player->venues.size() << endl;
-            cout << "==========================================" << endl;
-
-            cout << "1. View Map & Relations\n";
-            cout << "2. Member Status & Training\n";
-            cout << "3. Diplomacy (Set Rivalry)\n";
-            cout << "4. INVADE (Gauntlet Battle)\n";
-            cout << "5. Recruit New Member\n";
-            cout << "6. End Turn\n";
-            cout << "7. Quit\n";
-            cout << "Choice: ";
-            int act; cin >> act;
-
-            switch (act) {
-                case 1: // View Map
-                    for (auto& v : worldMap) {
-                        string rel = (v.owner == player) ? "YOU" : player->relations[v.owner->name];
-                        cout << "- " << v.name << " | Owner: " << v.owner->name << " [" << rel << "]\n";
-                    }
-                    break;
-
-                case 2: // Status & Training
-                    checkMemberStatus();
-                    cout << "Train a member? (y/n): ";
-                    char t; cin >> t;
-                    if (t == 'y') trainMembers();
-                    break;
-
-                case 3: // Diplomacy
-                    setDiplomacy();
-                    break;
-
-                case 4: // INVADE
-                    startInvasion();
-                    break;
-
-                case 5: // Recruit
-                    recruitMember();
-                    break;
-
-                case 6:
-                    turn++;
-                    cout << "Passing the day...\n";
-                    break;
-
-                case 7:
-                    gaming = false;
-                    break;
-            }
-
-            // Check Win/Loss conditions
-            if (player->venues.empty()) {
-                cout << "\nYour band has no venues left to play. Game Over.\n";
-                gaming = false;
-            } else if (player->venues.size() == worldMap.size()) {
-                cout << "\nYou have conquered the entire Japanese music scene!\n";
-                gaming = false;
-            }
+            int act = playerSelection(player);
+            gaming = takeAction(act, player);
         }
     }
 
+    int playerSelection(Band* player){
+        // 2. Display HUD
+        cout << "\n==========================================" << endl;
+        cout << " TURN: " << turn << " | BAND: " << player->name << endl;
+        cout << " VENUES HELD: " << player->venues.size() << endl;
+        cout << "==========================================" << endl;
+
+        cout << "1. View Map & Relations\n";
+        cout << "2. Member Status & Training\n";
+        cout << "3. Diplomacy (Set Rivalry)\n";
+        cout << "4. INVADE (Gauntlet Battle)\n";
+        cout << "5. Recruit New Member\n";
+        cout << "6. End Turn\n";
+        cout << "7. Quit\n";
+        cout << "Choice: ";
+        int act; cin >> act;
+        return act;
+    }
+
+    bool takeAction(int act, Band* player){
+        bool gaming = true;
+        // Check Win/Loss conditions
+        if (player->venues.empty()) {
+            cout << "\nYour band has no venues left to play. Game Over.\n";
+            gaming = false;
+        } else if (player->venues.size() == worldMap.size()) {
+            cout << "\nYou have conquered the entire Japanese music scene!\n";
+            gaming = false;
+        }
+        switch (act) {
+            case 1: // View Map
+                for (auto& v : worldMap) {
+                    string rel = (v.owner == player) ? "YOU" : player->relations[v.owner->name];
+                    cout << "- " << v.name << " | Owner: " << v.owner->name << " [" << rel << "]\n";
+                }
+                break;
+
+            case 2: // Status & Training
+                checkMemberStatus();
+                cout << "Train a member? (y/n): ";
+                char t; cin >> t;
+                if (t == 'y') trainMembers();
+                break;
+
+            case 3: // Diplomacy
+                setDiplomacy();
+                break;
+
+            case 4: // INVADE
+                startInvasion();
+                break;
+
+            case 5: // Recruit
+                recruitMember();
+                break;
+
+            case 6:
+                turn++;
+                cout << "Passing the day...\n";
+                break;
+
+            case 7:
+                gaming = false;
+                break;
+        }
+        return gaming;
+    }
     // --- Sub-routines for Run ---
 
     void startInvasion() {
@@ -439,69 +452,104 @@ public:
     }
 
     void setDiplomacy() {
-    cout << "\n--- DIPLOMACY OFFICE ---" << endl;
+        cout << "\n--- DIPLOMACY OFFICE ---" << endl;
+        
+        // 1. Filter out the player's own band
+        vector<Band*> otherBands;
+        for (auto& b : bands) {
+            if (b.name != player->name) {
+                otherBands.push_back(&b);
+            }
+        }
     
-    // 1. Filter out the player's own band
-    vector<Band*> otherBands;
-    for (auto& b : bands) {
-        if (b.name != player->name) {
-            otherBands.push_back(&b);
+        if (otherBands.empty()) {
+            cout << "No other bands found in the scene." << endl;
+            return;
+        }
+    
+        // 2. Display current relations
+        cout << "Select a band to change relations:" << endl;
+        for (int i = 0; i < otherBands.size(); ++i) {
+            string currentRel = player->relations[otherBands[i]->name];
+            if (currentRel == "") currentRel = "Neutral";
+            cout << i + 1 << ". " << otherBands[i]->name << " (Current: " << currentRel << ")" << endl;
+        }
+    
+        int choice;
+        cout << "Choice: ";
+        cin >> choice;
+    
+        if (choice < 1 || choice > otherBands.size()) {
+            cout << "Invalid selection." << endl;
+            return;
+        }
+    
+        Band* target = otherBands[choice - 1];
+    
+        // 3. Select New Stance
+        cout << "\nChoose new stance for " << target->name << ":" << endl;
+        cout << "1. Declare Rival (Allows Invasion)" << endl;
+        cout << "2. Propose Alliance (Requires 'Neutral' or better)" << endl;
+        cout << "3. Reset to Neutral" << endl;
+        int stance;
+        cin >> stance;
+    
+        if (stance == 1) {
+            player->relations[target->name] = "Rival";
+            target->relations[player->name] = "Rival"; // Rivalry is mutual
+            cout << "!!! War declared! You can now invade " << target->name << "'s venues." << endl;
+        } 
+        else if (stance == 2) {
+            // Simple logic: Can't ally if currently rivals without a plot event
+            if (player->relations[target->name] == "Rival") {
+                cout << "[!] They hate you too much! You must wait for a story event to befriend a Rival." << endl;
+            } else {
+                player->relations[target->name] = "Allied";
+                target->relations[player->name] = "Allied";
+                cout << ">> You are now Allies! Your fanbases will merge for bigger shows." << endl;
+            }
+        } 
+        else {
+            player->relations[target->name] = "Neutral";
+            target->relations[player->name] = "Neutral";
+            cout << "Relations normalized." << endl;
         }
     }
 
-    if (otherBands.empty()) {
-        cout << "No other bands found in the scene." << endl;
-        return;
+    void run() {
+        showMainMenu();
     }
 
-    // 2. Display current relations
-    cout << "Select a band to change relations:" << endl;
-    for (int i = 0; i < otherBands.size(); ++i) {
-        string currentRel = player->relations[otherBands[i]->name];
-        if (currentRel == "") currentRel = "Neutral";
-        cout << i + 1 << ". " << otherBands[i]->name << " (Current: " << currentRel << ")" << endl;
+    // 1. MAIN MENU
+    void showMainMenu() {
+        cout << "\n=== BanG Dream! Conquest Engine ===\n";
+        cout << "1. New Game (Story)\n";
+        cout << "2. New Game (Free Mode)\n";
+        cout << "3. Continue\n";
+        cout << "4. Exit\n";
+        cout << "Choice: ";
+
+        int choice; cin >> choice;
+
+        if (choice == 1 || choice == 2) {
+            currentMode = STORY;
+            startNewGame();
+        } else if (choice == 4) {
+        }
     }
 
-    int choice;
-    cout << "Choice: ";
-    cin >> choice;
-
-    if (choice < 1 || choice > otherBands.size()) {
-        cout << "Invalid selection." << endl;
-        return;
-    }
-
-    Band* target = otherBands[choice - 1];
-
-    // 3. Select New Stance
-    cout << "\nChoose new stance for " << target->name << ":" << endl;
-    cout << "1. Declare Rival (Allows Invasion)" << endl;
-    cout << "2. Propose Alliance (Requires 'Neutral' or better)" << endl;
-    cout << "3. Reset to Neutral" << endl;
-    int stance;
-    cin >> stance;
-
-    if (stance == 1) {
-        player->relations[target->name] = "Rival";
-        target->relations[player->name] = "Rival"; // Rivalry is mutual
-        cout << "!!! War declared! You can now invade " << target->name << "'s venues." << endl;
-    } 
-    else if (stance == 2) {
-        // Simple logic: Can't ally if currently rivals without a plot event
-        if (player->relations[target->name] == "Rival") {
-            cout << "[!] They hate you too much! You must wait for a story event to befriend a Rival." << endl;
+    // 2. START NEW GAME
+    void startNewGame() {
+        // Reset state for a fresh start
+        state = GameState();
+        // B. Handle Plot Logic
+        Band* player = chooseBand();
+        if (currentMode == STORY) {
+            storyMode(player);
         } else {
-            player->relations[target->name] = "Allied";
-            target->relations[player->name] = "Allied";
-            cout << ">> You are now Allies! Your fanbases will merge for bigger shows." << endl;
+            cout << "\n[PLOT] Free Mode Initialized. No predefined story events.\n";
         }
-    } 
-    else {
-        player->relations[target->name] = "Neutral";
-        target->relations[player->name] = "Neutral";
-        cout << "Relations normalized." << endl;
     }
-}
     
 };
 
