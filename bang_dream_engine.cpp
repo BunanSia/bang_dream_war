@@ -125,6 +125,15 @@ struct Event {
         : id(name), description(desc), condition(cond), action(act) {}
 };
 
+
+
+struct InitializationResult {
+    vector<Band> bands;
+    vector<Venue> worldMap;
+    vector<Event> eventPool;
+};
+
+class GameInitializer;
 class GameEngine {
 private:
     vector<Band> bands;
@@ -139,40 +148,14 @@ public:
     GameEngine() {
         srand(time(0));
         
-        // 1. Setup Expanded Map (8 Venues)
-        worldMap.push_back(Venue("CiRCLE", "Tokyo"));
-        worldMap.push_back(Venue("Galaxy", "Shinjuku"));
-        worldMap.push_back(Venue("7th!", "Shibuya"));
-        worldMap.push_back(Venue("Dub", "West Tokyo"));
-        worldMap.push_back(Venue("Space", "Kita-Senju"));
-        worldMap.push_back(Venue("KID BOX", "Nagoya"));
-        worldMap.push_back(Venue("V-HALL", "Osaka"));
-        worldMap.push_back(Venue("Drum Be-1", "Fukuoka"));
-
-        // 2. Setup Full Band Members (5 per band)
-        bands.reserve(10);
-        bands.push_back(Band("Poppin'Party", {
-            {"Kasumi", "Vo/Gt", 25, 20}, {"Otae", "Gt", 30, 15}, {"Rimi", "Ba", 18, 25}, {"Saaya", "Dr", 22, 22}, {"Arisa", "Key", 20, 20}
-        }));
-        bands.push_back(Band("Roselia", {
-            {"Yukina", "Vo", 35, 12}, {"Sayo", "Gt", 32, 18}, {"Lisa", "Ba", 20, 28}, {"Ako", "Dr", 18, 22}, {"Rinko", "Key", 22, 25}
-        }));
-        bands.push_back(Band("Afterglow", {
-            {"Ran", "Vo/Gt", 28, 18}, {"Moca", "Gt", 26, 18}, {"Himari", "Ba", 20, 25}, {"Tomoe", "Dr", 25, 25}, {"Tsugumi", "Key", 18, 28}
-        }));
-        bands.push_back(Band("Pastel*Palettes", {
-            {"Aya", "Vo", 22, 22}, {"Hina", "Gt", 30, 15}, {"Chisato", "Ba", 22, 28}, {"Maya", "Dr", 24, 24}, {"Eve", "Key", 18, 25}
-        }));
-
-        // 3. Initial Territory Assignment (2 Venues per band)
-        for(int i=0; i<4; ++i) {
-            bands[i].addVenue(&worldMap[i*2]);
-            bands[i].addVenue(&worldMap[i*2 + 1]);
-            for(int j=0; j<4; ++j) if(i != j) bands[i].relations[bands[j].name] = "Neutral";
-        }
-        setupEvents();
+        setupGame();
     }
-// --- The new, ultra-clean executeEvent ---
+
+    void addBands(const Band& b) {
+        state.bands.push_back(b);
+    }
+
+    // --- The new, ultra-clean executeEvent ---
     void executeEvent(Event& ev) {
         cout << "\n[!] STORY EVENT: " << ev.description << endl;
         if (ev.action) {
@@ -180,40 +163,7 @@ public:
         }
     }
 
-    void setupEvents() {
-        // Example: RAS_RAID
-        eventPool.emplace_back(
-            "RAS_RAID", 
-            "RAISE A SUILEN disrupts the peace!",
-            [](int t, const vector<Band>& b) { return t == 3; },
-            [](GameEngine& eng) {
-                Band* popipa = eng.findBand("Poppin'Party");
-                if (popipa) {
-                    popipa->removeMember("Otae");
-                    
-                    // Create RAS
-                    Band ras("RAISE A SUILEN", {});
-                    ras.addMember("CHU2", "Prod", 45, 10);
-                    ras.addMember("Otae", "Gt", 40, 25);
-                    
-                    eng.bands.push_back(ras);
-                    
-                    // Set Relations
-                    eng.setRelations("Poppin'Party", "RAISE A SUILEN", "Rival");
-                }
-            }
-        );
-
-        // Example: FRIENDSHIP_PACT
-        eventPool.emplace_back(
-            "FRIENDSHIP", 
-            "Roselia and Poppin'Party find common ground.",
-            [](int t, const vector<Band>& b) { return t >= 5; },
-            [](GameEngine& eng) {
-                eng.setRelations("Poppin'Party", "Roselia", "Allied");
-            }
-        );
-    }
+    void setupGame();
 
     // Helper to keep code clean
     void setRelations(string b1, string b2, string status) {
@@ -552,5 +502,105 @@ public:
     }
     
 };
+
+class GameInitializer {
+public:
+    static InitializationResult bootstrap(PlotMode mode) {
+        vector<Venue> worldMap = setupWorldMap();
+        // 2. Setup Full Band Members (5 per band)
+        vector<Band> bands = setupBands(worldMap);
+        vector<Event> eventPool = setupEvents();
+        InitializationResult data = {
+            bands: bands,
+            worldMap: worldMap,
+            eventPool: eventPool
+        };
+        return data;
+    }
+
+    static vector<Band> setupBands(vector<Venue> worldMap) {
+        vector<Band> bands;
+        bands.reserve(10);
+        bands.push_back(Band("Poppin'Party", {
+            {"Kasumi", "Vo/Gt", 25, 20}, {"Otae", "Gt", 30, 15}, {"Rimi", "Ba", 18, 25}, {"Saaya", "Dr", 22, 22}, {"Arisa", "Key", 20, 20}
+        }));
+        bands.push_back(Band("Roselia", {
+            {"Yukina", "Vo", 35, 12}, {"Sayo", "Gt", 32, 18}, {"Lisa", "Ba", 20, 28}, {"Ako", "Dr", 18, 22}, {"Rinko", "Key", 22, 25}
+        }));
+        bands.push_back(Band("Afterglow", {
+            {"Ran", "Vo/Gt", 28, 18}, {"Moca", "Gt", 26, 18}, {"Himari", "Ba", 20, 25}, {"Tomoe", "Dr", 25, 25}, {"Tsugumi", "Key", 18, 28}
+        }));
+        bands.push_back(Band("Pastel*Palettes", {
+            {"Aya", "Vo", 22, 22}, {"Hina", "Gt", 30, 15}, {"Chisato", "Ba", 22, 28}, {"Maya", "Dr", 24, 24}, {"Eve", "Key", 18, 25}
+        }));
+
+        // 3. Initial Territory Assignment (2 Venues per band)
+        for(int i=0; i<4; ++i) {
+            bands[i].addVenue(&worldMap[i*2]);
+            bands[i].addVenue(&worldMap[i*2 + 1]);
+            for(int j=0; j<4; ++j) if(i != j) bands[i].relations[bands[j].name] = "Neutral";
+        }
+        return bands;
+    }
+    static vector<Venue> setupWorldMap() {
+        vector<Venue> worldMap;
+        // 1. Setup Expanded Map (8 Venues)
+        worldMap.push_back(Venue("CiRCLE", "Tokyo"));
+        worldMap.push_back(Venue("Galaxy", "Shinjuku"));
+        worldMap.push_back(Venue("7th!", "Shibuya"));
+        worldMap.push_back(Venue("Dub", "West Tokyo"));
+        worldMap.push_back(Venue("Space", "Kita-Senju"));
+        worldMap.push_back(Venue("KID BOX", "Nagoya"));
+        worldMap.push_back(Venue("V-HALL", "Osaka"));
+        worldMap.push_back(Venue("Drum Be-1", "Fukuoka"));
+        return worldMap;
+    }
+    static vector<Event> setupEvents() {
+        // Example: RAS_RAID
+        vector<Event> eventPool;
+        eventPool.emplace_back(
+            "RAS_RAID", 
+            "RAISE A SUILEN disrupts the peace!",
+            [](int t, const vector<Band>& b) { return t == 3; },
+            [](GameEngine& eng) {
+                Band* popipa = eng.findBand("Poppin'Party");
+                if (popipa) {
+                    popipa->removeMember("Otae");
+                    
+                    // Create RAS
+                    Band ras("RAISE A SUILEN", {});
+                    ras.addMember("CHU2", "Prod", 45, 10);
+                    ras.addMember("Otae", "Gt", 40, 25);
+                    
+                    eng.addBands(ras);
+                    
+                    // Set Relations
+                    eng.setRelations("Poppin'Party", "RAISE A SUILEN", "Rival");
+                }
+            }
+        );
+
+        // Example: FRIENDSHIP_PACT
+        eventPool.emplace_back(
+            "FRIENDSHIP", 
+            "Roselia and Poppin'Party find common ground.",
+            [](int t, const vector<Band>& b) { return t >= 5; },
+            [](GameEngine& eng) {
+                eng.setRelations("Poppin'Party", "Roselia", "Allied");
+            }
+        );
+        return eventPool;
+    }
+};
+
+void GameEngine::setupGame() {
+            // 1. Let the Initializer do the heavy lifting
+        InitializationResult data = GameInitializer::bootstrap(currentMode);
+        
+        // 2. Transfer data to our state
+        bands = data.bands;
+        worldMap = data.worldMap;
+        eventPool = data.eventPool;
+}
 
 int main() { GameEngine().run(); return 0; }
