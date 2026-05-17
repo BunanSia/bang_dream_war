@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://ckv18ukr44q5u"]
+
+[ext_resource type="Script" uid="uid://clj2xm257e0m3" path="res://scripts/main_game/main_game.gd" id="1_petew"]
+[ext_resource type="Texture2D" uid="uid://dxiti7yqrjkhv" path="res://assets/world_map.png" id="2_72e8q"]
+[ext_resource type="Script" uid="uid://cylbr0jsgic7t" path="res://scripts/dialogue/dialogue_ui.gd" id="3_d2op2"]
+[ext_resource type="Script" uid="uid://lbb4lt1dtcv2" path="res://scripts/dialogue/dialogue_system.gd" id="4_0rdsr"]
+[ext_resource type="Script" uid="uid://dopgelshrj7dv" path="res://scripts/main_game/main_game_ui.gd" id="5_ipu61"]
+
+[node name="MainGame" type="Control" unique_id=1623774428 node_paths=PackedStringArray("markers_parent", "button_container", "dialogue_ui")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_petew")
+markers_parent = NodePath("VenueMakers")
+button_container = NodePath("VenueButtonContainer")
+dialogue_ui = NodePath("DialogueUI")
+
+[node name="WorldMap" type="Sprite2D" parent="." unique_id=1597056870]
+position = Vector2(987.58563, 550.44324)
+scale = Vector2(1.4311373, 1.4311373)
+texture = ExtResource("2_72e8q")
+
+[node name="VenueMakers" type="Node2D" parent="." unique_id=671549264]
+
+[node name="CiRCLE" type="Marker2D" parent="VenueMakers" unique_id=1566329261]
+position = Vector2(586, 742)
+
+[node name="Galaxy" type="Marker2D" parent="VenueMakers" unique_id=2076741570]
+position = Vector2(1181, 890)
+
+[node name="7th!" type="Marker2D" parent="VenueMakers" unique_id=1738576366]
+position = Vector2(1581, 627)
+
+[node name="Dub" type="Marker2D" parent="VenueMakers" unique_id=204457571]
+position = Vector2(1006, 392)
+
+[node name="Space" type="Marker2D" parent="VenueMakers" unique_id=1551666344]
+position = Vector2(590, 768)
+
+[node name="KID BOX" type="Marker2D" parent="VenueMakers" unique_id=705658002]
+position = Vector2(793, 206)
+
+[node name="VenueButtonContainer" type="Control" parent="." unique_id=1368351771]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DialogueUI" type="CanvasLayer" parent="." unique_id=1740832451]
+script = ExtResource("3_d2op2")
+
+[node name="Background" type="Node" parent="DialogueUI" unique_id=2146560145]
+
+[node name="SpeakerLabel" type="Label" parent="DialogueUI/Background" unique_id=324622201]
+offset_left = 68.0
+offset_top = 883.0
+offset_right = 108.0
+offset_bottom = 906.0
+
+[node name="DialogueText" type="RichTextLabel" parent="DialogueUI/Background" unique_id=1154760197]
+offset_left = 72.0
+offset_top = 952.0
+offset_right = 112.0
+offset_bottom = 992.0
+
+[node name="DialogueEngine" type="Node" parent="DialogueUI" unique_id=1762237006]
+script = ExtResource("4_0rdsr")
+
+[node name="UI" type="Node" parent="." unique_id=138536867]
+
+[node name="MainGameUI" type="Node" parent="UI" unique_id=1123109601 node_paths=PackedStringArray("markers_parent", "button_container", "dialogue_ui")]
+script = ExtResource("5_ipu61")
+markers_parent = NodePath("../../VenueMakers")
+button_container = NodePath("../../VenueButtonContainer")
+dialogue_ui = NodePath("../../DialogueUI")
+metadata/_custom_type_script = "uid://dopgelshrj7dv"

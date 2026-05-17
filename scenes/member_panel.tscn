@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://be2asvjlpverk"]
+
+[ext_resource type="Script" uid="uid://ck7w0w3pde1c4" path="res://scripts/member_panel/member_panel.gd" id="1_36ko1"]
+[ext_resource type="Texture2D" uid="uid://dbfyxlrnaqw23" path="res://assets/band_status.png" id="2_s5sss"]
+
+[node name="MemberPanel" type="Control" unique_id=880077427 node_paths=PackedStringArray("markers_parent", "button_container", "character_icon")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_36ko1")
+markers_parent = NodePath("ComponentMarker")
+button_container = NodePath("ButtonContainer")
+character_icon = NodePath("TextureRect")
+
+[node name="ComponentMarker" type="Node2D" parent="." unique_id=966160432]
+
+[node name="Table" type="Marker2D" parent="ComponentMarker" unique_id=429198623]
+position = Vector2(962, 53)
+
+[node name="Buttons" type="Marker2D" parent="ComponentMarker" unique_id=928202723]
+position = Vector2(735, 29)
+
+[node name="BandStatus" type="Sprite2D" parent="ComponentMarker" unique_id=1477614329]
+position = Vector2(964.00006, 557.00006)
+scale = Vector2(1.6800019, 1.4400018)
+texture = ExtResource("2_s5sss")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1618560461]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ButtonContainer" type="Control" parent="." unique_id=890421046]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

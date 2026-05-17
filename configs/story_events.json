@@ -1,0 +1,75 @@
+{
+  "venues": [
+	{"name": "CiRCLE", "location": "Tokyo", "initial_owner": "Poppin'Party"},
+	{"name": "Galaxy", "location": "Shinjuku", "initial_owner": "Poppin'Party"},
+	{"name": "7th!", "location": "Shibuya", "initial_owner": "Roselia"},
+	{"name": "Dub", "location": "West Tokyo", "initial_owner": "Roselia"},
+	{"name": "Space", "location": "Kita-Senju", "initial_owner": "Pastel*Palettes"},
+	{"name": "KID BOX", "location": "Nagoya", "initial_owner": "Afterglow"}
+  ],
+  "bands": [
+	{
+	  "name": "Poppin'Party",
+	  "members": [
+		{"name": "Kasumi", "role": "Vo/Gt", "perf": 25, "stam": 20},
+		{"name": "Otae", "role": "Gt", "perf": 30, "stam": 15},
+		{"name": "Rimi", "role": "Ba", "perf": 18, "stam": 25},
+		{"name": "Saaya", "role": "Dr", "perf": 22, "stam": 22},
+		{"name": "Arisa", "role": "Key", "perf": 20, "stam": 20}
+	  ]
+	},
+	{
+	  "name": "Roselia",
+	  "members": [
+		{"name": "Yukina", "role": "Vo", "perf": 35, "stam": 12},
+		{"name": "Sayo", "role": "Gt", "perf": 32, "stam": 18},
+		{"name": "Lisa", "role": "Ba", "perf": 20, "stam": 28},
+		{"name": "Ako", "role": "Dr", "perf": 18, "stam": 22},
+		{"name": "Rinko", "role": "Key", "perf": 22, "stam": 25}
+	  ]
+	},
+	{
+	  "name": "Afterglow",
+	  "members": [
+		{"name": "Ran", "role": "Vo/Gt", "perf": 28, "stam": 18},
+		{"name": "Moca", "role": "Gt", "perf": 26, "stam": 18},
+		{"name": "Himari", "role": "Ba", "perf": 20, "stam": 25},
+		{"name": "Tomoe", "role": "Dr", "perf": 25, "stam": 25},
+		{"name": "Tsugumi", "role": "Key", "perf": 18, "stam": 28}
+	  ]
+	},
+	{
+	  "name": "Pastel*Palettes",
+	  "members": [
+		{"name": "Aya", "role": "Vo", "perf": 22, "stam": 22},
+		{"name": "Hina", "role": "Gt", "perf": 30, "stam": 15},
+		{"name": "Chisato", "role": "Ba", "perf": 22, "stam": 28},
+		{"name": "Maya", "role": "Dr", "perf": 24, "stam": 24},
+		{"name": "Eve", "role": "Key", "perf": 18, "stam": 25}
+	  ]
+	}
+  ],
+  "events": [
+	{"id": "RAS_RAID", "desc": "RAISE A SUILEN disrupts the peace!", "trigger_turn": 3,
+	  "actions": [
+		{ "method": "play_dialogue", "args": ["res://story/ras_raid_plot.txt"],
+  "await": false },
+		{ "method": "remove_band_member", "args": ["Poppin'Party", "Otae"],
+  "await": false },
+		{ "method": "create_and_add_band", "args": ["RAISE A SUILEN", ["CHU2", "Otae"]],
+  "await": false },
+		{ "method": "set_band_relations", "args": ["Poppin'Party", "RAISE A SUILEN", "Rival"],
+  "await": false}
+		]
+	},
+	{
+	  "id": "FRIENDSHIP_BOND",
+	  "desc": "An alliance is forged.",
+	  "trigger_turn": 5,
+	  "actions": [
+		{ "method": "set_band_relations", "args": ["Poppin'Party", "Roselia", "Allied"],
+  "await": false }
+	  ]
+	}
+  ]
+}

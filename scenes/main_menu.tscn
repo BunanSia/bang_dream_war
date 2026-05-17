@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://0g1qpe5bq0hu"]
+
+[ext_resource type="Script" uid="uid://btsw27vvrbh0h" path="res://scripts/menu/main_menu.gd" id="1_06t4h"]
+[ext_resource type="Texture2D" uid="uid://dhos0asq2f7y" path="res://assets/bg_01.png" id="2_ekxnf"]
+
+[node name="MainMenu" type="Control" unique_id=299289786]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_06t4h")
+
+[node name="Bg01" type="Sprite2D" parent="." unique_id=1764583212]
+position = Vector2(956.5461, 529.5)
+scale = Vector2(1.7713816, 1.7713816)
+texture = ExtResource("2_ekxnf")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1136257947]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(1, 1, 1, 0.29411766)
+layout_mode = 0
+offset_left = -16.0
+offset_top = -9.0
+offset_right = 1925.0
+offset_bottom = 1932.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=12722046]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.5
+offset_top = -50.5
+offset_right = 46.5
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewGame" type="Button" parent="VBoxContainer" unique_id=1321329791]
+layout_mode = 2
+text = "New Game"
+
+[node name="Continue" type="Button" parent="VBoxContainer" unique_id=1551793739]
+layout_mode = 2
+text = "Continue"
+
+[node name="Exit" type="Button" parent="VBoxContainer" unique_id=46325361]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]

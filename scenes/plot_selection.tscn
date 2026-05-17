@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bwhnmyf1taiup"]
+
+[ext_resource type="Script" uid="uid://rlojh1qcga3o" path="res://scripts/menu/plot_selection.gd" id="1_71guw"]
+[ext_resource type="Texture2D" uid="uid://clj3qst1l4osd" path="res://assets/3.-CiRCLE-Reception.png" id="2_rx0ex"]
+
+[node name="PlotSelection" type="Control" unique_id=166600373]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_71guw")
+
+[node name="3_CiRcleReception" type="Sprite2D" parent="." unique_id=465034875]
+position = Vector2(963.875, 542.5)
+scale = Vector2(1.78125, 1.78125)
+texture = ExtResource("2_rx0ex")

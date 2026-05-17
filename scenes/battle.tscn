@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c2gl6hqu25jtp"]
+
+[ext_resource type="Script" uid="uid://bl4bwqog74k8d" path="res://scripts/battle/battle.gd" id="1_dn72j"]
+[ext_resource type="Texture2D" uid="uid://b5405qfjiarfj" path="res://assets/battlefield.png" id="2_th188"]
+
+[node name="Control" type="Control" unique_id=1320262592]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dn72j")
+
+[node name="Battlefield" type="Sprite2D" parent="." unique_id=1995548800]
+position = Vector2(973.00006, 717)
+scale = Vector2(1.9599977, 1.9599977)
+texture = ExtResource("2_th188")
