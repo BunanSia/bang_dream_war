@@ -12,7 +12,7 @@ func _ready() -> void:
 	
 	# Instantiate our facade context mapping
 	event_facade = GameEventFacade.new(self, ui)
-	add_child(event_facade)
+	Global.event_facade = event_facade
 	
 	# Connect UI Signals
 	ui.basic_button_pressed.connect(_on_ui_basic_action)
@@ -26,13 +26,29 @@ func start_invasion(target: String) -> void:
 	ui.game_log("--- Select a target to invade ---", "red")
 	GameStateBang.attacker = GameStateBang.player
 	GameStateBang.defender = data.worldMap[target].owner.band_name
-	get_tree().change_scene_to_file("res://scenes/battle.tscn")
+	var attacker = data.bands[GameStateBang.player]
+	var defender = data.worldMap[target].owner
+	# get_tree().change_scene_to_file("res://scenes/battle.tscn")
+	deploy_live_battle_sequence(attacker, defender,
+								data.worldMap[target])
+
+# Inside your GameEngine.gd or map controller where invasion is triggered
+
+func deploy_live_battle_sequence(attacker: Band, defender: Band, v: Venue) -> void:
+	# Load the combat scene overlay system layout
+	var battle_scene = load("res://scenes/live_battle_scene.tscn").instantiate()
+	
+	# Add it to the tree first so its @onready nodes initialize
+	get_tree().root.add_child(battle_scene)
+	
+	# Fire the interactive controller pipeline setup routine
+	battle_scene.start_interactive_battle(attacker, defender, v)
 
 func process_events() -> void:
 	for ev in data.eventPool:
 		if ev.triggered:
 			continue
-		if ev.trigger_condition.call(GameStateBang.turn, data.bands):
+		if ev.trigger_condition.call(GameStateBang.turn, data):
 			ui.game_log("\n[!] STORY EVENT: " + ev.description, "yellow")
 			# Pass the facade context to the reflection system
 			await ev.execute(event_facade)
@@ -50,20 +66,31 @@ func _on_ui_basic_action(action_name: String) -> void:
 
 func _on_ui_venue_selected(venue_name: String) -> void:
 	var venue = data.worldMap[venue_name]
+	var owner = venue.owner.band_name
+	GameStateBang.current_venue = venue_name
+	GameStateBang.current_band = owner
+	ui.refresh_venue_furniture_icons(venue.installed_furniture)
 	if venue.owner.band_name == GameStateBang.player:
 		ui.show_player_selection(GameStateBang.player)
-		GameStateBang.current_band = GameStateBang.player
 	else:
-		var owner = venue.owner.band_name
 		var rel = data.bands[GameStateBang.player].get_relation(owner)
 		ui.show_enemy_selection(owner, rel)
-		GameStateBang.current_venue = venue_name
-		GameStateBang.current_band = owner
+
 
 func _on_ui_player_choice(selection: String) -> void:
-	if selection == "Check member":
-		get_tree().change_scene_to_file("res://scenes/member_panel.tscn")
+	match selection:
+		"Check member":
+			get_tree().change_scene_to_file("res://scenes/member_panel.tscn")
+		"Purchase":
+			# Inside your Main Map View / GameEngine.gd
+			open_furniture_shop()
 
+func open_furniture_shop() -> void:
+	var shop_scene = preload("res://scenes/furniture_shop.tscn")
+	var shop_instance = shop_scene.instantiate()
+
+	# Add it on top of the screen layout
+	add_child(shop_instance)
 func _on_ui_enemy_choice(action: String) -> void:
 	match action:
 		"Check members":
@@ -94,5 +121,5 @@ func process_turn_rollover() -> void:
 		band.refresh_turn_actions(controlled_venues)
 		
 		# 3. Trigger individual stamina / performance growth gains
-		band.process_turn_recovery()
+		band.process_turn_recovery(data.worldMap)
 	process_events()

@@ -5,7 +5,7 @@ class_name PlayerSelectionVBoxContainer
 signal button_pressed(event_name)
 
 # The list of labels for your buttons
-var button_labels = ["Check member", "Part-time"]
+var button_labels = ["Check member", "Purchase"]
 var label := ""
 var labelbox
 
@@ -13,19 +13,8 @@ func _ready():
 	pass
 
 func establish(name):
-	set_label(name)
-	generate_buttons()
-
-
-func set_label(name):
 	label = name
-	generate_label()
-
-func generate_label():
-	labelbox = Label.new()
-	labelbox.name = label
-	labelbox.text = label
-	add_child(labelbox)
+	generate_buttons()
 
 func generate_buttons():
 	for text in button_labels:

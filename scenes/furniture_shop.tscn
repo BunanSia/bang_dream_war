@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://drvksgeqe0pfd"]
+
+[ext_resource type="Script" uid="uid://bb3uablrfdadc" path="res://scripts/furniture_shop/furniture_shop.gd" id="1_l56sm"]
+
+[node name="FurnitureShop" type="Control" unique_id=1431097644]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l56sm")
+
+[node name="ShopTitle" type="Label" parent="." unique_id=125148904]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Panel" type="Panel" parent="." unique_id=341378529]
+layout_mode = 0
+offset_right = 2176.0
+offset_bottom = 2176.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1643358823]
+layout_mode = 0
+offset_top = 41.0
+offset_right = 695.0
+offset_bottom = 736.0
+
+[node name="ShopGrid" type="GridContainer" parent="ScrollContainer" unique_id=769708561]
+layout_mode = 2
+
+[node name="BottomDetailsBox" type="Panel" parent="." unique_id=1021263956]
+layout_mode = 0
+offset_left = 1725.0
+offset_top = 966.0
+offset_right = 1765.0
+offset_bottom = 1006.0
+
+[node name="ItemDescription" type="RichTextLabel" parent="BottomDetailsBox" unique_id=3440390]
+layout_mode = 0
+offset_left = -1650.0
+offset_right = -1610.0
+offset_bottom = 40.0
+
+[node name="BuyButton" type="Button" parent="BottomDetailsBox" unique_id=869321431]
+layout_mode = 0
+offset_left = -96.0
+offset_right = -58.0
+offset_bottom = 31.0
+text = "Buy"
+
+[node name="ReturnButton" type="Button" parent="BottomDetailsBox" unique_id=1330944578]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Return"

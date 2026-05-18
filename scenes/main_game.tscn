@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://lbb4lt1dtcv2" path="res://scripts/dialogue/dialogue_system.gd" id="4_0rdsr"]
 [ext_resource type="Script" uid="uid://dopgelshrj7dv" path="res://scripts/main_game/main_game_ui.gd" id="5_ipu61"]
 
-[node name="MainGame" type="Control" unique_id=1623774428 node_paths=PackedStringArray("markers_parent", "button_container", "dialogue_ui")]
+[node name="MainGame" type="Control" unique_id=1623774428]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,9 +14,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_petew")
-markers_parent = NodePath("VenueMakers")
-button_container = NodePath("VenueButtonContainer")
-dialogue_ui = NodePath("DialogueUI")
 
 [node name="WorldMap" type="Sprite2D" parent="." unique_id=1597056870]
 position = Vector2(987.58563, 550.44324)
@@ -43,36 +40,74 @@ position = Vector2(590, 768)
 [node name="KID BOX" type="Marker2D" parent="VenueMakers" unique_id=705658002]
 position = Vector2(793, 206)
 
+[node name="FlagContainer" type="Node2D" parent="." unique_id=1852921399]
+
 [node name="VenueButtonContainer" type="Control" parent="." unique_id=1368351771]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="DialogueUI" type="CanvasLayer" parent="." unique_id=1740832451]
+[node name="FurnitureIconContainer" type="HBoxContainer" parent="." unique_id=1576857107]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DialogueUI" type="CanvasLayer" parent="." unique_id=1740832451 node_paths=PackedStringArray("_dialogue_box", "character_icon")]
 script = ExtResource("3_d2op2")
+_dialogue_box = NodePath("Background/DialogueBackground")
+character_icon = NodePath("Background/CharacterIcon")
 
 [node name="Background" type="Node" parent="DialogueUI" unique_id=2146560145]
 
+[node name="CharacterIcon" type="TextureRect" parent="DialogueUI/Background" unique_id=2080569522]
+offset_top = 329.0
+offset_right = 40.0
+offset_bottom = 369.0
+
+[node name="DialogueBackground" type="TextureRect" parent="DialogueUI/Background" unique_id=70044188]
+offset_left = 42.0
+offset_top = 855.0
+offset_right = 82.0
+offset_bottom = 895.0
+
 [node name="SpeakerLabel" type="Label" parent="DialogueUI/Background" unique_id=324622201]
 offset_left = 68.0
-offset_top = 883.0
+offset_top = 860.0
 offset_right = 108.0
-offset_bottom = 906.0
+offset_bottom = 905.0
+theme_override_font_sizes/font_size = 32
 
 [node name="DialogueText" type="RichTextLabel" parent="DialogueUI/Background" unique_id=1154760197]
 offset_left = 72.0
-offset_top = 952.0
+offset_top = 923.0
 offset_right = 112.0
-offset_bottom = 992.0
+offset_bottom = 963.0
+theme_override_font_sizes/normal_font_size = 28
+tab_size = 24
 
 [node name="DialogueEngine" type="Node" parent="DialogueUI" unique_id=1762237006]
 script = ExtResource("4_0rdsr")
 
 [node name="UI" type="Node" parent="." unique_id=138536867]
 
-[node name="MainGameUI" type="Node" parent="UI" unique_id=1123109601 node_paths=PackedStringArray("markers_parent", "button_container", "dialogue_ui")]
+[node name="MainGameUI" type="Node" parent="UI" unique_id=1123109601 node_paths=PackedStringArray("basic_ui", "markers_parent", "button_container", "flag_container", "dialogue_ui", "furniture_icon_container")]
 script = ExtResource("5_ipu61")
+basic_ui = NodePath("..")
 markers_parent = NodePath("../../VenueMakers")
 button_container = NodePath("../../VenueButtonContainer")
+flag_container = NodePath("../../FlagContainer")
 dialogue_ui = NodePath("../../DialogueUI")
+furniture_icon_container = NodePath("../../FurnitureIconContainer")
 metadata/_custom_type_script = "uid://dopgelshrj7dv"
+
+[node name="Actions" type="Marker2D" parent="UI" unique_id=227845261]
+position = Vector2(1654, 49)
+
+[node name="Data" type="Marker2D" parent="UI" unique_id=362569833]
+position = Vector2(53, 36)
+
+[node name="BasicButtons" type="Marker2D" parent="UI" unique_id=872170301]
+position = Vector2(1541, 926)
+
+[node name="FurnitureSlots" type="Marker2D" parent="UI" unique_id=883098926]
+position = Vector2(712, 69)

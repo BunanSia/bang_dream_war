@@ -13,19 +13,8 @@ func _ready():
 	pass
 
 func establish(name):
-	set_label(name)
-	generate_buttons()
-
-func set_label(name):
 	label = name
-	generate_label()
-
-func generate_label():
-	if(!labelbox):
-		labelbox = Label.new()
-	labelbox.name = label
-	labelbox.text = label
-	add_child(labelbox)
+	generate_buttons()
 
 func generate_buttons():
 	for text in button_labels:

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://vxo3lwut8wdf"]
+
+[ext_resource type="Script" uid="uid://cqssq70ssilwa" path="res://scripts/furniture_shop/shop_slot/shop_slot.gd" id="1_0lmm0"]
+
+[node name="ShopSlot" type="Button" unique_id=1550217003]
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_0lmm0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1410334860]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ItemIcon" type="TextureRect" parent="VBoxContainer" unique_id=1789574275]
+layout_mode = 2
+
+[node name="ItemName" type="Label" parent="VBoxContainer" unique_id=336587430]
+layout_mode = 2
+
+[node name="ItemPrice" type="Label" parent="VBoxContainer" unique_id=499471804]
+layout_mode = 2

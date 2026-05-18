@@ -96,6 +96,8 @@ func handle_battle(attacker: Band, defender: Band, v: Venue):
 		game_log("  RESULT: DEFEAT... %s defended the venue!" % defender.band_name, "red")
 		game_log("  %d members still standing." % (defender.members.size() - d_idx))
 	game_log("[b]==================================================[/b]\n", "yellow")
+	_reset_band_hp(attacker)
+	_reset_band_hp(defender)
 	var ret = {
 		"attacker": attacker,
 		"defender": defender,
@@ -105,7 +107,7 @@ func handle_battle(attacker: Band, defender: Band, v: Venue):
 
 func _reset_band_hp(band: Band):
 	for m in band.members:
-		m.hp = m.max_hp
+		if(m.hp<0): m.hp = 0
 
 func game_log(message: String, color: String = "white"):
 	# [color=...] is BBCode for styling

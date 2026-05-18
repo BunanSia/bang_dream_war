@@ -53,9 +53,52 @@ static func create_event_from_json(data: Dictionary) -> Event:
 	var description = data.get("desc", "")
 	var target_turn = data.get("trigger_turn", 1)
 	var actions_list = data.get("actions", [])
-	
-	# Clean, declarative trigger evaluation wrapper
-	var condition_check = func(current_turn: int, board_state: Dictionary) -> bool:
-		return current_turn == target_turn
-		
+	var conditions_dict = data.get("conditions", {})	
+# The runtime execution lambda wrapper evaluated during process_events()
+	var condition_check = func(current_turn: int, game_data: Dictionary) -> bool:
+		# If no conditions are provided, default to failing safe or passing automatically
+		if conditions_dict.is_empty():
+			return false
+			
+		# Loop through every condition rule declared in the JSON block
+		for condition_type in conditions_dict:
+			var criteria = conditions_dict[condition_type]
+			
+			match condition_type:
+				"min_turn":
+					if current_turn < int(criteria):
+						return false
+						
+				"exact_turn":
+					if current_turn != int(criteria):
+						return false
+						
+				"venue_owner":
+					var target_venue = criteria.get("venue_name", "")
+					var expected_owner = criteria.get("owner_name", "")
+					
+					var venue_obj = game_data.worldMap.get(target_venue)
+					# If venue doesn't exist, or owner doesn't match, condition fails
+					if not venue_obj:
+						return false
+					if expected_owner == "Neutral" and venue_obj.owner != null:
+						return false
+					if venue_obj.owner and venue_obj.owner.band_name != expected_owner:
+						return false
+						
+				"band_relation":
+					var band_a = criteria.get("band_a", "")
+					var band_b = criteria.get("band_b", "")
+					var expected_status = criteria.get("status", "")
+					
+					var band_obj = game_data.bands.get(band_a)
+					if not band_obj or band_obj.get_relation(band_b) != expected_status:
+						return false
+						
+				_:
+					push_error("Parser Error: Unknown condition validator rule: " + condition_type)
+					return false
+					
+		# If the loop completes without returning false, ALL conditions passed successfully!
+		return true
 	return Event.new(event_id, description, condition_check, actions_list)

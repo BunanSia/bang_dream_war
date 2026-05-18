@@ -5,7 +5,7 @@ class_name MemberActionVBoxContainer
 signal button_pressed(event_name)
 
 # The list of labels for your buttons
-var button_labels = ["Train Member", "Equip Member", "Return"]
+var button_labels = ["Return"]
 
 func _ready():
 	generate_buttons()

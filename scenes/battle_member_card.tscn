@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bn7x7btdmqbfx"]
+
+[ext_resource type="Script" uid="uid://6yu2il5206qa" path="res://scripts/battle/battle_member_card.gd" id="1_6yknn"]
+
+[node name="BattleMemberCard" type="Button" unique_id=1914361896]
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_6yknn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1263874144]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="IconRect" type="TextureRect" parent="VBoxContainer" unique_id=2102507140]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="VBoxContainer" unique_id=1711667342]
+layout_mode = 2
+
+[node name="HPProgress" type="ProgressBar" parent="VBoxContainer" unique_id=561115652]
+layout_mode = 2

@@ -36,33 +36,10 @@ static func load_config(mode: int) -> Dictionary:
 	push_error("Config Error: Failed to parse JSON from " + full_path)
 	return {}
 
-static func save_template_config():
-	var template = {
-		"venues": [
-			{"name": "CiRCLE", "location": "Tokyo", "initial_owner": "Poppin'Party"},
-			{"name": "Galaxy", "location": "Shinjuku", "initial_owner": "Poppin'Party"},
-			{"name": "7th!", "location": "Shibuya", "initial_owner": "Roselia"},
-			{"name": "Space", "location": "Kita-Senju", "initial_owner": ""} # Neutral Venue Example
-		],
-		"bands": [
-			{
-				"name": "Poppin'Party",
-				"members": [
-					{"name": "Kasumi", "role": "Vo/Gt", "perf": 25, "stam": 20}
-				]
-			},
-			{
-				"name": "Roselia",
-				"members": [
-					{"name": "Yukina", "role": "Vo", "perf": 35, "stam": 12}
-				]
-			}
-		],
-		"events": [
-			{"id": "RAS_RAID", "desc": "RAISE A SUILEN disrupts!", "trigger_turn": 3}
-		]
-	}
-	
-	var file = FileAccess.open(DEFAULT_CONFIG_PATH, FileAccess.WRITE)
-	file.store_string(JSON.stringify(template, "\t"))
-	file.close()
+static func load_config_by_path(path: String) -> Dictionary:
+	if not FileAccess.file_exists(path): return {}
+	var file = FileAccess.open(path, FileAccess.READ)
+	var json = JSON.new()
+	if json.parse(file.get_as_text()) == OK:
+		return json.get_data() if json.get_data() is Dictionary else {}
+	return {}

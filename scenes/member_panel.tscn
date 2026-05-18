@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://be2asvjlpverk"]
 
 [ext_resource type="Script" uid="uid://ck7w0w3pde1c4" path="res://scripts/member_panel/member_panel.gd" id="1_36ko1"]
-[ext_resource type="Texture2D" uid="uid://dbfyxlrnaqw23" path="res://assets/band_status.png" id="2_s5sss"]
+[ext_resource type="Texture2D" uid="uid://bxqyaig84tptf" path="res://assets/band_status.png" id="2_s5sss"]
 
 [node name="MemberPanel" type="Control" unique_id=880077427 node_paths=PackedStringArray("markers_parent", "button_container", "character_icon")]
 layout_mode = 3
@@ -18,22 +18,130 @@ character_icon = NodePath("TextureRect")
 [node name="ComponentMarker" type="Node2D" parent="." unique_id=966160432]
 
 [node name="Table" type="Marker2D" parent="ComponentMarker" unique_id=429198623]
-position = Vector2(962, 53)
+position = Vector2(962, 65)
 
 [node name="Buttons" type="Marker2D" parent="ComponentMarker" unique_id=928202723]
 position = Vector2(735, 29)
 
-[node name="BandStatus" type="Sprite2D" parent="ComponentMarker" unique_id=1477614329]
-position = Vector2(964.00006, 557.00006)
-scale = Vector2(1.6800019, 1.4400018)
-texture = ExtResource("2_s5sss")
+[node name="TabPositions" type="Marker2D" parent="ComponentMarker" unique_id=686546523]
+position = Vector2(117, 517)
+scale = Vector2(-1.4093789, -115.16413)
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1618560461]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -153.0
+offset_top = 83.0
+offset_right = -113.0
+offset_bottom = 123.0
+
+[node name="BandStatus" type="Sprite2D" parent="." unique_id=987789209]
+position = Vector2(960.0043, 655.50006)
+scale = Vector2(1.6713363, 1.6713363)
+texture = ExtResource("2_s5sss")
+
+[node name="Info" type="Label" parent="." unique_id=868232678]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 78.0
+offset_right = 284.0
+offset_bottom = 123.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
 
 [node name="ButtonContainer" type="Control" parent="." unique_id=890421046]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="TabContainer" type="Node" parent="." unique_id=996382211]
+
+[node name="LeftColumn" type="TabContainer" parent="." unique_id=1333158841]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 512.0
+offset_right = 511.0
+offset_bottom = 554.0
+theme_override_font_sizes/font_size = 24
+current_tab = 2
+
+[node name="TrainPanel" type="Control" parent="LeftColumn" unique_id=314116832]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="RestPanel" type="Control" parent="LeftColumn" unique_id=2057011652]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="SupplyLabel" type="Label" parent="LeftColumn/RestPanel" unique_id=218715408]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 80.0
+offset_right = 50.0
+offset_bottom = 103.0
+
+[node name="MemberHPLabel" type="Label" parent="LeftColumn/RestPanel" unique_id=1530893839]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 120.0
+offset_right = 50.0
+offset_bottom = 143.0
+
+[node name="RestButton" type="Button" parent="LeftColumn/RestPanel" unique_id=535589600]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 200.0
+offset_right = 18.0
+offset_bottom = 208.0
+text = "Rest"
+
+[node name="UpgradePanel" type="Control" parent="LeftColumn" unique_id=152085563]
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="InfoLabel" type="RichTextLabel" parent="LeftColumn/UpgradePanel" unique_id=277982876]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 80.0
+offset_right = 50.0
+offset_bottom = 120.0
+bbcode_enabled = true
+
+[node name="UpgradeButton" type="Button" parent="LeftColumn/UpgradePanel" unique_id=934429487]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 200.0
+offset_right = 18.0
+offset_bottom = 208.0
+text = "Upgrade"
+
+[node name="DetailedInfoPanel" type="Control" parent="LeftColumn" unique_id=912706991]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LeftColumn/DetailedInfoPanel" unique_id=1813242638]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 80.0
+offset_right = 50.0
+offset_bottom = 120.0
+bbcode_enabled = true
+
+[node name="Equipment" type="Control" parent="LeftColumn" unique_id=1354692068]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 4
+
+[node name="OthersPanel" type="Control" parent="LeftColumn" unique_id=527414942]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 5
+
+[node name="WarningLabel" type="Label" parent="LeftColumn/OthersPanel" unique_id=2102388144]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 80.0
+offset_right = 50.0
+offset_bottom = 103.0

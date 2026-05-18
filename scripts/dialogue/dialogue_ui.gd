@@ -1,29 +1,57 @@
 extends CanvasLayer
 
+const res_path = "res://assets/"
+const dialogue_box_path = "res://assets/dialogue_box.png"
+
 @onready var speaker_label: Label = $Background/SpeakerLabel
 @onready var text_label: RichTextLabel = $Background/DialogueText
 @onready var dialogue_engine: DialogueSystem = $DialogueEngine
-
+@export var _dialogue_box: TextureRect
+@export var character_icon: TextureRect
 @export var typing_speed: float = 0.03
 var _is_typing: bool = false
 
 func _ready() -> void:
 	hide()
+	dialogue_engine_setup()
+	dialogue_ui_setup()
+
+func dialogue_engine_setup():
 	dialogue_engine.dialogue_started.connect(show)
 	dialogue_engine.dialogue_line_displayed.connect(_on_line_received)
 	dialogue_engine.dialogue_finished.connect(_hide)
-	
+
+func dialogue_ui_setup():
 	# Connect the label's input signal directly via code
 	text_label.gui_input.connect(_on_text_label_gui_input)
+	text_label.custom_minimum_size = Vector2(800, 150)
 
 func _on_line_received(speaker: String, text: String) -> void:
+	_dialogue_box.texture = load(dialogue_box_path)
 	speaker_label.text = speaker
 	text_label.text = text
+	_update_icon()
 	_type_out_text()
+
+func _update_icon():
+	if character_icon:
+		character_icon.texture = null # Or set a placeholder image
+	var texture_path = "res://assets/icons/%s.png" % speaker_label.text
+	
+	# 3. Safe Guard: Check if the image file actually exists before loading it
+	if ResourceLoader.exists(texture_path):
+		var new_texture = load(texture_path)
+		character_icon.texture = new_texture
 
 func _hide():
 	text_label.hide()
 	speaker_label.hide()
+	if _dialogue_box:
+		_dialogue_box.queue_free()
+		_dialogue_box.texture = null
+	if character_icon:
+		character_icon.queue_free()
+		character_icon.texture = null
 	hide()
 
 func _type_out_text() -> void:

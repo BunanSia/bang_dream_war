@@ -1,7 +1,7 @@
 {
   "venues": [
 	{"name": "CiRCLE", "location": "Tokyo", "initial_owner": "Poppin'Party"},
-	{"name": "Galaxy", "location": "Shinjuku", "initial_owner": "Poppin'Party"},
+	{"name": "Galaxy", "location": "Shinjuku", "initial_owner": "RAISE A SUILEN"},
 	{"name": "7th!", "location": "Shibuya", "initial_owner": "Roselia"},
 	{"name": "Dub", "location": "West Tokyo", "initial_owner": "Roselia"},
 	{"name": "Space", "location": "Kita-Senju", "initial_owner": "Pastel*Palettes"},
@@ -47,16 +47,29 @@
 		{"name": "Maya", "role": "Dr", "perf": 24, "stam": 24},
 		{"name": "Eve", "role": "Key", "perf": 18, "stam": 25}
 	  ]
+	},
+	{
+	  "name": "RAISE A SUILEN",
+	  "members": [
+		{"name": "Layer", "role": "Vo/Ba", "perf": 32, "stam": 24},
+		{"name": "Lock", "role": "Gt", "perf": 28, "stam": 20},
+		{"name": "MASKING", "role": "Dr", "perf": 30, "stam": 25},
+		{"name": "PAREO", "role": "Key", "perf": 26, "stam": 18},
+		{"name": "CHU2", "role": "DJ", "perf": 25, "stam": 15}
+	  ]
 	}
   ],
   "events": [
 	{"id": "RAS_RAID", "desc": "RAISE A SUILEN disrupts the peace!", "trigger_turn": 3,
-	  "actions": [
+	  "conditions": {
+		"venue_owner": { "venue_name": "Galaxy", "owner_name": "RAISE A SUILEN" },
+		"min_turn": 3
+	  },"actions": [
 		{ "method": "play_dialogue", "args": ["res://story/ras_raid_plot.txt"],
   "await": false },
 		{ "method": "remove_band_member", "args": ["Poppin'Party", "Otae"],
   "await": false },
-		{ "method": "create_and_add_band", "args": ["RAISE A SUILEN", ["CHU2", "Otae"]],
+		{ "method": "add_band_member", "args": ["RAISE A SUILEN", "Otae"],
   "await": false },
 		{ "method": "set_band_relations", "args": ["Poppin'Party", "RAISE A SUILEN", "Rival"],
   "await": false}
@@ -66,6 +79,9 @@
 	  "id": "FRIENDSHIP_BOND",
 	  "desc": "An alliance is forged.",
 	  "trigger_turn": 5,
+	"conditions": {
+			"band_relation": { "band_a": "Poppin'Party", "band_b": "Roselia", "status": "Neutral" }
+		  },
 	  "actions": [
 		{ "method": "set_band_relations", "args": ["Poppin'Party", "Roselia", "Allied"],
   "await": false }

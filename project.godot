@@ -21,6 +21,7 @@ GameEvents="*uid://d36hb5v0frt6g"
 UiManager="*uid://dmioubbyifo28"
 GameRNG="*uid://vaux6y1ralo5"
 GameStateBang="*uid://csgxftbd8iww1"
+Global="*uid://byokyo78eh130"
 
 [display]
 
