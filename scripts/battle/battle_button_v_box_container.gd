@@ -1,6 +1,6 @@
-extends VBoxContainer
+extends SceneLayout
 
-class_name BattleButtonVBoxContainer
+class_name BattleButtonSceneLayout
 
 signal button_pressed(event_name)
 

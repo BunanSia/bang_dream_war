@@ -72,8 +72,9 @@ func _on_buy_pressed() -> void:
 	var current_venue = GameStateBang.current_venue
 	var current_player = GameStateBang.player
 	# Assuming access tracking to your global EventFacade instance running inside core engine
-	var success = Global.event_facade.buy_furniture_for_venue(current_player, current_venue, selected_item_data)
-	
+	var success = Global.event_facade.execute_action(
+		Global.event_facade.buy_furniture_for_venue,
+		[current_player, current_venue, selected_item_data])
 	if success:
 		print("Investment approved, building launched.")
 		# Turn off button or refresh view states

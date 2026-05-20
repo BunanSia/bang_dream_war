@@ -130,7 +130,7 @@ func _on_tab_button_pressed(tab_index: int) -> void:
 
 func _setup_rest_tab() -> void:
 	panel_rest.visible = true
-	var band = Global.event_facade.find_band(GameStateBang.player)
+	var band = Global.event_facade.execute_action(Global.event_facade.find_band, [GameStateBang.player])
 	# Display current stats and operational cost calculations
 	$LeftColumn/RestPanel/SupplyLabel.text = "目前樂團補給 (Current Supply): %d / %d" % [band.supply, band.get_total_max_supply(GameStateBang.data.worldMap)]
 	$LeftColumn/RestPanel/MemberHPLabel.text = "團員體力 (Member HP): %d / %d" % [member.hp, member.get_total_max_hp()]
@@ -140,31 +140,11 @@ func _setup_rest_tab() -> void:
 	# Disable the rest action execution if the performer is already fully healed
 	$LeftColumn/RestPanel/RestButton.disabled = (member.hp >= member.get_total_max_hp() or band.supply < 10)
 
-func _on_rest_button_pressed() -> void:
-	var band = Global.event_facade.find_band(GameStateBang.player)
-	
-	# Transaction cost checks: Spend 10 tactical supply points for baseline restructuring
-	if band.supply >= 10:
-		band.supply -= 10
-		
-		# Recovery application math formulas
-		var hp_healed = 30
-		var xp_granted = 15
-		
-		member.hp = clampi(member.hp + hp_healed, 0, member.get_total_max_hp())
-		if member.has_method("gain_xp"):
-			member.gain_xp(xp_granted)
-		elif "xp" in member:
-			member.xp += xp_granted
-			
-		Global.event_facade.ui.game_log("☕ %s rested! Restored %d HP and gained %d XP." % [member.name, hp_healed, xp_granted], "green")
-		_setup_rest_tab() # Instantly refreshes text values on the UI display layout!
-
 # Inside MemberPanel.gd -> Detail Context
 
 func _setup_details_tab() -> void:
 	panel_detailed_info.visible = true
-	var band = Global.event_facade.find_band(GameStateBang.player)
+	var band = Global.event_facade.execute_action(Global.event_facade.find_band, [GameStateBang.player])
 
 	# Add custom bio blurbs directly out of your member attributes setup mapping
 	var profile_blurb = member.get("bio")
@@ -186,12 +166,11 @@ func _setup_info_tab():
 	$Info.text = bio_text
 	$Info.custom_minimum_size = Vector2(250, 250)
 
-
 # Inside MemberPanel.gd -> Upgrade Context
 
 func _setup_upgrade_tab() -> void:
 	panel_upgrade.visible = true
-	var band = Global.event_facade.find_band(GameStateBang.player)
+	var band = Global.event_facade.execute_action(Global.event_facade.find_band, [GameStateBang.player])
 
 	var member_lvl = member.get("level") # Assumes your member profiles track level thresholds
 	var current_role = member.part
@@ -222,21 +201,7 @@ func _setup_upgrade_tab() -> void:
 	# Enforce both financial check variables and experience tiering prerequisites
 	$LeftColumn/UpgradePanel/UpgradeButton.disabled = (member_lvl < req_lvl or band.money < gold_cost)
 
-func _on_upgrade_button_pressed() -> void:
-	var band = Global.event_facade.find_band(GameStateBang.player)
-	var upgrades_cfg = ConfigManager.load_config_by_path("res://config/upgrades.json").get("promotions", {})
-	var tier_data = upgrades_cfg[member.role]
-	
-	# Deduct costs and adjust member identity fields
-	band.money -= tier_data["cost"]
-	member.role = tier_data["next_tier"]
-	member.base_performance += tier_data["perf_boost"]
-	
-	Global.event_facade.ui.game_log("⚡ EVOLUTION: %s has evolved into a %s!" % [member.name, member.role], "purple")
-	_setup_upgrade_tab() # Force visual components recalculation state instantly!
-
 func _on_tree_item_clicked() -> void:
-	print("tree item clicked")
 	var selected_item: TreeItem = current_table.get_selected()
 	if selected_item:
 		# Assuming Column 0 contains the string of the member's name
@@ -251,30 +216,41 @@ func _setup_others_tab() -> void:
 	panel_others.visible = true
 	$OthersPanel/WarningLabel.text = "⚠️ 警告: 您正在準備解除 [color=red]%s[/color] 的職務。\n解雇後該成員與其全部附帶裝備將被永久清除。" % member.name
 
-func _on_layoff_button_pressed() -> void:
-	var band = Global.event_facade.find_band(GameStateBang.player)
-	
-	# Prevent the player from deleting their entire squad down to 0 members
-	if band.members.size() <= 1:
-		$OthersPanel/WarningLabel.text = "[color=red]❌ 錯誤: 樂團內必須保留至少一名成員！[/color]"
+func _on_upgrade_button_pressed() -> void:
+	Global.event_facade.execute_action(Global.event_facade.upgrade_member, [GameStateBang.player, member.name])
+	Global.event_facade.execute_action(Global.event_facade.ui.game_log, ["⚡ EVOLUTION: %s has evolved into a %s!" % [member.name, member.role], "purple"])
+	_setup_upgrade_tab() # Force visual components recalculation state instantly!
+
+func _on_rest_button_pressed() -> void:
+	Global.event_facade.execute_action(Global.event_facade.rest_member, [GameStateBang.player, member.name])
+	_setup_rest_tab() # Instantly refreshes text values on the UI display layout!
+
+func _on_equip_button_pressed() -> void:
+	if selected_member_name == "":
+		print("Please select a character row from the status table first!")
 		return
-		
-	# Find indices tracking location records and purge the element loop array
-	for i in range(band.members.size()):
-		if band.members[i].name == GameStateBang.current_selected_member_name:
-			var fired_member_name = band.members[i].name
-			band.members.remove_at(i)
-			
-			Global.event_facade.ui.game_log("❌ LAYOFF: %s has been removed from the roster." % fired_member_name, "red")
-			
-			# Reset target trackers back to safe default empty strings
-			GameStateBang.current_selected_member_name = ""
-			
-			# Force parent interface viewport reload to update the right-side roster table!
-			setup_member_table(GameStateBang.bands[GameStateBang.current_band])
-			selected_member_name = ""
-			GameStateBang.current_selected_member_name = selected_member_name
-			return
+	GameStateBang.current_selected_member_name = selected_member_name
+	# Instantiate the panel scene overlay
+	var popup_instance = equipment_popup_scene.instantiate()
+	# Append it straight to your current scene root view wrapper stack
+	add_child(popup_instance)
+
+# Inside GameEventFacade.gd
+func _on_train_button_pressed(member_name: String) -> void:
+	Global.event_facade.execute_action(Global.event_facade.train_member, [GameStateBang.player, member_name])
+	setup_member_table(GameStateBang.data.bands[current_band])
+	return
+
+func _on_layoff_button_pressed() -> void:
+	Global.event_facade.execute_action(Global.event_facade.remove_band_member, [GameStateBang.player, GameStateBang.current_selected_member_name])
+	# Reset target trackers back to safe default empty strings
+	GameStateBang.current_selected_member_name = ""
+	
+	# Force parent interface viewport reload to update the right-side roster table!
+	setup_member_table(GameStateBang.bands[GameStateBang.current_band])
+	selected_member_name = ""
+	GameStateBang.current_selected_member_name = selected_member_name
+	return
 
 func update_icon():
 	if character_icon:
@@ -286,43 +262,12 @@ func update_icon():
 		var new_texture = load(texture_path)
 		character_icon.texture = new_texture
 
-
 func setup_ui():
 	for marker in markers_parent.get_children():
 		match marker.name:
 			"Table": table_position = marker.global_position
 			"Buttons": buttons_position = marker.global_position
 			"TabPositions": tabs_position_start = marker.global_position
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-func setup_buttons():
-	var vbox_container = MemberActionVBoxContainer.new()
-	vbox_container.button_pressed.connect(_on_player_selection_selected)
-	add_child(vbox_container)
-	# vbox_container.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT)
-	vbox_container.global_position = buttons_position
-
-func _on_player_selection_selected(name):
-	match name:
-		"Return":
-			get_tree().change_scene_to_file("res://scenes/main_game.tscn")
-
-# Inside GameEventFacade.gd
-func _on_train_button_pressed(member_name: String) -> void:
-	if(!member_name): return
-	var band = GameStateBang.data.bands[current_band]
-
-	# Find the member by name inside the Band object array
-	for member in band.members:
-		if member.name == member_name:
-			if member.has_method("train"):
-				member.train() # Triggers your mechanical stat changes inside your Member object
-			else:
-				printerr("Training Error: Member object missing 'train()' method.")
-			setup_member_table(GameStateBang.data.bands[current_band])
-			return
 
 func setup_member_table(owner):
 # 1. Clear the previous table if it exists
@@ -376,15 +321,17 @@ func setup_member_table(owner):
 
 	add_child(table)
 
-func _on_equip_button_pressed() -> void:
-	if selected_member_name == "":
-		print("Please select a character row from the status table first!")
-		return
-	GameStateBang.current_selected_member_name = selected_member_name
-	# Instantiate the panel scene overlay
-	var popup_instance = equipment_popup_scene.instantiate()
-	# Append it straight to your current scene root view wrapper stack
-	add_child(popup_instance)
+func setup_buttons():
+	var vbox_container = MemberActionVBoxContainer.new()
+	vbox_container.button_pressed.connect(_on_player_selection_selected)
+	add_child(vbox_container)
+	# vbox_container.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT)
+	vbox_container.global_position = buttons_position
+
+func _on_player_selection_selected(name):
+	match name:
+		"Return":
+			get_tree().change_scene_to_file("res://scenes/main_game.tscn")
 
 func _get_member():
 	var band = GameStateBang.data.bands[current_band]

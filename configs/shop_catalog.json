@@ -7,7 +7,14 @@
 		"hp_recovery_bonus": 10,
 		"supply_cap_bonus": 20,
 		"description": "A soft sofa that allows band members to fully relax during downtime."
-	  }
+	  },
+	{
+		"name": "高階音響系統",
+		"cost": 500,
+		"hp_recovery_bonus": 5,
+		"supply_cap_bonus": 20,
+		"description": "AI 升級"
+		}
 	],
 	"equipment": [
 	  {

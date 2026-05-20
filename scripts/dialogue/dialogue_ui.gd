@@ -61,7 +61,6 @@ func _type_out_text() -> void:
 		if not _is_typing: 
 			break
 		text_label.visible_characters += 1
-		await get_tree().create_timer(typing_speed).timeout
 	text_label.visible_characters = -1
 	_is_typing = false
 

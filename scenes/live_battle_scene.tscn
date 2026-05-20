@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://kq3neqxf4pqq"]
 
 [ext_resource type="Script" uid="uid://deu10uohfvdfs" path="res://scripts/battle/live_battle_scene.gd" id="1_t7pka"]
-[ext_resource type="Texture2D" uid="uid://b5405qfjiarfj" path="res://assets/battlefield.png" id="2_ufs07"]
 
 [node name="LiveBattleScene" type="Control" unique_id=2142456286]
 layout_mode = 3
@@ -12,58 +11,94 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_t7pka")
 
-[node name="Battlefield" type="Sprite2D" parent="." unique_id=886478637]
-position = Vector2(957, 758)
-scale = Vector2(1.9199988, 1.9199988)
-texture = ExtResource("2_ufs07")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=248137309]
+[node name="Battlefield" type="TextureRect" parent="." unique_id=824630607]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="HeaderPanel" type="Panel" parent="VBoxContainer" unique_id=1583986735]
-layout_mode = 2
+[node name="SceneLayout" type="Node" parent="." unique_id=1845656047]
 
-[node name="StageLayout" type="HBoxContainer" parent="VBoxContainer" unique_id=2035535119]
-layout_mode = 2
+[node name="HeaderPanel" type="Panel" parent="SceneLayout" unique_id=1583986735]
+offset_left = 129.0
+offset_top = -36.0
+offset_right = 169.0
+offset_bottom = -36.0
 
-[node name="LeftTeamBox" type="VBoxContainer" parent="VBoxContainer/StageLayout" unique_id=1752538534]
-layout_mode = 2
-
-[node name="AttackerTitle" type="Label" parent="VBoxContainer/StageLayout/LeftTeamBox" unique_id=799676728]
-layout_mode = 2
-
-[node name="AttackerRoster" type="GridContainer" parent="VBoxContainer/StageLayout/LeftTeamBox" unique_id=1875448747]
-layout_mode = 2
-columns = 3
-
-[node name="VSLabel" type="Label" parent="VBoxContainer/StageLayout" unique_id=629857287]
-layout_mode = 2
-
-[node name="RightTeamBox" type="VBoxContainer" parent="VBoxContainer/StageLayout" unique_id=581892592]
-layout_mode = 2
-
-[node name="DefenderTitle" type="Label" parent="VBoxContainer/StageLayout/RightTeamBox" unique_id=452308888]
-layout_mode = 2
-
-[node name="DefenderRoster" type="GridContainer" parent="VBoxContainer/StageLayout/RightTeamBox" unique_id=210488685]
-layout_mode = 2
-columns = 3
-
-[node name="FooterPanel" type="Panel" parent="VBoxContainer" unique_id=656119110]
-layout_mode = 2
-
-[node name="BattleLog" type="RichTextLabel" parent="VBoxContainer/FooterPanel" unique_id=368268363]
+[node name="EncoreButton" type="Button" parent="SceneLayout/HeaderPanel" unique_id=625898123]
 layout_mode = 0
-offset_left = 61.0
-offset_top = 566.0
-offset_right = 101.0
-offset_bottom = 606.0
+offset_left = -113.0
+offset_top = 80.0
+offset_right = -52.0
+offset_bottom = 111.0
+text = "Encore"
 
-[node name="ActionPrompt" type="Label" parent="VBoxContainer/FooterPanel" unique_id=1143790443]
+[node name="SonicBoomButton" type="Button" parent="SceneLayout/HeaderPanel" unique_id=1079742701]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 80.0
+offset_right = 145.0
+offset_bottom = 111.0
+text = "SonicBoom"
+
+[node name="GrooveMeter" type="ProgressBar" parent="SceneLayout/HeaderPanel" unique_id=536372788]
+layout_mode = 0
+offset_left = 273.0
+offset_top = 80.0
+offset_right = 277.0
+offset_bottom = 107.0
+
+[node name="StageLayout" type="Node2D" parent="SceneLayout" unique_id=924722954]
+position = Vector2(675, 108)
+
+[node name="LeftTeamBox" type="VBoxContainer" parent="SceneLayout/StageLayout" unique_id=1752538534]
+offset_left = -617.0
+offset_top = 212.0
+offset_right = -616.0
+offset_bottom = 239.0
+
+[node name="AttackerTitle" type="Label" parent="SceneLayout/StageLayout/LeftTeamBox" unique_id=799676728]
+layout_mode = 2
+
+[node name="AttackerRoster" type="GridContainer" parent="SceneLayout/StageLayout/LeftTeamBox" unique_id=1875448747]
+layout_mode = 2
+columns = 3
+
+[node name="VSLabel" type="Label" parent="SceneLayout/StageLayout" unique_id=629857287]
+offset_left = 238.0
+offset_top = 214.0
+offset_right = 257.0
+offset_bottom = 237.0
+text = "VS"
+
+[node name="RightTeamBox" type="VBoxContainer" parent="SceneLayout/StageLayout" unique_id=581892592]
+offset_left = 562.0
+offset_top = 212.0
+offset_right = 563.0
+offset_bottom = 239.0
+
+[node name="DefenderTitle" type="Label" parent="SceneLayout/StageLayout/RightTeamBox" unique_id=452308888]
+layout_mode = 2
+
+[node name="DefenderRoster" type="GridContainer" parent="SceneLayout/StageLayout/RightTeamBox" unique_id=210488685]
+layout_mode = 2
+columns = 3
+
+[node name="FooterPanel" type="Panel" parent="SceneLayout" unique_id=656119110]
+offset_left = 617.0
+offset_top = 37.0
+offset_right = 657.0
+offset_bottom = 37.0
+
+[node name="BattleLog" type="RichTextLabel" parent="SceneLayout/FooterPanel" unique_id=368268363]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 113.0
+offset_right = 166.0
+offset_bottom = 153.0
+
+[node name="ActionPrompt" type="Label" parent="SceneLayout/FooterPanel" unique_id=1143790443]
 layout_mode = 0
 offset_left = 81.0
-offset_top = 450.0
+offset_top = 273.0
 offset_right = 121.0
-offset_bottom = 473.0
+offset_bottom = 296.0

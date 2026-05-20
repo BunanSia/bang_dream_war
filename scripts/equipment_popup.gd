@@ -41,7 +41,7 @@ func _populate_shop_grid(items: Array) -> void:
 func _refresh_member_current_equipment() -> void:
 	for child in current_slots_container.get_children(): child.queue_free()
 	
-	var band = Global.event_facade.find_band(GameStateBang.player)
+	var band = Global.event_facade.execute_action(Global.event_facade.find_band, [GameStateBang.player])
 	var member = _find_active_member(band, current_member)
 	if not member: return
 	
@@ -78,26 +78,13 @@ func _on_item_focused(item_data: Dictionary, from_inventory: bool) -> void:
 
 func _on_action_pressed() -> void:
 	if selected_item_data.is_empty(): return
-	
-	var current_player = GameStateBang.player
-
 	if is_selected_from_inventory:
-		# DISCARD AXIS PIPELINE
-		var band = Global.event_facade.find_band(current_player)
-		var member = _find_active_member(band, current_member)
-		if member and selected_inventory_index != -1:
-			member.equipped_items.remove_at(selected_inventory_index)
-			Global.event_facade.ui.game_log("🗑️ Discarded %s from slots." % selected_item_data.get("name"), "yellow")
+		Global.event_facade.execute_action(Global.event_facade.discard_member_equipped_item, [GameStateBang.player, current_member, selected_inventory_index])
+		Global.event_facade.execute_action(Global.event_facade.ui.game_log, ["🗑️ Discarded %s from slots." % selected_item_data.get("name"), "yellow"])
 	else:
 		# PURCHASE AXIS PIPELINE
 		# Check item weight limit capacity cap before finalizing purchase
-		var band = Global.event_facade.find_band(current_player)
-		var member = _find_active_member(band, current_member)
-		if member && member.equipped_items.size() >= 3:
-			desc_label.text = "[color=red]❌ 裝備欄位已滿！請先點擊上方已裝備道具進行丟棄。[/color]"
-			return
-			
-		var success = Global.event_facade.buy_member_equipment(current_player, current_member, selected_item_data)
+		var success = Global.event_facade.execute_action(Global.event_facade.buy_member_equipment, [GameStateBang.player, current_member, selected_item_data])
 		if not success: return
 		
 	# Post-transaction structural refresh steps

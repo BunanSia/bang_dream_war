@@ -1,0 +1,16 @@
+{
+  "encore": {
+	"name": "安可！ (Encore!)",
+	"description": "復活一名已精疲力竭的團員並恢復 30% 體力。",
+	"cost": 50.0,
+	"target_type": "allies_fainted",
+	"effect": "revive"
+  },
+  "sonic_boom": {
+	"name": "音爆突襲 (Sonic Boom)",
+	"description": "對敵方全體防守者造成大範圍的體力精神削弱降級。",
+	"cost": 100.0,
+	"target_type": "all_enemies",
+	"effect": "aoe_debuff"
+  }
+}

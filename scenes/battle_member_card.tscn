@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://6yu2il5206qa" path="res://scripts/battle/battle_member_card.gd" id="1_6yknn"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yknn"]
+bg_color = Color(0, 0.72025496, 0.32890794, 1)
+
 [node name="BattleMemberCard" type="Button" unique_id=1914361896]
 offset_right = 8.0
 offset_bottom = 8.0
@@ -20,3 +23,4 @@ layout_mode = 2
 
 [node name="HPProgress" type="ProgressBar" parent="VBoxContainer" unique_id=561115652]
 layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_6yknn")

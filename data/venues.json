@@ -1,0 +1,32 @@
+{
+  "underground_punk": {
+	"venue_name": "地下龐克俱樂部 (Underground Punk Club)",
+	"bg_image": "res://assets/background/underground_punk.png",
+	"modifiers": {
+	  "perf_bonus": { "Vo/Gt": 0.20, "Dr": 0.20 },
+	  "stam_nerf": { "Key": -0.10 },
+	  "vocal_throttle": false,
+	  "stamina_decay_multiplier": 1.0
+	}
+  },
+  "symphony_hall": {
+	"venue_name": "國家音樂廳 (Symphony Hall)",
+	"bg_image": "res://assets/background/symphony_hall.png",
+	"modifiers": {
+	  "perf_bonus": {},
+	  "stam_nerf": {},
+	  "vocal_throttle": true,
+	  "stamina_decay_multiplier": 1.0
+	}
+  },
+  "open_air_festival": {
+	"venue_name": "露天搖滾音樂祭 (Open-Air Festival)",
+	"bg_image": "res://assets/background/open_air_festival.png",
+	"modifiers": {
+	  "perf_bonus": {},
+	  "stam_nerf": {},
+	  "vocal_throttle": false,
+	  "stamina_decay_multiplier": 1.5
+	}
+  }
+}

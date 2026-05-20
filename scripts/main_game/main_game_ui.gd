@@ -3,20 +3,17 @@ extends Node
 
 const logo_path = "res://assets/logo"
 
-@export var basic_ui: Node
 @export var markers_parent: Node2D
 @export var button_container: Control
 @export var flag_container: Node2D
 @export var dialogue_ui: CanvasLayer
 @export var furniture_icon_container: Control
 
-var logbox: RichTextLabel
+@export var selection_box: VBoxContainer
+@export var data_label: Label
+@export var logbox: RichTextLabel
+
 var actionvbox: Control
-var data_label: Label
-var actionvbox_position
-var data_position
-var basicbuttons_position
-var furnitureslots_position
 
 signal basic_button_pressed(action_name: String)
 signal venue_button_pressed(venue_name: String)
@@ -24,17 +21,8 @@ signal player_selection_confirmed(selection: String)
 signal enemy_selection_confirmed(action_name: String)
 
 func _ready() -> void:
-	setup_ui()
 	general_vbox_initialize()
 	logbox_generation()
-
-func setup_ui():
-	for marker in basic_ui.get_children():
-		match marker.name:
-			"Actions": actionvbox_position = marker.global_position
-			"Data": data_position = marker.global_position
-			"BasicButtons": basicbuttons_position = marker.global_position
-			"FurnitureSlots": furnitureslots_position = marker.global_position
 
 func logbox_generation() -> void:
 	logbox = RichTextLabel.new()
@@ -72,7 +60,7 @@ func generate_venue_buttons() -> void:
 			if ResourceLoader.exists(texture_path):
 				var new_texture = load(texture_path)
 				texture.texture = new_texture
-			texture.global_position = marker.global_position
+				texture.global_position = marker.global_position
 			flag_container.add_child(texture)
 
 			# Get base sizes
@@ -89,14 +77,12 @@ func generate_venue_buttons() -> void:
 			btn.grow_horizontal = Control.GROW_DIRECTION_BOTH
 			btn.grow_vertical = Control.GROW_DIRECTION_BOTH
 			btn.global_position = marker.global_position
-			
 			btn.pressed.connect(func(): venue_button_pressed.emit(venue_name))
 			button_container.add_child(btn)
 
 func general_vbox_initialize() -> void:
 	var vbox_container = BasicGameButtonsHBoxContainer.new()
 	add_child(vbox_container)
-	vbox_container.global_position = basicbuttons_position
 	vbox_container.generate_buttons()
 	vbox_container.button_pressed.connect(func(id): basic_button_pressed.emit(id))
 
@@ -106,21 +92,18 @@ func show_data():
 	var money = "Money:" + "%s" % GameStateBang.data.bands[GameStateBang.current_band].money + "\n"
 	var venue = "City:" + "%s" % GameStateBang.current_venue + "\n"
 	var band = "Band:" + "%s" % GameStateBang.current_band + "\n"
-	data_label = Label.new()
 	data_label.text = ap_point + supply + money + venue + band
 	if(GameStateBang.current_band != GameStateBang.player):
 		var rel = "Relation:" + "%s" % GameStateBang.data.bands[GameStateBang.player].get_relation(GameStateBang.current_band)
 		data_label.text += rel
 	data_label.set("theme_override_font_sizes/font_size", 24)
-	add_child(data_label)
 
 func show_player_selection(player_id: String) -> void:
 	_refresh_ui()
 	actionvbox = PlayerSelectionVBoxContainer.new()
 	actionvbox.establish(player_id)
 	actionvbox.button_pressed.connect(func(sel): player_selection_confirmed.emit(sel))
-	add_child(actionvbox)
-	actionvbox.global_position = actionvbox_position
+	selection_box.add_child(actionvbox)
 	show_data()
 
 func show_enemy_selection(owner_name: String, relation_label: String) -> void:
@@ -128,8 +111,7 @@ func show_enemy_selection(owner_name: String, relation_label: String) -> void:
 	actionvbox = OtherBandSelectionVBoxContainer.new()
 	actionvbox.establish("%s(%s)" % [owner_name, relation_label])
 	actionvbox.button_pressed.connect(func(act): enemy_selection_confirmed.emit(act))
-	add_child(actionvbox)
-	actionvbox.global_position = actionvbox_position
+	selection_box.add_child(actionvbox)
 	show_data()
 
 func update_selection_label(new_text: String) -> void:
@@ -140,9 +122,6 @@ func _refresh_ui() -> void:
 	if actionvbox:
 		actionvbox.queue_free()
 		actionvbox = null
-	if data_label:
-		data_label.queue_free()
-		data_label = null
 
 # Inside MainGameUI.gd
 
