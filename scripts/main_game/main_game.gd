@@ -109,27 +109,53 @@ func _turn_recovery():
 		# 3. Trigger individual stamina / performance growth gains
 		band.process_turn_recovery(data.worldMap)
 		
+# 在你的腳本頂部宣告這個陣列
+var ai_queue: Array[String] = []
+var current_ai_brain: BandBrainAI = null
+
 ## 當玩家點擊「結束回合」按鈕
 func _ai_round() -> void:
-# 1. 建立一個純字串陣列作為待辦清單 (Queue)
-	var ai_queue: Array[String] = []
+	# 1. 每次開始 AI 回合時，確保已經連線到 Facade 的戰鬥結束信號
+	if not Global.event_facade.battle_resolved.is_connected(_on_battle_resolved):
+		Global.event_facade.battle_resolved.connect(_on_battle_resolved)
+		
+	# 2. 建立待辦清單 (Queue)
+	ai_queue.clear()
 	for b_name in GameStateBang.data.bands:
 		if b_name != GameStateBang.player:
 			ai_queue.append(b_name)
 			
-	# 2. 使用 while 迴圈代替 for 迴圈
-	# 只要清單裡還有 AI，就一直跑，絕對不怕戰鬥場景中斷指針！
-	while ai_queue.size() > 0:
-		# 彈出佇列中的第一位 AI 樂團名稱
-		var current_ai_band = ai_queue.pop_front()
+	# 3. 拔出第一根蘿蔔，啟動連鎖反應
+	_process_next_ai()
+
+## 抽取並執行下一位 AI
+func _process_next_ai() -> void:
+	# 如果清單空了，代表全體 AI 執行完畢
+	if ai_queue.size() == 0:
+		GameStateBang.set_turn_band(GameStateBang.player)
+		return
 		
-		var ai_personality = "AGGRESSIVE" if current_ai_band == "RAISE A SUILEN" else "BALANCED"
-		var ai_brain = BandBrainAI.new(Global.event_facade, current_ai_band, ai_personality)
-		
-		# 啟動思考
-		ai_brain.process_turn()
-		
-		# 這裡會安全卡住。不論打仗打多久，回來後 while 條件句只會看 ai_queue.size() 
-		# 陣列長度是純資料，絕對不會因為場景切換而崩潰或遺失！
-		await ai_brain.ai_process_complete
-	GameStateBang.set_turn_band(GameStateBang.player)
+	var current_ai_band = ai_queue.pop_front()
+	var ai_personality = "AGGRESSIVE" if current_ai_band == "RAISE A SUILEN" else "BALANCED"
+	
+	current_ai_brain = BandBrainAI.new(Global.event_facade, current_ai_band, ai_personality)
+	
+	# 監聽這個 AI 的「和平結束」信號
+	current_ai_brain.ai_process_complete.connect(_on_ai_peaceful_complete)
+	
+	# 啟動思考
+	current_ai_brain.process_turn()
+
+## 狀況 A：AI 把 AP 花光，沒有引發戰爭 (和平結束)
+func _on_ai_peaceful_complete() -> void:
+	# 解除綁定，避免記憶體洩漏
+	current_ai_brain.ai_process_complete.disconnect(_on_ai_peaceful_complete)
+	
+	# 呼叫下一位
+	_process_next_ai()
+
+## 狀況 B：AI 引發戰爭，玩家打完仗後回到大地圖 (戰爭結束)
+func _on_battle_resolved() -> void:
+	# 戰鬥結束了，因為之前的設定，發動戰爭的 AI 會直接中斷剩餘回合。
+	# 我們在這裡直接無縫接軌，叫下一位 AI 出場！
+	_process_next_ai()

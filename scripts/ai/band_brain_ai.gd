@@ -11,24 +11,28 @@ func _init(_facade: GameEventFacade, _band_name: String, _personality: String = 
 	band_name = _band_name
 	personality = _personality
 
-## AI 決策主入口。由主遊戲迴圈在 AI 回合時呼叫
 func process_turn() -> void:
 	var band = facade.find_band(band_name)
 	if not band: return
 	
 	facade.game_log("🤖 敵方樂團 [ %s ] 開始進行戰略思考..." % band_name, "magenta")
 	
-	# 當 AI 還有賸餘行動點數時，持續尋找最佳解
 	while _get_current_ap(band) > 0:
 		var best_action = _evaluate_best_action(band)
 		
-		# 如果算出來沒有任何值得或可執行的行動，則提早結束回合
 		if best_action.is_empty():
 			facade.game_log("🤖 [ %s ] 本輪已無最佳策略，宣告保留或結束行動。" % band_name, "gray")
 			break
 			
-		# 執行決策出的最佳行動
+		# Check if the chosen action is a battle
 		_execute_ai_choice(best_action)
+		
+		if best_action["type"] == "start_invasion":
+			# CRITICAL: The AI triggered a battle. 
+			# We immediately kill this function. Do NOT emit ai_process_complete!
+			return 
+			
+	# Only emit this if the AI spent all AP peacefully (training, resting, etc.)
 	ai_process_complete.emit()
 
 func _get_current_ap(band: Band) -> int:
@@ -123,4 +127,3 @@ func _execute_ai_choice(choice: Dictionary) -> void:
 			facade.game_log("🔥 [AI 宣戰] %s 揮軍大舉突擊由 %s 佔領的舞台: %s！" % [band_name, GameStateBang.data.worldMap[args[1]].owner.band_name, args[1]], "red")
 			# 鎖定大戰略狀態，並正式切換進入你做好的 Task 1~3 Live 戰鬥場景！
 			facade.execute_action(facade.start_invasion, [band_name, args[1]])
-			await facade.battle_resolved
