@@ -7,10 +7,12 @@ var data
 var event_facade: GameEventFacade
 
 func _ready() -> void:
-	if not GameStateBang.data:
-		GameStateBang.data = GameInitializer.bootstrap(PlotMode.PlotMode.STORY)
+	# 如果還沒有資料，直接呼叫大腦的 session 初始化
+	if not GameStateBang.data or GameStateBang.data.is_empty():
+		GameStateBang.init_game_session(PlotMode.PlotMode.STORY, "NEW_GAME")
+		
+	# 順暢指回乾淨的本地變數
 	data = GameStateBang.data
-	
 	# Instantiate our facade context mapping
 	event_facade = GameEventFacade.new(self, ui)
 	Global.event_facade = event_facade
@@ -23,6 +25,9 @@ func _ready() -> void:
 	
 	ui.generate_venue_buttons()
 	GameStateBang.set_turn_band(GameStateBang.player)
+
+func refresh_venues():
+	ui.generate_venue_buttons()
 
 func process_events() -> void:
 	for ev in data.eventPool:
@@ -41,8 +46,19 @@ func _on_ui_basic_action(action_name: String) -> void:
 		"Exit game": get_tree().quit()
 		"End turn":
 			GameStateBang.data = data
-			GameStateBang.next_turn()
 			process_turn_rollover()
+		"Check member":
+			GameStateBang.current_band = GameStateBang.player
+			event_facade.execute_action(event_facade.start_managing, [])
+		"Recruit":
+			var recruit_brain = RecruitController.new()
+			if not recruit_brain.has_poster_wall():
+				Global.event_facade.game_log("❌ 你需要先在自己的 Livehouse 購買並佈置「海報牆 (Poster Wall)」才能發佈招募啟事！", "red")
+			event_facade.execute_action(event_facade.start_recruit, [])
+		"Policy":
+			event_facade.execute_action(event_facade.start_setting_policy, [])
+		"Save":
+			event_facade.execute_action(event_facade.save_game_session, [])
 
 func _on_ui_venue_selected(venue_name: String) -> void:
 	var venue = data.worldMap[venue_name]
@@ -59,21 +75,18 @@ func _on_ui_venue_selected(venue_name: String) -> void:
 func _on_ui_player_choice(selection: String) -> void:
 	match selection:
 		"Check member":
-			get_tree().change_scene_to_file("res://scenes/member_panel.tscn")
+			event_facade.execute_action(event_facade.start_managing, [])
 		"Purchase":
 			# Inside your Main Map View / GameEngine.gd
 			open_furniture_shop()
 
 func open_furniture_shop() -> void:
-	var shop_scene = preload("res://scenes/furniture_shop.tscn")
-	var shop_instance = shop_scene.instantiate()
+	event_facade.execute_action(event_facade.start_shopping, [])
 
-	# Add it on top of the screen layout
-	add_child(shop_instance)
 func _on_ui_enemy_choice(action: String) -> void:
 	match action:
 		"Check members":
-			get_tree().change_scene_to_file("res://scenes/member_panel.tscn")
+			event_facade.execute_action(event_facade.start_managing, [])
 		"対バン":
 			Global.event_facade.execute_action(Global.event_facade.start_invasion, [GameStateBang.player, GameStateBang.current_venue])
 		"Challenge":
@@ -90,9 +103,10 @@ func _on_ui_enemy_choice(action: String) -> void:
 func process_turn_rollover() -> void:
 	set_process_input(false)
 	_turn_recovery()
-	GameStateBang.turn += 1
-	ui.game_log("☀️ 新的一天開始，全體樂團精神抖擻，AP 已重置！", "green")
 	_ai_round()
+	GameStateBang.next_turn()
+	ui.game_log("☀️ 新的一天開始，全體樂團精神抖擻，AP 已重置！", "green")
+
 	process_events()
 	set_process_input(true)
 
@@ -136,6 +150,7 @@ func _process_next_ai() -> void:
 		return
 		
 	var current_ai_band = ai_queue.pop_front()
+	GameStateBang.set_turn_band(current_ai_band)
 	var ai_personality = "AGGRESSIVE" if current_ai_band == "RAISE A SUILEN" else "BALANCED"
 	
 	current_ai_brain = BandBrainAI.new(Global.event_facade, current_ai_band, ai_personality)

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://kq3neqxf4pqq"]
 
-[ext_resource type="Script" uid="uid://deu10uohfvdfs" path="res://scripts/battle/live_battle_scene.gd" id="1_t7pka"]
+[ext_resource type="Script" uid="uid://cyl43eocuymto" path="res://scripts/battle/live_battle_screen.gd" id="1_ufs07"]
+[ext_resource type="Texture2D" uid="uid://by2dipi45cxvp" path="res://assets/battle_stage.png" id="2_ufs07"]
 
 [node name="LiveBattleScene" type="Control" unique_id=2142456286]
 layout_mode = 3
@@ -9,7 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_t7pka")
+script = ExtResource("1_ufs07")
 
 [node name="Battlefield" type="TextureRect" parent="." unique_id=824630607]
 layout_mode = 0
@@ -102,3 +103,8 @@ offset_left = 81.0
 offset_top = 273.0
 offset_right = 121.0
 offset_bottom = 296.0
+
+[node name="BattleStage" type="Sprite2D" parent="." unique_id=2088525519]
+position = Vector2(960.00006, 643)
+scale = Vector2(2.0400004, 2.0400004)
+texture = ExtResource("2_ufs07")

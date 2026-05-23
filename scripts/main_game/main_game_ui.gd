@@ -47,7 +47,8 @@ func generate_venue_buttons() -> void:
 		
 	for child in button_container.get_children():
 		child.queue_free()
-		
+	for child in flag_container.get_children():
+		child.queue_free()
 	for marker in markers_parent.get_children():
 		if marker is Marker2D:
 			var venue_name: String = marker.name

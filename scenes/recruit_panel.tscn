@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://6wohgq6r47jl"]
+
+[ext_resource type="Script" uid="uid://cm6tq4yeepjrm" path="res://scripts/recruit/recruit_panel.gd" id="1_rrt0y"]
+
+[node name="HBoxContainer" type="HBoxContainer" unique_id=1435392940]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_rrt0y")
+
+[node name="ProfilePanel" type="Panel" parent="." unique_id=485172068]
+layout_mode = 2
+
+[node name="Avatar" type="TextureRect" parent="ProfilePanel" unique_id=305014724]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="NameLabel" type="Label" parent="ProfilePanel" unique_id=1316827346]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="InfoLabel" type="RichTextLabel" parent="ProfilePanel" unique_id=815706238]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RecruitButton" type="Button" parent="ProfilePanel" unique_id=459295051]
+layout_mode = 0
+offset_left = 399.0
+offset_top = 336.0
+offset_right = 463.0
+offset_bottom = 367.0
+text = "Recruit"
+
+[node name="ListScroll" type="HScrollBar" parent="." unique_id=23736969]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="ListScroll" unique_id=489868414]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FooterPanel" type="Label" parent="." unique_id=1971976852]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="FooterPanel" unique_id=1209615207]
+layout_mode = 0
+offset_left = 491.0
+offset_top = 327.0
+offset_right = 541.0
+offset_bottom = 358.0
+text = "Close"

@@ -43,3 +43,27 @@ static func load_config_by_path(path: String) -> Dictionary:
 	if json.parse(file.get_as_text()) == OK:
 		return json.get_data() if json.get_data() is Dictionary else {}
 	return {}
+
+# ==========================================
+# 資料讀取 (Data Loading)
+# ==========================================
+static func _load_stratagems() -> void:
+	var file_path = "res://data/stratagems.json"
+	GameStateBang.stratagem_db = load_config_by_path(file_path)
+
+static func _load_venue_database() -> void:
+	var file_path = "res://data/venues.json"
+	GameStateBang.venue_database = load_config_by_path(file_path)
+
+static func _load_counter_matrix() -> void:
+	GameStateBang.counter_matrix = load_config_by_path("res://data/instrument_matrix.json")
+
+static func _load_free_members():
+	var file_path = "res://data/free_members.json"
+	if FileAccess.file_exists(file_path):
+		var json = JSON.new()
+		if json.parse(FileAccess.get_file_as_string(file_path)) == OK:
+			GameStateBang.free_member_pool = json.data
+
+static func _load_shop_catalog():
+	load_config_by_path("res://configs/shop_catalog.json")

@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://bkd8cjqdvy4mx"]
+
+[ext_resource type="Script" uid="uid://bu0kjvrlgbs24" path="res://scripts/band_policy/band_policy_panel.gd" id="1_6gsj0"]
+
+[node name="Control" type="Control" unique_id=715914652]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_6gsj0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1737413826]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GoalSection" type="Panel" parent="VBoxContainer" unique_id=1766894230]
+layout_mode = 2
+
+[node name="ButtonContainer" type="BoxContainer" parent="VBoxContainer/GoalSection" unique_id=1196135583]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 99.0
+offset_right = 125.0
+offset_bottom = 139.0
+
+[node name="TypeSection" type="Panel" parent="VBoxContainer" unique_id=1039403924]
+layout_mode = 2
+
+[node name="ButtonContainer" type="BoxContainer" parent="VBoxContainer/TypeSection" unique_id=1177707102]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 211.0
+offset_right = 87.0
+offset_bottom = 251.0
+
+[node name="ConfirmButton" type="Button" parent="." unique_id=675229650]
+layout_mode = 0
+offset_left = 562.0
+offset_top = 361.0
+offset_right = 633.0
+offset_bottom = 392.0
+text = "Confirm"

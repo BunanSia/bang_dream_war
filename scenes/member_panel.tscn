@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://be2asvjlpverk"]
 
-[ext_resource type="Script" uid="uid://ck7w0w3pde1c4" path="res://scripts/member_panel/member_panel.gd" id="1_36ko1"]
+[ext_resource type="Script" uid="uid://ccfqbd1cv4a0n" path="res://scripts/member_panel/member_panel.gd" id="1_s5sss"]
 [ext_resource type="Texture2D" uid="uid://bxqyaig84tptf" path="res://assets/band_status.png" id="2_s5sss"]
 
 [node name="MemberPanel" type="Control" unique_id=880077427 node_paths=PackedStringArray("markers_parent", "button_container", "character_icon")]
@@ -10,7 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_36ko1")
+script = ExtResource("1_s5sss")
 markers_parent = NodePath("ComponentMarker")
 button_container = NodePath("ButtonContainer")
 character_icon = NodePath("TextureRect")
@@ -68,6 +68,12 @@ current_tab = 2
 visible = false
 layout_mode = 2
 metadata/_tab_index = 0
+
+[node name="TrainButton" type="Button" parent="LeftColumn/TrainPanel" unique_id=1918246764]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Train"
 
 [node name="RestPanel" type="Control" parent="LeftColumn" unique_id=2057011652]
 visible = false
@@ -129,10 +135,26 @@ offset_right = 50.0
 offset_bottom = 120.0
 bbcode_enabled = true
 
-[node name="Equipment" type="Control" parent="LeftColumn" unique_id=1354692068]
+[node name="EquipPanel" type="Control" parent="LeftColumn" unique_id=1354692068]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 4
+
+[node name="GridContainer" type="GridContainer" parent="LeftColumn/EquipPanel" unique_id=1185240796]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="LeftColumn/EquipPanel" unique_id=1990668835]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BuyButton" type="Button" parent="LeftColumn/EquipPanel" unique_id=162781631]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Buy"
 
 [node name="OthersPanel" type="Control" parent="LeftColumn" unique_id=527414942]
 visible = false
@@ -145,3 +167,19 @@ offset_left = 10.0
 offset_top = 80.0
 offset_right = 50.0
 offset_bottom = 103.0
+
+[node name="LayoffButton" type="Button" parent="LeftColumn/OthersPanel" unique_id=1205419425]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Layoff"
+
+[node name="ComparePanel" type="Control" parent="LeftColumn" unique_id=1044799785]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 6
+
+[node name="CompareTree" type="Tree" parent="LeftColumn/ComparePanel" unique_id=1069874804]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 17.0

@@ -113,9 +113,9 @@ logbox = NodePath("LogBox")
 metadata/_custom_type_script = "uid://dopgelshrj7dv"
 
 [node name="DynamicLabel" type="Label" parent="MapUI/StaticScreenLayer/MainGameUI" unique_id=2000020236]
-offset_left = 1726.0
+offset_left = 1490.0
 offset_top = 86.0
-offset_right = 1766.0
+offset_right = 1530.0
 offset_bottom = 109.0
 
 [node name="SelectionContainer" type="VBoxContainer" parent="MapUI/StaticScreenLayer/MainGameUI" unique_id=318505172]

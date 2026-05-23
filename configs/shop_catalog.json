@@ -14,7 +14,14 @@
 		"hp_recovery_bonus": 5,
 		"supply_cap_bonus": 20,
 		"description": "AI 升級"
-		}
+		},
+		{
+	"name": "Poster Wall",
+	"cost": 500,
+	"hp_recovery_bonus": 0,
+	"supply_cap_bonus": 10,
+	"description": "貼滿了各式獨立樂團 live 啟事與招募傳單的牆面。佈置後解鎖「大地圖招募新團員」功能。"
+}
 	],
 	"equipment": [
 	  {

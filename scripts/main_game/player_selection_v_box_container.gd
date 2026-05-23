@@ -5,7 +5,7 @@ class_name PlayerSelectionVBoxContainer
 signal button_pressed(event_name)
 
 # The list of labels for your buttons
-var button_labels = ["Check member", "Purchase"]
+var button_labels = ["Purchase"]
 var label := ""
 var labelbox
 

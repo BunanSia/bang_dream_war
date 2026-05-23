@@ -1,5 +1,7 @@
 extends Control
 
+signal done_shopping
+
 @onready var shop_grid: GridContainer = $ScrollContainer/ShopGrid
 @onready var desc_label: RichTextLabel = $BottomDetailsBox/ItemDescription
 @onready var buy_button: Button = $BottomDetailsBox/BuyButton
@@ -70,7 +72,7 @@ func _on_buy_pressed() -> void:
 	
 	# Route the order to your lightweight data transaction Facade layer
 	var current_venue = GameStateBang.current_venue
-	var current_player = GameStateBang.player
+	var current_player = GameStateBang.turn_band
 	# Assuming access tracking to your global EventFacade instance running inside core engine
 	var success = Global.event_facade.execute_action(
 		Global.event_facade.buy_furniture_for_venue,
@@ -83,7 +85,7 @@ func _on_buy_pressed() -> void:
 
 func _on_return_pressed() -> void:
 	# Drop cleanly back into the main map world panel loop layout
-	get_tree().change_scene_to_file("res://scenes/main_game.tscn")
+	done_shopping.emit()
 
 ## Mock template simulating your external dynamic JSON lookup architecture pipeline
 ## Fetches catalog lists straight from the filesystem config architecture

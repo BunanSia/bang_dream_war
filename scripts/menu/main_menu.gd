@@ -14,7 +14,8 @@ func _on_continue_pressed():
 	load_game()
 
 func load_game():
-	print("Loading Game...")
+	GameStateBang.init_game_session(PlotMode.PlotMode.STORY, "CONTINUE")	
+	get_tree().change_scene_to_file("res://scenes/main_game.tscn")
 
 func _on_exit_pressed():
 	print("Exiting Game...")
@@ -24,7 +25,6 @@ func setup_initial_game_state():
 	# Reset GameState singleton for a fresh run
 	print("Initialize new game")
 	get_tree().change_scene_to_file("res://scenes/plot_selection.tscn")
-	# ... etc
 
 func _on_new_game_pressed() -> void:
 	# Replaces: Select your Band logic

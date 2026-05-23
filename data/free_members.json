@@ -1,0 +1,22 @@
+[
+	{
+		"name": "Hirasawa Ui",
+		"part": "Guitar",
+		"perf": 45,
+		"stam": 55,
+		"cost": 500,
+		"ap_cost": 1,
+		"avatar": "res://assets/icons/Hirasawa Ui.png",
+		"desc": "平澤唯的妹妹。全能型天才，學習速度極快，烹飪與照顧能力也是頂級。"
+	},
+	{
+		"name": "PA san",
+		"part": "Keyboard",
+		"perf": 50,
+		"stam": 40,
+		"cost": 700,
+		"ap_cost": 1,
+		"avatar": "res://assets/icons/Pa san.png",
+		"desc": "STARRY Livehouse 的 Goth-Loli 負責人。對黑客技術與混音設備瞭若指掌。"
+	}
+]

@@ -1,0 +1,436 @@
+{
+	"attacker": "",
+	"bands": {
+		"Afterglow": {
+			"goal": "CONQUER_MAP",
+			"members": [
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Ran",
+					"part": "Vo/Gt",
+					"perf": 28,
+					"stam": 18,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Moca",
+					"part": "Gt",
+					"perf": 26,
+					"stam": 18,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Himari",
+					"part": "Ba",
+					"perf": 20,
+					"stam": 25,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Tomoe",
+					"part": "Dr",
+					"perf": 25,
+					"stam": 25,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Tsugumi",
+					"part": "Key",
+					"perf": 18,
+					"stam": 28,
+					"xp": 0
+				}
+			],
+			"money": 1000,
+			"name": "Afterglow",
+			"relations": {
+				"Pastel*Palettes": "Neutral",
+				"Poppin'Party": "Neutral",
+				"RAISE A SUILEN": "Neutral",
+				"Roselia": "Neutral"
+			},
+			"supply": 50,
+			"type": ""
+		},
+		"Pastel*Palettes": {
+			"goal": "CONQUER_MAP",
+			"members": [
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Aya",
+					"part": "Vo",
+					"perf": 22,
+					"stam": 22,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Hina",
+					"part": "Gt",
+					"perf": 30,
+					"stam": 15,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Chisato",
+					"part": "Ba",
+					"perf": 22,
+					"stam": 28,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Maya",
+					"part": "Dr",
+					"perf": 24,
+					"stam": 24,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Eve",
+					"part": "Key",
+					"perf": 18,
+					"stam": 25,
+					"xp": 0
+				}
+			],
+			"money": 1000,
+			"name": "Pastel*Palettes",
+			"relations": {
+				"Afterglow": "Neutral",
+				"Poppin'Party": "Neutral",
+				"RAISE A SUILEN": "Neutral",
+				"Roselia": "Neutral"
+			},
+			"supply": 50,
+			"type": ""
+		},
+		"Poppin'Party": {
+			"goal": "CONQUER_MAP",
+			"members": [
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Kasumi",
+					"part": "Vo/Gt",
+					"perf": 25,
+					"stam": 20,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Otae",
+					"part": "Gt",
+					"perf": 30,
+					"stam": 15,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Rimi",
+					"part": "Ba",
+					"perf": 18,
+					"stam": 25,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Saaya",
+					"part": "Dr",
+					"perf": 22,
+					"stam": 22,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Arisa",
+					"part": "Key",
+					"perf": 20,
+					"stam": 20,
+					"xp": 0
+				}
+			],
+			"money": 1000,
+			"name": "Poppin'Party",
+			"relations": {
+				"Afterglow": "Neutral",
+				"Pastel*Palettes": "Neutral",
+				"RAISE A SUILEN": "Neutral",
+				"Roselia": "Neutral"
+			},
+			"supply": 50,
+			"type": ""
+		},
+		"RAISE A SUILEN": {
+			"goal": "CONQUER_MAP",
+			"members": [
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Layer",
+					"part": "Vo/Ba",
+					"perf": 32,
+					"stam": 24,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Lock",
+					"part": "Gt",
+					"perf": 28,
+					"stam": 20,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "MASKING",
+					"part": "Dr",
+					"perf": 30,
+					"stam": 25,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "PAREO",
+					"part": "Key",
+					"perf": 26,
+					"stam": 18,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "CHU2",
+					"part": "DJ",
+					"perf": 25,
+					"stam": 15,
+					"xp": 0
+				}
+			],
+			"money": 1000,
+			"name": "RAISE A SUILEN",
+			"relations": {
+				"Afterglow": "Neutral",
+				"Pastel*Palettes": "Neutral",
+				"Poppin'Party": "Neutral",
+				"Roselia": "Neutral"
+			},
+			"supply": 50,
+			"type": ""
+		},
+		"Roselia": {
+			"goal": "CONQUER_MAP",
+			"members": [
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Yukina",
+					"part": "Vo",
+					"perf": 35,
+					"stam": 12,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Sayo",
+					"part": "Gt",
+					"perf": 32,
+					"stam": 18,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Lisa",
+					"part": "Ba",
+					"perf": 20,
+					"stam": 28,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Ako",
+					"part": "Dr",
+					"perf": 18,
+					"stam": 22,
+					"xp": 0
+				},
+				{
+					"hp": 100,
+					"max_hp": 100,
+					"name": "Rinko",
+					"part": "Key",
+					"perf": 22,
+					"stam": 25,
+					"xp": 0
+				}
+			],
+			"money": 1000,
+			"name": "Roselia",
+			"relations": {
+				"Afterglow": "Neutral",
+				"Pastel*Palettes": "Neutral",
+				"Poppin'Party": "Neutral",
+				"RAISE A SUILEN": "Neutral"
+			},
+			"supply": 50,
+			"type": ""
+		}
+	},
+	"current_band": "Poppin'Party",
+	"current_selected_member_name": "",
+	"current_venue": "",
+	"defender": "",
+	"eventPool": [
+		{
+			"actions": [
+				{
+					"args": [
+						"res://story/ras_raid_plot.txt"
+					],
+					"await": false,
+					"method": "play_dialogue"
+				},
+				{
+					"args": [
+						"Poppin'Party",
+						"Otae"
+					],
+					"await": false,
+					"method": "remove_band_member"
+				},
+				{
+					"args": [
+						"RAISE A SUILEN",
+						{
+							"name": "Otae",
+							"part": "Gt",
+							"perf": 35.0,
+							"stam": 20.0
+						}
+					],
+					"await": false,
+					"method": "add_band_member"
+				},
+				{
+					"args": [
+						"Poppin'Party",
+						"RAISE A SUILEN",
+						"Rival"
+					],
+					"await": false,
+					"method": "set_band_relations"
+				}
+			],
+			"conditions": {
+				"min_turn": 3.0,
+				"venue_owner": {
+					"owner_name": "RAISE A SUILEN",
+					"venue_name": "Galaxy"
+				}
+			},
+			"desc": "RAISE A SUILEN disrupts the peace!",
+			"id": "RAS_RAID",
+			"triggered": false
+		},
+		{
+			"actions": [
+				{
+					"args": [
+						"Poppin'Party",
+						"Roselia",
+						"Allied"
+					],
+					"await": false,
+					"method": "set_band_relations"
+				}
+			],
+			"conditions": {
+				"band_relation": {
+					"band_a": "Poppin'Party",
+					"band_b": "Roselia",
+					"status": "Neutral"
+				},
+				"min_turn": 5.0
+			},
+			"desc": "An alliance is forged.",
+			"id": "FRIENDSHIP_BOND",
+			"triggered": false
+		}
+	],
+	"free_member_pool": [],
+	"is_running": true,
+	"player": "Poppin'Party",
+	"plot_mode": "STORY",
+	"turn": 1,
+	"turn_band": "Poppin'Party",
+	"worldMap": {
+		"7th!": {
+			"installed_furniture": [],
+			"location": "Shibuya",
+			"name": "7th!",
+			"owner": "Roselia",
+			"type": "symphony_hall"
+		},
+		"CiRCLE": {
+			"installed_furniture": [],
+			"location": "Tokyo",
+			"name": "CiRCLE",
+			"owner": "Poppin'Party",
+			"type": "open_air_festival"
+		},
+		"Dub": {
+			"installed_furniture": [],
+			"location": "West Tokyo",
+			"name": "Dub",
+			"owner": "Roselia",
+			"type": "underground_punk"
+		},
+		"Galaxy": {
+			"installed_furniture": [],
+			"location": "Shinjuku",
+			"name": "Galaxy",
+			"owner": "RAISE A SUILEN",
+			"type": "symphony_hall"
+		},
+		"KID BOX": {
+			"installed_furniture": [],
+			"location": "Nagoya",
+			"name": "KID BOX",
+			"owner": "Afterglow",
+			"type": "open_air_festival"
+		},
+		"Space": {
+			"installed_furniture": [],
+			"location": "Kita-Senju",
+			"name": "Space",
+			"owner": "Pastel*Palettes",
+			"type": "symphony_hall"
+		}
+	}
+}
