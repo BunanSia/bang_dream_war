@@ -9,6 +9,7 @@ const logo_path = "res://assets/logo"
 @export var dialogue_ui: CanvasLayer
 @export var furniture_icon_container: Control
 
+@export var line_container: Node2D
 @export var selection_box: VBoxContainer
 @export var data_label: Label
 @export var logbox: RichTextLabel
@@ -27,7 +28,8 @@ func _ready() -> void:
 func logbox_generation() -> void:
 	logbox = RichTextLabel.new()
 	logbox.name = "Dialogue"
-	logbox.custom_minimum_size = Vector2(500, 150)
+	logbox.custom_minimum_size = Vector2(1000, 500)
+	logbox.fit_content = true
 	logbox.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	logbox.bbcode_enabled = true
 	logbox.scroll_following = true 
@@ -80,6 +82,7 @@ func generate_venue_buttons() -> void:
 			btn.global_position = marker.global_position
 			btn.pressed.connect(func(): venue_button_pressed.emit(venue_name))
 			button_container.add_child(btn)
+	_draw_map_edges()
 
 func general_vbox_initialize() -> void:
 	var vbox_container = BasicGameButtonsHBoxContainer.new()
@@ -159,3 +162,54 @@ func refresh_venue_furniture_icons(installed_furniture: Array) -> void:
 		
 		# 4. Commit to the visual scene layout tree
 		furniture_icon_container.add_child(tex_rect)
+
+## 動態根據鄰接矩陣在 Marker 之間繪製 Line2D
+func _draw_map_edges() -> void:
+	# 先清空可能殘留的舊線條（防呆）
+	for child in line_container.get_children():
+		child.queue_free()
+		
+	var venues_count = GameStateBang.adjacency_matrix.size()
+	
+	# 建立一個臨時陣列，用 Index 快速反查對應的 Marker2D 節點
+	# 這樣待會畫線時就不用一直用字串翻箱倒櫃
+	var marker_lookup = {}
+	for marker in markers_parent.get_children():
+		if marker is Marker2D:
+			var v_name = marker.name
+			if GameStateBang.venue_indices.has(v_name):
+				var idx = GameStateBang.venue_indices[v_name]
+				marker_lookup[idx] = marker
+	# 🎯 開始遍歷鄰接矩陣
+	for i in range(venues_count):
+		for j in range(venues_count):
+			# 💡 關鍵優化：只在 j > i 時才畫，確保 A<->B 之間只會有一條 Line2D 實例
+			if j > i:
+				# 如果矩陣記錄為 1，代表這兩個 Index 對應的場地有連線
+				if GameStateBang.adjacency_matrix[i][j] == 1:
+					var marker_a = marker_lookup.get(i)
+					var marker_b = marker_lookup.get(j)
+					
+					if marker_a and marker_b:
+						# 呼叫畫線工廠，把這兩點連起來
+						_create_line_between(marker_a.global_position, marker_b.global_position)
+
+## 建立單條 Line2D 的工廠函數
+func _create_line_between(pos_a: Vector2, pos_b: Vector2) -> void:
+	var line := Line2D.new()
+	
+	# 1. 塞入起點與終點的 global_position
+	line.add_point(pos_a)
+	line.add_point(pos_b)
+	
+	# 2. 🎨 樣式與外觀設定 (你可以根據獨立樂團的風格自由調整)
+	line.width = 2.0                                # 線條粗細
+	line.default_color = Color("ff4570", 0.6)       # 帶有一點透明度的粉紅/桃紅色霓虹感
+	line.antialiased = true                         # 開啟抗鋸齒，讓斜線不毛躁
+	
+	# 3. 讓線條的頭尾變成圓角，看起來更精緻
+	line.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	line.end_cap_mode = Line2D.LINE_CAP_ROUND
+	
+	# 塞進地圖的線條圖層中
+	line_container.add_child(line)

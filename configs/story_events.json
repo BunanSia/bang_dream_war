@@ -1,90 +1,503 @@
 {
   "venues": [
-	{"name": "CiRCLE", "location": "Tokyo", "initial_owner": "Poppin'Party", "type": "open_air_festival"},
-	{"name": "Galaxy", "location": "Shinjuku", "initial_owner": "RAISE A SUILEN", "type": "symphony_hall"},
-	{"name": "7th!", "location": "Shibuya", "initial_owner": "Roselia", "type": "symphony_hall"},
-	{"name": "Dub", "location": "West Tokyo", "initial_owner": "Roselia", "type": "underground_punk"},
-	{"name": "Space", "location": "Kita-Senju", "initial_owner": "Pastel*Palettes", "type": "symphony_hall"},
-	{"name": "KID BOX", "location": "Nagoya", "initial_owner": "Afterglow", "type": "open_air_festival"}
-],
+	{
+	  "name": "CiRCLE",
+	  "location": "Tokyo",
+	  "initial_owner": "Poppin'Party",
+	  "type": "open_air_festival",
+	  "edges": [
+		"Galaxy",
+        "Space"
+	  ]
+	},
+	{
+	  "name": "Galaxy",
+	  "location": "Shinjuku",
+	  "initial_owner": "RAISE A SUILEN",
+	  "type": "symphony_hall",
+	  "edges": [
+		"CiRCLE",
+        "7th!"
+	  ]
+	},
+	{
+	  "name": "7th!",
+	  "location": "Shibuya",
+	  "initial_owner": "Morfonica",
+	  "type": "symphony_hall",
+	  "edges": [
+		"Galaxy",
+        "Dub"
+	  ]
+	},
+	{
+	  "name": "Dub",
+	  "location": "West Tokyo",
+	  "initial_owner": "Roselia",
+	  "type": "underground_punk",
+	  "edges": [
+		"7th!",
+        "Space"
+	  ]
+	},
+	{
+	  "name": "Space",
+	  "location": "Kita-Senju",
+	  "initial_owner": "Pastel*Palettes",
+	  "type": "symphony_hall",
+	  "edges": [
+		"CiRCLE",
+		"Dub",
+        "KID BOX"
+	  ]
+	},
+	{
+	  "name": "KID BOX",
+	  "location": "Nagoya",
+	  "initial_owner": "Afterglow",
+	  "type": "open_air_festival",
+	  "edges": [
+        "Space"
+	  ]
+	},
+	{
+	  "name": "RiNG",
+	  "location": "Ikebukuro",
+	  "initial_owner": "MyGO",
+	  "type": "live_house_basement",
+	  "edges": [
+		"CiRCLE",
+        "Galaxy"
+	  ]
+	},
+	{
+	  "name": "Live House KENNEDY",
+	  "location": "Shibuya Underground",
+	  "initial_owner": "Ave Mujica",
+	  "type": "underground_punk",
+	  "edges": [
+        "7th!"
+	  ]
+	},
+	{
+	  "name": "Edogawa Riverside Stage",
+	  "location": "Edogawa",
+	  "initial_owner": "Poppin'Party",
+	  "type": "open_air_festival",
+	  "edges": [
+		"CiRCLE",
+        "Space"
+	  ]
+	},
+	{
+	  "name": "Dub Studio Cafe",
+	  "location": "Shinjuku West",
+	  "initial_owner": "Afterglow",
+	  "type": "symphony_hall",
+	  "edges": [
+        "Dub"
+	  ]
+	},
+	{
+	  "name": "Asuka Show Hall",
+	  "location": "Asukayama",
+	  "initial_owner": "Hello Happy World",
+	  "type": "open_air_festival",
+	  "edges": [
+        "KID BOX"
+	  ]
+	}
+  ],
   "bands": [
 	{
 	  "name": "Poppin'Party",
 	  "members": [
-		{"name": "Kasumi", "part": "Vo/Gt", "perf": 25, "stam": 20},
-		{"name": "Otae", "part": "Gt", "perf": 30, "stam": 15},
-		{"name": "Rimi", "part": "Ba", "perf": 18, "stam": 25},
-		{"name": "Saaya", "part": "Dr", "perf": 22, "stam": 22},
-		{"name": "Arisa", "part": "Key", "perf": 20, "stam": 20}
+		{
+		  "name": "Kasumi",
+		  "part": "Vo/Gt",
+		  "perf": 25,
+		  "stam": 20
+		},
+		{
+		  "name": "Otae",
+		  "part": "Gt",
+		  "perf": 30,
+		  "stam": 15
+		},
+		{
+		  "name": "Rimi",
+		  "part": "Ba",
+		  "perf": 18,
+		  "stam": 25
+		},
+		{
+		  "name": "Saaya",
+		  "part": "Dr",
+		  "perf": 22,
+		  "stam": 22
+		},
+		{
+		  "name": "Arisa",
+		  "part": "Key",
+		  "perf": 20,
+		  "stam": 20
+		}
 	  ]
 	},
 	{
 	  "name": "Roselia",
 	  "members": [
-		{"name": "Yukina", "part": "Vo", "perf": 35, "stam": 12},
-		{"name": "Sayo", "part": "Gt", "perf": 32, "stam": 18},
-		{"name": "Lisa", "part": "Ba", "perf": 20, "stam": 28},
-		{"name": "Ako", "part": "Dr", "perf": 18, "stam": 22},
-		{"name": "Rinko", "part": "Key", "perf": 22, "stam": 25}
+		{
+		  "name": "Yukina",
+		  "part": "Vo",
+		  "perf": 35,
+		  "stam": 12
+		},
+		{
+		  "name": "Sayo",
+		  "part": "Gt",
+		  "perf": 32,
+		  "stam": 18
+		},
+		{
+		  "name": "Lisa",
+		  "part": "Ba",
+		  "perf": 20,
+		  "stam": 28
+		},
+		{
+		  "name": "Ako",
+		  "part": "Dr",
+		  "perf": 18,
+		  "stam": 22
+		},
+		{
+		  "name": "Rinko",
+		  "part": "Key",
+		  "perf": 22,
+		  "stam": 25
+		}
 	  ]
 	},
 	{
 	  "name": "Afterglow",
 	  "members": [
-		{"name": "Ran", "part": "Vo/Gt", "perf": 28, "stam": 18},
-		{"name": "Moca", "part": "Gt", "perf": 26, "stam": 18},
-		{"name": "Himari", "part": "Ba", "perf": 20, "stam": 25},
-		{"name": "Tomoe", "part": "Dr", "perf": 25, "stam": 25},
-		{"name": "Tsugumi", "part": "Key", "perf": 18, "stam": 28}
+		{
+		  "name": "Ran",
+		  "part": "Vo/Gt",
+		  "perf": 28,
+		  "stam": 18
+		},
+		{
+		  "name": "Moca",
+		  "part": "Gt",
+		  "perf": 26,
+		  "stam": 18
+		},
+		{
+		  "name": "Himari",
+		  "part": "Ba",
+		  "perf": 20,
+		  "stam": 25
+		},
+		{
+		  "name": "Tomoe",
+		  "part": "Dr",
+		  "perf": 25,
+		  "stam": 25
+		},
+		{
+		  "name": "Tsugumi",
+		  "part": "Key",
+		  "perf": 18,
+		  "stam": 28
+		}
 	  ]
 	},
 	{
 	  "name": "Pastel*Palettes",
 	  "members": [
-		{"name": "Aya", "part": "Vo", "perf": 22, "stam": 22},
-		{"name": "Hina", "part": "Gt", "perf": 30, "stam": 15},
-		{"name": "Chisato", "part": "Ba", "perf": 22, "stam": 28},
-		{"name": "Maya", "part": "Dr", "perf": 24, "stam": 24},
-		{"name": "Eve", "part": "Key", "perf": 18, "stam": 25}
+		{
+		  "name": "Aya",
+		  "part": "Vo",
+		  "perf": 22,
+		  "stam": 22
+		},
+		{
+		  "name": "Hina",
+		  "part": "Gt",
+		  "perf": 30,
+		  "stam": 15
+		},
+		{
+		  "name": "Chisato",
+		  "part": "Ba",
+		  "perf": 22,
+		  "stam": 28
+		},
+		{
+		  "name": "Maya",
+		  "part": "Dr",
+		  "perf": 24,
+		  "stam": 24
+		},
+		{
+		  "name": "Eve",
+		  "part": "Key",
+		  "perf": 18,
+		  "stam": 25
+		}
 	  ]
 	},
 	{
 	  "name": "RAISE A SUILEN",
 	  "members": [
-		{"name": "Layer", "part": "Vo/Ba", "perf": 32, "stam": 24},
-		{"name": "Lock", "part": "Gt", "perf": 28, "stam": 20},
-		{"name": "MASKING", "part": "Dr", "perf": 30, "stam": 25},
-		{"name": "PAREO", "part": "Key", "perf": 26, "stam": 18},
-		{"name": "CHU2", "part": "DJ", "perf": 25, "stam": 15}
+		{
+		  "name": "Layer",
+		  "part": "Vo/Ba",
+		  "perf": 32,
+		  "stam": 24
+		},
+		{
+		  "name": "Lock",
+		  "part": "Gt",
+		  "perf": 28,
+		  "stam": 20
+		},
+		{
+		  "name": "MASKING",
+		  "part": "Dr",
+		  "perf": 30,
+		  "stam": 25
+		},
+		{
+		  "name": "PAREO",
+		  "part": "Key",
+		  "perf": 26,
+		  "stam": 18
+		},
+		{
+		  "name": "CHU2",
+		  "part": "DJ",
+		  "perf": 25,
+		  "stam": 15
+		}
+	  ]
+	},
+	{
+	  "name": "Morfonica",
+	  "members": [
+		{
+		  "name": "Mashiro",
+		  "part": "Vo",
+		  "perf": 22,
+		  "stam": 18
+		},
+		{
+		  "name": "Touko",
+		  "part": "Gt",
+		  "perf": 26,
+		  "stam": 18
+		},
+		{
+		  "name": "Nanami",
+		  "part": "Ba",
+		  "perf": 20,
+		  "stam": 24
+		},
+		{
+		  "name": "Tsukushi",
+		  "part": "Dr",
+		  "perf": 21,
+		  "stam": 22
+		},
+		{
+		  "name": "Rui",
+		  "part": "Vn",
+		  "perf": 28,
+		  "stam": 20
+		}
+	  ]
+	},
+	{
+	  "name": "Hello Happy World",
+	  "members": [
+		{
+		  "name": "Kokoro",
+		  "part": "Vo",
+		  "perf": 32,
+		  "stam": 25
+		},
+		{
+		  "name": "Kaoru",
+		  "part": "Gt",
+		  "perf": 24,
+		  "stam": 18
+		},
+		{
+		  "name": "Hagumi",
+		  "part": "Ba",
+		  "perf": 20,
+		  "stam": 26
+		},
+		{
+		  "name": "Kanon",
+		  "part": "Dr",
+		  "perf": 19,
+		  "stam": 22
+		},
+		{
+		  "name": "Misaki",
+		  "part": "DJ",
+		  "perf": 25,
+		  "stam": 21
+		}
+	  ]
+	},
+	{
+	  "name": "MyGO",
+	  "members": [
+		{
+		  "name": "Tomori",
+		  "part": "Vo",
+		  "perf": 28,
+		  "stam": 17
+		},
+		{
+		  "name": "Anon",
+		  "part": "Gt",
+		  "perf": 20,
+		  "stam": 20
+		},
+		{
+		  "name": "Raana",
+		  "part": "Gt",
+		  "perf": 35,
+		  "stam": 15
+		},
+		{
+		  "name": "Soyo",
+		  "part": "Ba",
+		  "perf": 22,
+		  "stam": 24
+		},
+		{
+		  "name": "Taki",
+		  "part": "Dr",
+		  "perf": 24,
+		  "stam": 22
+		}
+	  ]
+	},
+	{
+	  "name": "Ave Mujica",
+	  "members": [
+		{
+		  "name": "Doloris",
+		  "part": "Vo/Gt",
+		  "perf": 30,
+		  "stam": 20
+		},
+		{
+		  "name": "Mortis",
+		  "part": "Gt",
+		  "perf": 32,
+		  "stam": 16
+		},
+		{
+		  "name": "Timoris",
+		  "part": "Ba",
+		  "perf": 24,
+		  "stam": 24
+		},
+		{
+		  "name": "Amoris",
+		  "part": "Dr",
+		  "perf": 23,
+		  "stam": 23
+		},
+		{
+		  "name": "Oblivionist",
+		  "part": "Key",
+		  "perf": 26,
+		  "stam": 21
+		}
 	  ]
 	}
   ],
   "events": [
-	{"id": "RAS_RAID", "desc": "RAISE A SUILEN disrupts the peace!", "trigger_turn": 3,
+	{
+	  "id": "RAS_RAID",
+	  "desc": "RAISE A SUILEN disrupts the peace!",
+	  "trigger_turn": 3,
 	  "conditions": {
-		"venue_owner": { "venue_name": "Galaxy", "owner_name": "RAISE A SUILEN" },
+		"venue_owner": {
+		  "venue_name": "Galaxy",
+		  "owner_name": "RAISE A SUILEN"
+		},
 		"min_turn": 3
-	  },"actions": [
-		{ "method": "play_dialogue", "args": ["res://story/ras_raid_plot.txt"],
-  "await": false },
-		{ "method": "remove_band_member", "args": ["Poppin'Party", "Otae"],
-  "await": false },
-		{ "method": "add_band_member", "args": ["RAISE A SUILEN", {"name":"Otae","part":"Gt","perf":35,"stam":20}],
-  "await": false },
-		{ "method": "set_band_relations", "args": ["Poppin'Party", "RAISE A SUILEN", "Rival"],
-  "await": false}
-		]
+	  },
+	  "actions": [
+		{
+		  "method": "play_dialogue",
+		  "args": [
+            "res://story/ras_raid_plot.txt"
+		  ],
+		  "await": false
+		},
+		{
+		  "method": "remove_band_member",
+		  "args": [
+			"Poppin'Party",
+            "Otae"
+		  ],
+		  "await": false
+		},
+		{
+		  "method": "add_band_member",
+		  "args": [
+			"RAISE A SUILEN",
+			{
+			  "name": "Otae",
+			  "part": "Gt",
+			  "perf": 35,
+			  "stam": 20
+			}
+		  ],
+		  "await": false
+		},
+		{
+		  "method": "set_band_relations",
+		  "args": [
+			"Poppin'Party",
+			"RAISE A SUILEN",
+            "Rival"
+		  ],
+		  "await": false
+		}
+	  ]
 	},
 	{
 	  "id": "FRIENDSHIP_BOND",
 	  "desc": "An alliance is forged.",
-	"conditions": {
-			"band_relation": { "band_a": "Poppin'Party", "band_b": "Roselia", "status": "Neutral" },
-			"min_turn": 5
-		  },
+	  "conditions": {
+		"band_relation": {
+		  "band_a": "Poppin'Party",
+		  "band_b": "Roselia",
+		  "status": "Neutral"
+		},
+		"min_turn": 5
+	  },
 	  "actions": [
-		{ "method": "set_band_relations", "args": ["Poppin'Party", "Roselia", "Allied"],
-  "await": false }
+		{
+		  "method": "set_band_relations",
+		  "args": [
+			"Poppin'Party",
+			"Roselia",
+            "Allied"
+		  ],
+		  "await": false
+		}
 	  ]
 	}
   ]

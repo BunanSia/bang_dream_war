@@ -257,7 +257,7 @@ func discard_member_equipped_item(band_name: String, member_name: String, item_i
 func upgrade_member(band_name: String, member_name: String) -> void:
 	var band = execute_action(find_band, [GameStateBang.get_turn_band()])
 	var member = get_member(band_name, member_name)
-	var upgrades_cfg = ConfigManager.load_config_by_path("res://config/upgrades.json").get("promotions", {})
+	var upgrades_cfg = ConfigManager.load_upgrade().get("promotions", {})
 	var tier_data = upgrades_cfg[member.part]
 	
 	# Deduct costs and adjust member identity fields
@@ -595,3 +595,37 @@ func _serialize_venue(venue: Object) -> Dictionary:
 		"owner": owner_name,
 		"installed_furniture": venue.get("installed_furniture").duplicate() # 存下海報牆、音響等家具狀態！
 	}
+
+## 驗證玩家當前是否能向目標場地發動進攻
+func can_attack_venue(target_venue_name: String) -> bool:
+	var player_band_id = GameStateBang.player
+	var player_band = GameStateBang.data.bands[player_band_id]
+	
+	# 1. 安全防線：如果目標場地根本不存在，或者主人已經是玩家自己，不能打
+	var target_venue_obj = GameStateBang.data.worldMap.get(target_venue_name)
+	if not target_venue_obj: return false
+	if target_venue_obj.owner == player_band: return false
+	
+	# 2. 獲取目標場地在矩陣中的 Index
+	if not GameStateBang.venue_indices.has(target_venue_name):
+		push_error("Matrix Error: Venue name not found in index registry: " + target_venue_name)
+		return false
+	var target_idx: int = GameStateBang.venue_indices[target_venue_name]
+	
+	# 3. 🎯 核心掃描：遍歷地圖上所有場地，找出「屬於玩家」且「與目標相鄰」的跳板
+	for v_name in GameStateBang.data.worldMap:
+		var my_venue = GameStateBang.data.worldMap[v_name]
+		
+		# 如果這個場地是玩家的，我們就拿它當潛在的「進攻發起點」
+		if my_venue.owner == player_band:
+			var my_idx: int = GameStateBang.venue_indices.get(v_name, -1)
+			if my_idx == -1: continue
+			
+			# 🔍 查表：從鄰接矩陣看【我的場地索引】與【目標場地索引】有沒有接通
+			if GameStateBang.adjacency_matrix[my_idx][target_idx] == 1:
+				print("⚔️ [Strategy] 進攻線確立！可從 %s 進攻 %s" % [v_name, target_venue_name])
+				return true # 只要找到任意一個場地有連線，立刻放行！
+				
+	# 遍歷完所有領地，發現沒有任何一塊地跟目標挨著
+	print("❌ [Strategy] 無法進攻 %s：該場地與你目前的勢力範圍不相鄰！" % target_venue_name)
+	return false

@@ -57,7 +57,7 @@ func get_rest_data() -> Dictionary:
 func get_upgrade_data() -> Dictionary:
 	if not selected_member: return {}
 	
-	var upgrades_cfg = ConfigManager.load_config_by_path("res://configs/upgrades.json").get("promotions", {})
+	var upgrades_cfg = ConfigManager.load_upgrade().get("promotions", {})
 	var current_part = selected_member.part
 	
 	if not upgrades_cfg.has(current_part):
@@ -108,7 +108,7 @@ func layoff_current_member() -> void:
 
 func get_equipment_data() -> Array:
 	if not selected_member: return []
-	var catalog = ConfigManager.load_config_by_path("res://configs/shop_catalog.json")
+	var catalog = ConfigManager.load_shop_catalog()
 	var gear_list = catalog.get("shop_items", {}).get("equipment", [])
 	return gear_list
 

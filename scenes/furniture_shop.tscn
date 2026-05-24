@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://drvksgeqe0pfd"]
 
 [ext_resource type="Script" uid="uid://bb3uablrfdadc" path="res://scripts/furniture_shop/furniture_shop.gd" id="1_l56sm"]
+[ext_resource type="Texture2D" uid="uid://cuq32mmih5dkp" path="res://assets/pngtree-furniture-shop-with-colorful-background-picture-image_15709065.png" id="2_ji5n1"]
 
 [node name="FurnitureShop" type="Control" unique_id=1431097644]
 layout_mode = 3
@@ -11,15 +12,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l56sm")
 
+[node name="PngtreeFurnitureShopWithColorfulBackgroundPictureImage15709065" type="Sprite2D" parent="." unique_id=381428420]
+position = Vector2(956.00006, 547)
+scale = Vector2(1.6103941, 1.6103941)
+texture = ExtResource("2_ji5n1")
+
 [node name="ShopTitle" type="Label" parent="." unique_id=125148904]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
-
-[node name="Panel" type="Panel" parent="." unique_id=341378529]
-layout_mode = 0
-offset_right = 2176.0
-offset_bottom = 2176.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1643358823]
 layout_mode = 0
@@ -29,6 +30,7 @@ offset_bottom = 736.0
 
 [node name="ShopGrid" type="GridContainer" parent="ScrollContainer" unique_id=769708561]
 layout_mode = 2
+columns = 4
 
 [node name="BottomDetailsBox" type="Panel" parent="." unique_id=1021263956]
 layout_mode = 0
@@ -40,8 +42,10 @@ offset_bottom = 1006.0
 [node name="ItemDescription" type="RichTextLabel" parent="BottomDetailsBox" unique_id=3440390]
 layout_mode = 0
 offset_left = -1650.0
+offset_top = -64.0
 offset_right = -1610.0
-offset_bottom = 40.0
+offset_bottom = -24.0
+bbcode_enabled = true
 
 [node name="BuyButton" type="Button" parent="BottomDetailsBox" unique_id=869321431]
 layout_mode = 0

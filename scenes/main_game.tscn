@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://dxiti7yqrjkhv" path="res://assets/world_map.png" id="2_72e8q"]
 [ext_resource type="Script" uid="uid://b380bbacyqieq" path="res://scripts/main_game/camera_2d.gd" id="2_ygxny"]
 [ext_resource type="Script" uid="uid://cylbr0jsgic7t" path="res://scripts/dialogue/dialogue_ui.gd" id="3_d2op2"]
-[ext_resource type="Script" uid="uid://lbb4lt1dtcv2" path="res://scripts/dialogue/dialogue_system.gd" id="4_0rdsr"]
 [ext_resource type="Script" uid="uid://dopgelshrj7dv" path="res://scripts/main_game/main_game_ui.gd" id="5_ipu61"]
 
 [node name="MainGame" type="Control" unique_id=1623774428]
@@ -27,7 +26,7 @@ texture = ExtResource("2_72e8q")
 limit_left = 0
 limit_top = 0
 limit_right = 3000
-limit_bottom = 1350
+limit_bottom = 1600
 script = ExtResource("2_ygxny")
 
 [node name="VenueMakers" type="Node2D" parent="MapUI" unique_id=671549264]
@@ -45,10 +44,25 @@ position = Vector2(1581, 627)
 position = Vector2(1006, 392)
 
 [node name="Space" type="Marker2D" parent="MapUI/VenueMakers" unique_id=1551666344]
-position = Vector2(590, 768)
+position = Vector2(210, 661)
 
 [node name="KID BOX" type="Marker2D" parent="MapUI/VenueMakers" unique_id=705658002]
 position = Vector2(793, 206)
+
+[node name="RiNG" type="Marker2D" parent="MapUI/VenueMakers" unique_id=1454139514]
+position = Vector2(2345, 1189)
+
+[node name="Live House KENNEDY" type="Marker2D" parent="MapUI/VenueMakers" unique_id=307899671]
+position = Vector2(809, 1302)
+
+[node name="Edogawa Riverside Stage" type="Marker2D" parent="MapUI/VenueMakers" unique_id=388683043]
+position = Vector2(797, 93)
+
+[node name="Dub Studio Cafe" type="Marker2D" parent="MapUI/VenueMakers" unique_id=1339703788]
+position = Vector2(1237, 607)
+
+[node name="Asuka Show Hall" type="Marker2D" parent="MapUI/VenueMakers" unique_id=951073584]
+position = Vector2(1124, 1282)
 
 [node name="FlagContainer" type="Node2D" parent="MapUI" unique_id=1852921399]
 
@@ -62,51 +76,16 @@ offset_bottom = 40.0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="DialogueUI" type="CanvasLayer" parent="MapUI" unique_id=1740832451 node_paths=PackedStringArray("_dialogue_box", "character_icon")]
-script = ExtResource("3_d2op2")
-_dialogue_box = NodePath("Background/DialogueBackground")
-character_icon = NodePath("Background/CharacterIcon")
-
-[node name="Background" type="Node" parent="MapUI/DialogueUI" unique_id=2146560145]
-
-[node name="CharacterIcon" type="TextureRect" parent="MapUI/DialogueUI/Background" unique_id=2080569522]
-offset_top = 329.0
-offset_right = 40.0
-offset_bottom = 369.0
-
-[node name="DialogueBackground" type="TextureRect" parent="MapUI/DialogueUI/Background" unique_id=70044188]
-offset_left = 42.0
-offset_top = 855.0
-offset_right = 82.0
-offset_bottom = 895.0
-
-[node name="SpeakerLabel" type="Label" parent="MapUI/DialogueUI/Background" unique_id=324622201]
-offset_left = 68.0
-offset_top = 860.0
-offset_right = 108.0
-offset_bottom = 905.0
-theme_override_font_sizes/font_size = 32
-
-[node name="DialogueText" type="RichTextLabel" parent="MapUI/DialogueUI/Background" unique_id=1154760197]
-offset_left = 72.0
-offset_top = 923.0
-offset_right = 112.0
-offset_bottom = 963.0
-theme_override_font_sizes/normal_font_size = 28
-tab_size = 24
-
-[node name="DialogueEngine" type="Node" parent="MapUI/DialogueUI" unique_id=1762237006]
-script = ExtResource("4_0rdsr")
-
 [node name="StaticScreenLayer" type="CanvasLayer" parent="MapUI" unique_id=1320750919]
 
-[node name="MainGameUI" type="Node" parent="MapUI/StaticScreenLayer" unique_id=1123109601 node_paths=PackedStringArray("markers_parent", "button_container", "flag_container", "dialogue_ui", "furniture_icon_container", "selection_box", "data_label", "logbox")]
+[node name="MainGameUI" type="Node" parent="MapUI/StaticScreenLayer" unique_id=1123109601 node_paths=PackedStringArray("markers_parent", "button_container", "flag_container", "dialogue_ui", "furniture_icon_container", "line_container", "selection_box", "data_label", "logbox")]
 script = ExtResource("5_ipu61")
 markers_parent = NodePath("../../VenueMakers")
 button_container = NodePath("../../VenueButtonContainer")
 flag_container = NodePath("../../FlagContainer")
 dialogue_ui = NodePath("../../DialogueUI")
 furniture_icon_container = NodePath("../../FurnitureIconContainer")
+line_container = NodePath("../../LineContainer")
 selection_box = NodePath("SelectionContainer")
 data_label = NodePath("DynamicLabel")
 logbox = NodePath("LogBox")
@@ -129,3 +108,45 @@ offset_left = 1203.0
 offset_top = 866.0
 offset_right = 1243.0
 offset_bottom = 906.0
+
+[node name="LineContainer" type="Node2D" parent="MapUI" unique_id=1543046362]
+
+[node name="DialogueUI" type="CanvasLayer" parent="MapUI" unique_id=1740832451 node_paths=PackedStringArray("speaker_label", "text_label", "modal_shield", "_dialogue_box", "character_icon")]
+script = ExtResource("3_d2op2")
+speaker_label = NodePath("SpeakerLabel")
+text_label = NodePath("DialogueText")
+modal_shield = NodePath("ModalShield")
+_dialogue_box = NodePath("DialogueBackground")
+character_icon = NodePath("CharacterIcon")
+
+[node name="ModalShield" type="ColorRect" parent="MapUI/DialogueUI" unique_id=1930121054]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(75.320015, 43.160004)
+color = Color(0.018167885, 0.018167885, 0.018167885, 0.27058825)
+
+[node name="CharacterIcon" type="TextureRect" parent="MapUI/DialogueUI" unique_id=2080569522]
+offset_top = 329.0
+offset_right = 40.0
+offset_bottom = 369.0
+
+[node name="DialogueBackground" type="TextureRect" parent="MapUI/DialogueUI" unique_id=1753385059]
+offset_left = 48.0
+offset_top = 856.0
+offset_right = 88.0
+offset_bottom = 896.0
+
+[node name="SpeakerLabel" type="Label" parent="MapUI/DialogueUI" unique_id=324622201]
+offset_left = 68.0
+offset_top = 860.0
+offset_right = 108.0
+offset_bottom = 905.0
+theme_override_font_sizes/font_size = 32
+
+[node name="DialogueText" type="RichTextLabel" parent="MapUI/DialogueUI" unique_id=1154760197]
+offset_left = 72.0
+offset_top = 923.0
+offset_right = 112.0
+offset_bottom = 963.0
+theme_override_font_sizes/normal_font_size = 28
+tab_size = 24

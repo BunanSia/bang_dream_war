@@ -6,7 +6,7 @@ signal button_pressed(event_name)
 
 # The list of labels for your buttons
 var data
-var basic_buttons = ["Save", "Policy", "Recruit", "Check member", "End turn", "Exit game"]
+var basic_buttons = ["Victory", "Save", "Policy", "Recruit", "Check member", "End turn", "Exit game"]
 
 func _ready():
 	pass

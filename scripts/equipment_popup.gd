@@ -20,7 +20,7 @@ func _ready() -> void:
 	$MainPanel/CloseButton.pressed.connect(queue_free) # Destroys the popup overlay panel safely
 	
 	# Load shop list items dynamically from your JSON utility file structure
-	var catalog = ConfigManager.load_config_by_path("res://configs/shop_catalog.json")
+	var catalog = ConfigManager.load_shop_catalog()
 	var gear_list = catalog.get("shop_items", {}).get("equipment", [])
 	
 	_populate_shop_grid(gear_list)
@@ -75,6 +75,7 @@ func _on_item_focused(item_data: Dictionary, from_inventory: bool) -> void:
 		display_text += "\n[color=yellow]購買成本 (Cost): $%d[/color]" % item_data.get("cost", 0)
 		
 	desc_label.text = display_text
+	desc_label.fit_content = true
 
 func _on_action_pressed() -> void:
 	if selected_item_data.is_empty(): return

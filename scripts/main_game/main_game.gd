@@ -59,6 +59,17 @@ func _on_ui_basic_action(action_name: String) -> void:
 			event_facade.execute_action(event_facade.start_setting_policy, [])
 		"Save":
 			event_facade.execute_action(event_facade.save_game_session, [])
+		"Victory":
+			var player_name = GameStateBang.player
+			var player_band = GameStateBang.data.bands.get(player_name)
+			
+			if not player_band: return
+			
+			# 🔥 直接把樂團的單一目標丟進去，1 行代碼秒殺判定
+			if VictoryChecker.check_victory(player_band.goal):
+				ui.game_log("🎉 宿願達成！恭喜制霸東京搖滾界！", "green")
+			else:
+				ui.game_log("❌ 少女們的理想尚未實現，繼續進攻下一座 Livehouse 吧！", "green")
 
 func _on_ui_venue_selected(venue_name: String) -> void:
 	var venue = data.worldMap[venue_name]

@@ -37,8 +37,8 @@ func setup_battle(attacker: Band, defender: Band, venue: Venue) -> void:
 	counter_matrix = GameStateBang.counter_matrix
 	venue_database = GameStateBang.venue_database
 	
-	if venue_database.has(venue.id):
-		target_venue.load_from_dict(venue.id, venue_database[venue.id])
+	if venue_database.has(venue.type):
+		target_venue.load_from_dict(venue.type, venue_database[venue.type])
 		
 	# 2. 資料灌入完畢！立刻發送信號通知 UI 可以換背景了
 	emit_signal("venue_ready", target_venue.background_path)

@@ -2,7 +2,7 @@ class_name GameInitializer
 
 static func bootstrap(mode) -> Dictionary:
 	var config = ConfigManager.load_config(mode)
-	
+	generate_adjacency_matrix(config["venues"])
 	# 1. Parse All Venues (Instantiated without owners first)
 	var world_map = {}
 	for v_data in config["venues"]:
@@ -49,14 +49,21 @@ static func bootstrap(mode) -> Dictionary:
 	return {"bands": bands, "worldMap": world_map, "eventPool": event_pool}
 
 static func _load_config():
-	ConfigManager._load_free_members()
-	ConfigManager._load_stratagems()
-	ConfigManager._load_venue_database()
-	ConfigManager._load_counter_matrix()
+	ConfigManager.load_free_members()
+	ConfigManager.load_stratagems()
+	ConfigManager.load_venue_database()
+	ConfigManager.load_counter_matrix()
 
 static func bootsave(mode) -> Dictionary:
 	var save_path = "res://data/save.json"
-	
+	# ==========================================================
+	# 🔥 核心防線：不論是讀檔還是新遊戲，都必須先把鄰接矩陣動態架好！
+	# ==========================================================
+	var config = ConfigManager.load_config(mode)
+	if config and config.has("venues"):
+		generate_adjacency_matrix(config["venues"])
+	else:
+		printerr("⚠️ [Save System] 讀檔時無法載入基礎配置，鄰接矩陣重建失敗！")
 	# ==========================================================
 	# 🔥 核心分支：如果存檔存在，走【讀取存檔流】
 	# ==========================================================
@@ -217,3 +224,42 @@ static func _load_from_save_data(save_data: Dictionary) -> Dictionary:
 		"eventPool": event_pool,
 		"global_states": global_states # 餵給初始化器賦值
 	}
+
+# GameInitializer.gd 內部
+
+static func generate_adjacency_matrix(venues_config: Array) -> void:
+	# 1. 重設並清空大腦原有的資料
+	GameStateBang.venue_indices.clear()
+	GameStateBang.adjacency_matrix.clear()
+	
+	var total_venues = venues_config.size()
+	
+	# 2. 第一輪走訪：建立每個場地名字與唯一的整數 Index 的映射
+	for i in range(total_venues):
+		var v_name = venues_config[i]["name"]
+		GameStateBang.venue_indices[v_name] = i
+		
+	# 3. 初始化一個完全空白的 N x N 二維矩陣（全部預設為 0）
+	for i in range(total_venues):
+		var row: Array[int] = []
+		row.resize(total_venues)
+		row.fill(0)
+		GameStateBang.adjacency_matrix.append(row)
+		
+	# 4. 第二輪走訪：讀取 edges，動態將相連的格子改為 1
+	for i in range(total_venues):
+		var v_data = venues_config[i]
+		var current_name = v_data["name"]
+		var current_idx = GameStateBang.venue_indices[current_name]
+		var edges_list = v_data.get("edges", [])
+		
+		for neighbor_name in edges_list:
+			# 安全防線：萬一 JSON 的 edges 填錯名字，給予警告不崩潰
+			if GameStateBang.venue_indices.has(neighbor_name):
+				var neighbor_idx = GameStateBang.venue_indices[neighbor_name]
+				
+				# 雙向無向圖設定：A 到 B 通，B 到 A 也就通
+				GameStateBang.adjacency_matrix[current_idx][neighbor_idx] = 1
+				GameStateBang.adjacency_matrix[neighbor_idx][current_idx] = 1
+
+	print("📊 [Initializer] 鄰接矩陣已動態生成完成！當前場地數: ", total_venues)

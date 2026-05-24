@@ -2,6 +2,7 @@ extends Control
 
 signal done_shopping
 
+@onready var scroll_container: ScrollContainer = $ScrollContainer
 @onready var shop_grid: GridContainer = $ScrollContainer/ShopGrid
 @onready var desc_label: RichTextLabel = $BottomDetailsBox/ItemDescription
 @onready var buy_button: Button = $BottomDetailsBox/BuyButton
@@ -24,10 +25,12 @@ func populate_shop(items: Array) -> void:
 	# Clean out visual test items
 	for child in shop_grid.get_children():
 		child.queue_free()
+	scroll_container.custom_minimum_size = Vector2(1920, 800)
 		
 	# Restrict display boundaries to your rule: Max 5 rows * 4 columns = 20 slots
 	var max_slots = min(items.size(), 20)
-	
+	shop_grid.add_theme_constant_override("h_separation", 150) # 橫向間距
+	shop_grid.add_theme_constant_override("v_separation", 150) # 縱向間距
 	for i in range(max_slots):
 			var item_data = items[i]
 			var slot_instance = slot_scene.instantiate()
@@ -57,16 +60,18 @@ func _on_item_selected(item_data: Dictionary) -> void:
 	var custom_desc = item_data.get("description", "")
 	
 	# Assemble the BBCode layout text box
-	var display_text = "[b]%s[/b]\n" % item_name
+	var display_text = "[color=black]"
+	display_text += "[b]%s[/b]\n" % item_name
 	display_text += "1. HP Recovery: +%d\n" % hp_bonus
 	display_text += "2. Supply Capacity: +%d\n" % supply_bonus
 	
 	if not custom_desc.is_empty():
 		display_text += "說明 (Info): %s\n" % custom_desc
-		
+	display_text += "[/color]"
 	display_text += "\n[color=yellow] Cost: $%d[/color]" % cost
 	
 	desc_label.text = display_text
+	desc_label.fit_content = true
 func _on_buy_pressed() -> void:
 	if selected_item_data.is_empty(): return
 	
@@ -92,7 +97,7 @@ func _on_return_pressed() -> void:
 func _get_shop_catalog() -> Array:
 	# 1. Read raw dictionary from your pre-existing ConfigManager file engine
 	# Ensure ConfigManager has an accessible load_config approach or edit path target here
-	var full_catalog_data: Dictionary = ConfigManager.load_config_by_path("res://configs/shop_catalog.json")
+	var full_catalog_data: Dictionary = ConfigManager.load_shop_catalog()
 	
 	if full_catalog_data.is_empty():
 		push_error("Shop Error: Could not read or locate shop_catalog.json!")

@@ -35,6 +35,7 @@ func _build_recruit_list() -> void:
 	if pool.is_empty():
 		name_label.text = "空空如也"
 		info_label.text = "[color=gray]目前地圖上沒有流浪的樂手...[/color]"
+		info_label.fit_content = true
 		recruit_button.disabled = true
 		avatar_rect.texture = load("res://assets/icons/default.png")
 		return

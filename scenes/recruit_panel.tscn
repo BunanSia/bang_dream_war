@@ -1,11 +1,17 @@
 [gd_scene format=3 uid="uid://6wohgq6r47jl"]
 
 [ext_resource type="Script" uid="uid://cm6tq4yeepjrm" path="res://scripts/recruit/recruit_panel.gd" id="1_rrt0y"]
+[ext_resource type="Texture2D" uid="uid://bbygn01s0qqs1" path="res://assets/blurred-corporate-office-background.png" id="2_tvipm"]
 
 [node name="HBoxContainer" type="HBoxContainer" unique_id=1435392940]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_rrt0y")
+
+[node name="BlurredCorporateOfficeBackground" type="Sprite2D" parent="." unique_id=792273749]
+position = Vector2(967.99994, 524)
+scale = Vector2(1.52, 1.52)
+texture = ExtResource("2_tvipm")
 
 [node name="ProfilePanel" type="Panel" parent="." unique_id=485172068]
 layout_mode = 2

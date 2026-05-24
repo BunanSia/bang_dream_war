@@ -134,6 +134,7 @@ func _render_details_view() -> void:
 	panel_detailed_info.visible = true
 	var profile_blurb = controller.selected_member.get("bio")
 	$LeftColumn/DetailedInfoPanel/RichTextLabel.text = "[color=black]\n[i]%s[/i]\n[/color]" % profile_blurb
+	$LeftColumn/DetailedInfoPanel/RichTextLabel.fit_content = true
 
 func _render_upgrade_view() -> void:
 	panel_upgrade.visible = true
@@ -164,6 +165,7 @@ func _render_others_view() -> void:
 func _on_equip_slot_focused(item_data: Dictionary) -> void:
 	var desc = item_data.get("desc", "該裝備沒有詳細說明。")
 	equip_desc_label.text = "[color=black]%s[/color]" % desc
+	equip_desc_label.fit_content = true
 
 func _on_tab_button_pressed(tab_index: int) -> void:
 	current_active_tab = tab_index

@@ -1,18 +1,48 @@
 [gd_scene format=3 uid="uid://dk5576pklkyv5"]
 
-[ext_resource type="Script" uid="uid://kgg3gwwixqdd" path="res://scripts/menu/band_selection.gd" id="1_n3awi"]
 [ext_resource type="Texture2D" uid="uid://clj3qst1l4osd" path="res://assets/3.-CiRCLE-Reception.png" id="2_do6fb"]
+[ext_resource type="Script" uid="uid://dmnk440xm8u6e" path="res://scripts/menu/band_selection_v_box_container.gd" id="2_ijlbl"]
 
-[node name="BandSelection" type="Control" unique_id=813077865]
+[node name="BandSelectionMenu" type="Control" unique_id=813077865]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_n3awi")
 
 [node name="3_CiRcleReception" type="Sprite2D" parent="." unique_id=181587009]
 position = Vector2(963.875, 542.5)
 scale = Vector2(1.78125, 1.78125)
 texture = ExtResource("2_do6fb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=235033597]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BandSelectionVBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=1137487156 node_paths=PackedStringArray("banner_display", "intro_display", "confirm_button")]
+layout_mode = 2
+script = ExtResource("2_ijlbl")
+banner_display = NodePath("../DisplayPanel/BannerTexture")
+intro_display = NodePath("../DisplayPanel/IntroLabel")
+confirm_button = NodePath("../../ConfirmButton")
+metadata/_custom_type_script = "uid://dmnk440xm8u6e"
+
+[node name="DisplayPanel" type="VBoxContainer" parent="HBoxContainer" unique_id=413654266]
+layout_mode = 2
+
+[node name="BannerTexture" type="TextureRect" parent="HBoxContainer/DisplayPanel" unique_id=764785627]
+layout_mode = 2
+
+[node name="IntroLabel" type="RichTextLabel" parent="HBoxContainer/DisplayPanel" unique_id=700556419]
+layout_mode = 2
+
+[node name="ConfirmButton" type="Button" parent="." unique_id=1243197554]
+layout_mode = 0
+offset_left = 894.0
+offset_top = 671.0
+offset_right = 965.0
+offset_bottom = 702.0
+text = "Confirm
+"
