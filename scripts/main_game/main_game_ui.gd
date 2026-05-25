@@ -28,7 +28,8 @@ func _ready() -> void:
 func logbox_generation() -> void:
 	logbox = RichTextLabel.new()
 	logbox.name = "Dialogue"
-	logbox.custom_minimum_size = Vector2(1000, 500)
+	logbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	logbox.custom_minimum_size = Vector2(700, 300)
 	logbox.fit_content = true
 	logbox.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	logbox.bbcode_enabled = true

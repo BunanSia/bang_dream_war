@@ -28,6 +28,7 @@ func dialogue_ui_setup():
 	# Connect the label's input signal directly via code
 	text_label.gui_input.connect(_on_text_label_gui_input)
 	text_label.fit_content = true
+	text_label.custom_minimum_size = Vector2(800, 200)
 
 func _on_line_received(speaker: String, text: String) -> void:
 	modal_shield.show()
