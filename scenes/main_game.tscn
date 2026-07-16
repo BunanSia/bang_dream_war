@@ -31,6 +31,9 @@ script = ExtResource("2_ygxny")
 
 [node name="VenueMakers" type="Node2D" parent="MapUI" unique_id=671549264]
 
+[node name="Toyosato Elementary School" type="Marker2D" parent="MapUI/VenueMakers" unique_id=1108774098]
+position = Vector2(2575, 368)
+
 [node name="CiRCLE" type="Marker2D" parent="MapUI/VenueMakers" unique_id=1566329261]
 position = Vector2(586, 742)
 

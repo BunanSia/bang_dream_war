@@ -15,6 +15,10 @@ var recruit_panel_scene = preload("res://scenes/recruit_panel.tscn")
 var recruit_panel_instance
 var policy_panel_scene = preload("res://scenes/band_policy_panel.tscn")
 var current_policy_instance
+# 預載你的戰前準備場景
+var battle_prep_scene = preload("res://scenes/battle_preparation.tscn")
+var prep_instance
+
 var json
 
 func _init(_engine: Node, _ui: MainGameUI) -> void:
@@ -57,7 +61,7 @@ func check_action_point(action_name: String) -> bool:
 	if GameStateBang.data.bands[GameStateBang.get_turn_band()].current_action_points >= cost:
 		return true
 		
-	game_log("❌ 行動點數不足！需要 %d 點 AP，目前僅剩 %d 點。" % [cost, GameStateBang.data.bands[GameStateBang.player].current_action_points], "red")
+	game_log("❌ 行動點數不足！需要 %d 點 AP，目前僅剩 %d 點。" % [cost, GameStateBang.data.bands[GameStateBang.get_turn_band()].current_action_points], "red")
 	return false
 
 ## 扣除玩家的行動點數
@@ -90,11 +94,11 @@ func remove_band_member(band_name: String, member_name: String) -> void:
 		game_log("System: Removed %s from %s" % [member_name, band_name], "yellow")
 
 ## 動態將新成員塞入指定樂團（完全抽離硬編碼）
-func add_band_member(band_name: String, member_data: Dictionary) -> void:
+func add_band_member(band_name: String, member_data: Dictionary) -> bool:
 	var band = find_band(band_name)
 	if not band:
 		printerr("Facade Error: Band not found: ", band_name)
-		return
+		return false
 		
 	# 1. 從傳入的 Dictionary 中安全地提取數值（若缺少欄位則給予防呆預設值）
 	var m_name = member_data.get("name", "Unknown Member")
@@ -109,6 +113,7 @@ func add_band_member(band_name: String, member_data: Dictionary) -> void:
 	
 	# 3. 列印黃色系統日誌
 	game_log("System: Added %s (%s) to %s" % [m_name, m_part, band_name], "yellow")
+	return true
 
 func create_and_add_band(band_name: String, member_names: Array) -> void:
 	var ras = Band.new(band_name, [])
@@ -254,16 +259,38 @@ func discard_member_equipped_item(band_name: String, member_name: String, item_i
 	member.equipped_items.remove_at(item_index)
 	return true
 
-func upgrade_member(band_name: String, member_name: String) -> void:
-	var band = execute_action(find_band, [GameStateBang.get_turn_band()])
+## 🚀 執行團員晉升（指定特定分支路徑）
+func upgrade_member(band_name: String, member_name: String, branch_index: int = 0) -> void:
+	var band = execute_action(find_band, [band_name])
 	var member = get_member(band_name, member_name)
-	var upgrades_cfg = ConfigManager.load_upgrade().get("promotions", {})
-	var tier_data = upgrades_cfg[member.part]
+	if not band or not member: return
 	
-	# Deduct costs and adjust member identity fields
-	band.money -= tier_data["cost"]
-	member.part = tier_data["next_tier"]
-	member.base_performance += tier_data["perf_boost"]
+	var branches = _get_promotion_branches(member.part)
+	# 🛡️ 安全防線：防呆索引值越界或根本沒分支
+	if branches.is_empty() or branch_index < 0 or branch_index >= branches.size():
+		return 
+		
+	# 🎯 精準鎖定玩家挑選的那一條技能分支！
+	var chosen_branch = branches[branch_index]
+	
+	var req_lvl = int(chosen_branch.get("level_required", 1))
+	var gold_cost = int(chosen_branch.get("cost", 0))
+	
+	# 🛡️ 硬性指標條件檢查
+	if int(member.get("level", 1)) < req_lvl or band.money < gold_cost:
+		return
+
+	# 扣款並完成該分支轉職
+	band.money -= gold_cost
+	member.part = chosen_branch.get("next_tier", member.part)
+	member.base_performance += int(chosen_branch.get("perf_boost", 0))
+	
+	print("🎉 [轉職成功] %s 成功晉升為新的型態: [%s]!" % [member_name, member.part])
+
+## 内部工具：撈出該職位當前可選的所有晉升分支陣列
+func _get_promotion_branches(member_part: String) -> Array:
+	var upgrades_cfg = ConfigManager.load_upgrade().get("promotions", {})
+	return upgrades_cfg.get(member_part, []) # 如果找不到（滿級），回傳空陣列 []
 
 func rest_member(band_name: String, member_name: String) -> void:
 	var band = execute_action(find_band, [GameStateBang.get_turn_band()])
@@ -337,22 +364,50 @@ func _refresh_main_map_ui(main_map: Node) -> void:
 
 func start_invasion(player: String, target: String) -> void:
 	GameStateBang.attacker = player
-	GameStateBang.defender = GameStateBang.data.worldMap[target].owner.band_name
 	GameStateBang.current_venue = target
-		
-	current_battle_instance = current_battle.instantiate()
-	var attacker_band = GameStateBang.data.bands[GameStateBang.attacker]
-	var defender_band = GameStateBang.data.bands[GameStateBang.defender]
-	var target_venue = GameStateBang.data.worldMap[GameStateBang.current_venue]
+	GameStateBang.defender = GameStateBang.data.worldMap[target].owner.band_name
 	
-	_enter_sub_scene(current_battle_instance, "--- Select a target to invade ---")
-	current_battle_instance.start_interactive_battle(attacker_band, defender_band, target_venue)
+	prep_instance = battle_prep_scene.instantiate() as BattlePreparation
+	_enter_sub_scene(prep_instance, "--- Live Battle Preparation ---")
 	
-func stop_invation() -> void: # 註：維持你原本拼法避免其他地方報錯，可找時間改為 invasion
-	_exit_sub_scene(current_battle_instance)
-	current_battle_instance = null
-	battle_resolved.emit()
+	# 如果你在 Prep 結尾用的是自訂信號，這裡綁定它即可
+	prep_instance.preparation_completed.connect(on_battle_roster_ready)
 
+## 🎯 核心對接點：一拿到 Facade 封包，立刻無縫加載戰鬥畫面
+func on_battle_roster_ready(packet: Dictionary) -> void:
+	# 1. 如果是從 UI 按下的，先把準備畫面關掉
+	# (注意：如果是雙 AI 觀戰，prep_instance 可能剛生成完就秒拋此函數，交由子場景管理器安全卸載)
+	_exit_sub_scene(prep_instance)
+	
+	# 2. 建立大腦與實例化戰鬥畫面
+	current_battle_instance = current_battle.instantiate()
+	var b_brain = BattleController.new()
+	current_battle_instance.add_child(b_brain)
+	current_battle_instance.controller = b_brain
+	
+	_enter_sub_scene(current_battle_instance, "--- LIVE BATTLE ENGAGED ---")
+
+	
+	current_battle_instance.start_interactive_battle(
+		packet.attacker_band, 
+		packet.defender_band, 
+		packet.target_venue
+	)
+	# 3. 🎯 直接解包（Unpack）字典，優雅對位！
+	b_brain.setup_battle(
+		packet.attacker_band, 
+		packet.defender_band, 
+		packet.target_venue, 
+		packet.attacker_team, 
+		packet.defender_team
+	)
+
+func stop_invation() -> void:
+	# 戰鬥結束或撤退時，子場景管理器會精準拔掉 current_battle_instance，完全不污染大地圖
+	if current_battle_instance:
+		_exit_sub_scene(current_battle_instance)
+		current_battle_instance = null
+	battle_resolved.emit()
 func start_shopping() -> void:
 	shop_instance = shop_scene.instantiate()
 	shop_instance.done_shopping.connect(stop_shopping)

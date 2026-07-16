@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://cha18sfk64ytt"]
+
+[ext_resource type="Script" uid="uid://ccioefsjpmivc" path="res://scripts/battle/battle_preparation.gd" id="1_mpmce"]
+[ext_resource type="Texture2D" uid="uid://t5tdimpdjiq2" path="res://assets/Scenario2_bg00026.png" id="2_rg1ha"]
+
+[node name="BattlePreparation" type="Control" unique_id=626252630]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mpmce")
+
+[node name="Scenario2Bg00026" type="Sprite2D" parent="." unique_id=280977571]
+position = Vector2(958.99994, 740.9999)
+scale = Vector2(1.9139998, 1.9139998)
+texture = ExtResource("2_rg1ha")
+
+[node name="LeftPanel" type="VBoxContainer" parent="." unique_id=2131674086]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 45.0
+offset_right = 199.0
+offset_bottom = 111.0
+
+[node name="TitleLabel" type="Label" parent="LeftPanel" unique_id=313130349]
+layout_mode = 2
+text = "Select our members"
+
+[node name="MemberListVBox" type="VBoxContainer" parent="LeftPanel" unique_id=1048522831]
+layout_mode = 2
+
+[node name="RightPanel" type="VBoxContainer" parent="." unique_id=397180635]
+layout_mode = 0
+offset_left = 604.0
+offset_top = 60.0
+offset_right = 675.0
+offset_bottom = 126.0
+
+[node name="VenueLabel" type="Label" parent="RightPanel" unique_id=1927907956]
+layout_mode = 2
+
+[node name="TeamPreviewLabel" type="RichTextLabel" parent="RightPanel" unique_id=847233363]
+layout_mode = 2
+bbcode_enabled = true
+
+[node name="Spacer" type="Control" parent="RightPanel" unique_id=1338868974]
+layout_mode = 2
+
+[node name="ConfirmSelectionButton" type="Button" parent="RightPanel" unique_id=347405038]
+layout_mode = 2
+text = "Confirm"

@@ -1,4 +1,4 @@
-extends SceneLayout
+extends  Node
 
 class_name BattleButtonSceneLayout
 

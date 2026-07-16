@@ -47,13 +47,13 @@ func recruit_member(member_data: Dictionary) -> void:
 		return
 	
 	# 1. 透過 Facade 門面執行實際的扣款、扣 AP、塞入隊伍資料
-	Global.event_facade.execute_action(
+	var success = Global.event_facade.execute_action(
 		Global.event_facade.add_band_member,
 		[GameStateBang.player, member_data]
 	)
-	
-	# 2. 從全域的自由成員池中移除（已被玩家簽走）
-	GameStateBang.free_member_pool.erase(member_data)
-	
-	# 3. 通知 UI 市場資料有變動，該刷新了
-	recruit_market_refreshed.emit()
+	if success:
+		# 2. 從全域的自由成員池中移除（已被玩家簽走）
+		GameStateBang.free_member_pool.erase(member_data)
+		
+		# 3. 通知 UI 市場資料有變動，該刷新了
+		recruit_market_refreshed.emit()

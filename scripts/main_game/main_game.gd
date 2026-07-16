@@ -6,6 +6,10 @@ extends Node
 var data
 var event_facade: GameEventFacade
 
+# 在你的腳本頂部宣告這個陣列
+var ai_queue: Array[String] = []
+var current_ai_brain: BandBrainAI = null
+
 func _ready() -> void:
 	# 如果還沒有資料，直接呼叫大腦的 session 初始化
 	if not GameStateBang.data or GameStateBang.data.is_empty():
@@ -133,10 +137,7 @@ func _turn_recovery():
 		
 		# 3. Trigger individual stamina / performance growth gains
 		band.process_turn_recovery(data.worldMap)
-		
-# 在你的腳本頂部宣告這個陣列
-var ai_queue: Array[String] = []
-var current_ai_brain: BandBrainAI = null
+		band.process_turn_finance(data.worldMap)
 
 ## 當玩家點擊「結束回合」按鈕
 func _ai_round() -> void:

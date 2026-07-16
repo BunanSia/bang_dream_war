@@ -1,114 +1,168 @@
 {
-  "venues": [
-	{
-	  "name": "CiRCLE",
-	  "location": "Tokyo",
-	  "initial_owner": "Poppin'Party",
-	  "type": "open_air_festival",
-	  "edges": [
-		"Galaxy",
-        "Space"
-	  ]
-	},
-	{
-	  "name": "Galaxy",
-	  "location": "Shinjuku",
-	  "initial_owner": "RAISE A SUILEN",
-	  "type": "symphony_hall",
-	  "edges": [
-		"CiRCLE",
-        "7th!"
-	  ]
-	},
-	{
-	  "name": "7th!",
-	  "location": "Shibuya",
-	  "initial_owner": "Morfonica",
-	  "type": "symphony_hall",
-	  "edges": [
-		"Galaxy",
-        "Dub"
-	  ]
-	},
-	{
-	  "name": "Dub",
-	  "location": "West Tokyo",
-	  "initial_owner": "Roselia",
-	  "type": "underground_punk",
-	  "edges": [
-		"7th!",
-        "Space"
-	  ]
-	},
-	{
-	  "name": "Space",
-	  "location": "Kita-Senju",
-	  "initial_owner": "Pastel*Palettes",
-	  "type": "symphony_hall",
-	  "edges": [
-		"CiRCLE",
-		"Dub",
-        "KID BOX"
-	  ]
-	},
-	{
-	  "name": "KID BOX",
-	  "location": "Nagoya",
-	  "initial_owner": "Afterglow",
-	  "type": "open_air_festival",
-	  "edges": [
-        "Space"
-	  ]
-	},
-	{
-	  "name": "RiNG",
-	  "location": "Ikebukuro",
-	  "initial_owner": "MyGO",
-	  "type": "live_house_basement",
-	  "edges": [
-		"CiRCLE",
-        "Galaxy"
-	  ]
-	},
-	{
-	  "name": "Live House KENNEDY",
-	  "location": "Shibuya Underground",
-	  "initial_owner": "Ave Mujica",
-	  "type": "underground_punk",
-	  "edges": [
-        "7th!"
-	  ]
-	},
-	{
-	  "name": "Edogawa Riverside Stage",
-	  "location": "Edogawa",
-	  "initial_owner": "Poppin'Party",
-	  "type": "open_air_festival",
-	  "edges": [
-		"CiRCLE",
-        "Space"
-	  ]
-	},
-	{
-	  "name": "Dub Studio Cafe",
-	  "location": "Shinjuku West",
-	  "initial_owner": "Afterglow",
-	  "type": "symphony_hall",
-	  "edges": [
-        "Dub"
-	  ]
-	},
-	{
-	  "name": "Asuka Show Hall",
-	  "location": "Asukayama",
-	  "initial_owner": "Hello Happy World",
-	  "type": "open_air_festival",
-	  "edges": [
-        "KID BOX"
-	  ]
-	}
-  ],
+"venues": [
+  {
+	"name": "CiRCLE",
+	"location": "Tokyo",
+	"initial_owner": "Poppin'Party",
+	"type": "open_air_festival",
+	"edges": [
+	  "Galaxy",
+	  "Space",
+	  "RiNG",
+      "Edogawa Riverside Stage"
+	]
+  },
+  {
+	"name": "Toyosato Elementary School",
+	"location": "Tokyo",
+	"initial_owner": "Ho-kago Tea Time",
+	"type": "open_air_festival",
+	"edges": [
+	  "Galaxy",
+	  "Space",
+	  "RiNG",
+      "Edogawa Riverside Stage"
+	]
+  },
+  {
+	"name": "Galaxy",
+	"location": "Shinjuku",
+	"initial_owner": "RAISE A SUILEN",
+	"type": "symphony_hall",
+	"edges": [
+	  "CiRCLE",
+	  "7th!",
+      "RiNG"
+	]
+  },
+  {
+	"name": "7th!",
+	"location": "Shibuya",
+	"initial_owner": "Morfonica",
+	"type": "symphony_hall",
+	"edges": [
+	  "Galaxy",
+	  "Dub",
+      "Live House KENNEDY"
+	]
+  },
+  {
+	"name": "Dub",
+	"location": "West Tokyo",
+	"initial_owner": "Roselia",
+	"type": "underground_punk",
+	"edges": [
+	  "7th!",
+	  "Space",
+      "Dub Studio Cafe"
+	]
+  },
+  {
+	"name": "Space",
+	"location": "Kita-Senju",
+	"initial_owner": "Pastel*Palettes",
+	"type": "symphony_hall",
+	"edges": [
+	  "CiRCLE",
+	  "Dub",
+	  "KID BOX",
+      "Edogawa Riverside Stage"
+	]
+  },
+  {
+	"name": "KID BOX",
+	"location": "Nagoya",
+	"initial_owner": "Afterglow",
+	"type": "open_air_festival",
+	"edges": [
+	  "Space",
+      "Asuka Show Hall"
+	]
+  },
+  {
+	"name": "RiNG",
+	"location": "Ikebukuro",
+	"initial_owner": "MyGO",
+	"type": "live_house_basement",
+	"edges": [
+	  "CiRCLE",
+      "Galaxy"
+	]
+  },
+  {
+	"name": "Live House KENNEDY",
+	"location": "Shibuya Underground",
+	"initial_owner": "Ave Mujica",
+	"type": "underground_punk",
+	"edges": [
+      "7th!"
+	]
+  },
+  {
+	"name": "Edogawa Riverside Stage",
+	"location": "Edogawa",
+	"initial_owner": "Poppin'Party",
+	"type": "open_air_festival",
+	"edges": [
+	  "CiRCLE",
+      "Space"
+	]
+  },
+  {
+	"name": "Dub Studio Cafe",
+	"location": "Shinjuku West",
+	"initial_owner": "Afterglow",
+	"type": "symphony_hall",
+	"edges": [
+      "Dub"
+	]
+  },
+  {
+	"name": "Asuka Show Hall",
+	"location": "Asukayama",
+	"initial_owner": "Hello Happy World",
+	"type": "open_air_festival",
+	"edges": [
+      "KID BOX"
+	]
+  }
+],
   "bands": [
+	{
+	  "name": "Ho-kago Tea Time",
+	  "members": [
+		{
+		  "name": "Yui",
+		  "part": "Gt & Vo",
+		  "perf": 300,
+		  "stam": 150
+		},
+		{
+		  "name": "Mio",
+		  "part": "Ba & Vo",
+		  "perf": 320,
+		  "stam": 200
+		},
+		{
+		  "name": "Ritsu",
+		  "part": "Dr",
+		  "perf": 250,
+		  "stam": 300
+		},
+		{
+		  "name": "Tsumugi",
+		  "part": "Key",
+		  "perf": 280,
+		  "stam": 350
+		},
+		{
+		  "name": "Azusa",
+		  "part": "Gt",
+		  "perf": 330,
+		  "stam": 220
+		}
+	  ]
+	},
 	{
 	  "name": "Poppin'Party",
 	  "members": [
@@ -474,6 +528,75 @@
             "Rival"
 		  ],
 		  "await": false
+		},
+		{
+		  "method": "set_band_relations",
+		  "args": [
+			"Roselia",
+			"RAISE A SUILEN",
+            "Rival"
+		  ],
+		  "await": false
+		}
+	  ]
+	},
+	{
+	  "id": "RAS_FRIEND",
+	  "desc": "RAISE A SUILEN and PPP, Roselia reach common ground!",
+	  "trigger_turn": 5,
+	  "conditions": {
+		"venue_owner": {
+		  "venue_name": "Edogawa Riverside Stage",
+		  "owner_name": "Poppin'Party"
+		},
+		"min_turn": 5
+	  },
+	  "actions": [
+		{
+		  "method": "play_dialogue",
+		  "args": [
+            "res://story/ras_friend_plot.txt"
+		  ],
+		  "await": false
+		},
+		{
+		  "method": "remove_band_member",
+		  "args": [
+			"RAISE A SUILEN",
+            "Otae"
+		  ],
+		  "await": false
+		},
+		{
+		  "method": "add_band_member",
+		  "args": [
+			"Poppin'Party",
+			{
+			  "name": "Otae",
+			  "part": "Gt",
+			  "perf": 35,
+			  "stam": 20
+			}
+		  ],
+		  "await": false
+		},
+		{
+		  "method": "set_band_relations",
+		  "args": [
+			"Poppin'Party",
+			"RAISE A SUILEN",
+            "Neutral"
+		  ],
+		  "await": false
+		},
+		{
+		  "method": "set_band_relations",
+		  "args": [
+			"Roselia",
+			"RAISE A SUILEN",
+            "Neutral"
+		  ],
+		  "await": false
 		}
 	  ]
 	},
@@ -486,7 +609,7 @@
 		  "band_b": "Roselia",
 		  "status": "Neutral"
 		},
-		"min_turn": 5
+		"min_turn": 2
 	  },
 	  "actions": [
 		{
@@ -495,6 +618,59 @@
 			"Poppin'Party",
 			"Roselia",
             "Allied"
+		  ],
+		  "await": false
+		}
+	  ]
+	},
+	{
+	  "id": "MyGO_AveMujica_War",
+	  "desc": "Soyo wants to rebuild crychic",
+	  "trigger_turn": 7,
+	  "conditions": {
+		"min_turn": 7
+	  },
+	  "actions": [
+		{
+		  "method": "play_dialogue",
+		  "args": [
+            "res://story/mygo_avemujica_war.txt"
+		  ],
+		  "await": false
+		},
+		{
+		  "method": "set_band_relations",
+		  "args": [
+			"Ave Mujica",
+			"MyGO",
+            "Rival"
+		  ],
+		  "await": false
+		}
+	  ]
+	}
+	,
+	{
+	  "id": "MyGO_AveMujica_War",
+	  "desc": "Soyo wants to rebuild crychic",
+	  "trigger_turn": 8,
+	  "conditions": {
+		"min_turn": 8
+	  },
+	  "actions": [
+		{
+		  "method": "play_dialogue",
+		  "args": [
+            "res://story/afterglow_roselia_war.txt"
+		  ],
+		  "await": false
+		},
+		{
+		  "method": "set_band_relations",
+		  "args": [
+			"Afterglow",
+			"Roselia",
+            "Rival"
 		  ],
 		  "await": false
 		}

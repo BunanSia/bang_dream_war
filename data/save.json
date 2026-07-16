@@ -1,16 +1,16 @@
 {
-	"attacker": "",
+	"attacker": "Afterglow",
 	"bands": {
 		"Afterglow": {
 			"goal": "CONQUER_MAP",
 			"members": [
 				{
-					"hp": 100,
-					"max_hp": 100,
+					"hp": 160,
+					"max_hp": 160,
 					"name": "Ran",
 					"part": "Vo/Gt",
-					"perf": 28,
-					"stam": 18,
+					"perf": 58,
+					"stam": 36,
 					"xp": 0
 				},
 				{
@@ -48,19 +48,37 @@
 					"perf": 18,
 					"stam": 28,
 					"xp": 0
+				},
+				{
+					"hp": 960,
+					"max_hp": 960,
+					"name": "PA san",
+					"part": "Keyboard",
+					"perf": 480,
+					"stam": 298,
+					"xp": 0
+				},
+				{
+					"hp": 150,
+					"max_hp": 150,
+					"name": "Hirasawa Ui",
+					"part": "Guitar",
+					"perf": 70,
+					"stam": 70,
+					"xp": 0
 				}
 			],
-			"money": 1000,
+			"money": 650,
 			"name": "Afterglow",
 			"relations": {
-				"Ave Mujica": "Neutral",
-				"Hello Happy World": "Neutral",
-				"Morfonica": "Neutral",
+				"Ave Mujica": "Allied",
+				"Hello Happy World": "Rival",
+				"Morfonica": "Allied",
 				"MyGO": "Neutral",
-				"Pastel*Palettes": "Neutral",
-				"Poppin'Party": "Neutral",
-				"RAISE A SUILEN": "Neutral",
-				"Roselia": "Neutral"
+				"Pastel*Palettes": "Rival",
+				"Poppin'Party": "Rival",
+				"RAISE A SUILEN": "Rival",
+				"Roselia": "Rival"
 			},
 			"supply": 50,
 			"type": ""
@@ -69,12 +87,12 @@
 			"goal": "CONQUER_MAP",
 			"members": [
 				{
-					"hp": 100,
-					"max_hp": 100,
+					"hp": 600,
+					"max_hp": 600,
 					"name": "Doloris",
 					"part": "Vo/Gt",
-					"perf": 30,
-					"stam": 20,
+					"perf": 280,
+					"stam": 170,
 					"xp": 0
 				},
 				{
@@ -114,10 +132,10 @@
 					"xp": 0
 				}
 			],
-			"money": 1000,
+			"money": 450,
 			"name": "Ave Mujica",
 			"relations": {
-				"Afterglow": "Neutral",
+				"Afterglow": "Allied",
 				"Hello Happy World": "Neutral",
 				"Morfonica": "Neutral",
 				"MyGO": "Neutral",
@@ -133,12 +151,12 @@
 			"goal": "CONQUER_MAP",
 			"members": [
 				{
-					"hp": 100,
-					"max_hp": 100,
+					"hp": 720,
+					"max_hp": 720,
 					"name": "Kokoro",
 					"part": "Vo",
-					"perf": 32,
-					"stam": 25,
+					"perf": 342,
+					"stam": 211,
 					"xp": 0
 				},
 				{
@@ -178,10 +196,10 @@
 					"xp": 0
 				}
 			],
-			"money": 1000,
+			"money": 4350,
 			"name": "Hello Happy World",
 			"relations": {
-				"Afterglow": "Neutral",
+				"Afterglow": "Rival",
 				"Ave Mujica": "Neutral",
 				"Morfonica": "Neutral",
 				"MyGO": "Neutral",
@@ -197,12 +215,12 @@
 			"goal": "CONQUER_MAP",
 			"members": [
 				{
-					"hp": 100,
-					"max_hp": 100,
+					"hp": 600,
+					"max_hp": 600,
 					"name": "Mashiro",
 					"part": "Vo",
-					"perf": 22,
-					"stam": 18,
+					"perf": 272,
+					"stam": 168,
 					"xp": 0
 				},
 				{
@@ -242,10 +260,10 @@
 					"xp": 0
 				}
 			],
-			"money": 1000,
+			"money": 450,
 			"name": "Morfonica",
 			"relations": {
-				"Afterglow": "Neutral",
+				"Afterglow": "Allied",
 				"Ave Mujica": "Neutral",
 				"Hello Happy World": "Neutral",
 				"MyGO": "Neutral",
@@ -261,12 +279,12 @@
 			"goal": "CONQUER_MAP",
 			"members": [
 				{
-					"hp": 100,
-					"max_hp": 100,
+					"hp": 600,
+					"max_hp": 600,
 					"name": "Tomori",
 					"part": "Vo",
-					"perf": 28,
-					"stam": 17,
+					"perf": 278,
+					"stam": 167,
 					"xp": 0
 				},
 				{
@@ -306,7 +324,7 @@
 					"xp": 0
 				}
 			],
-			"money": 1000,
+			"money": 450,
 			"name": "MyGO",
 			"relations": {
 				"Afterglow": "Neutral",
@@ -325,12 +343,12 @@
 			"goal": "CONQUER_MAP",
 			"members": [
 				{
-					"hp": 100,
-					"max_hp": 100,
+					"hp": 610,
+					"max_hp": 610,
 					"name": "Aya",
 					"part": "Vo",
-					"perf": 22,
-					"stam": 22,
+					"perf": 277,
+					"stam": 175,
 					"xp": 0
 				},
 				{
@@ -370,10 +388,10 @@
 					"xp": 0
 				}
 			],
-			"money": 1000,
+			"money": 400,
 			"name": "Pastel*Palettes",
 			"relations": {
-				"Afterglow": "Neutral",
+				"Afterglow": "Rival",
 				"Ave Mujica": "Neutral",
 				"Hello Happy World": "Neutral",
 				"Morfonica": "Neutral",
@@ -389,21 +407,12 @@
 			"goal": "CONQUER_MAP",
 			"members": [
 				{
-					"hp": 100,
-					"max_hp": 100,
+					"hp": 1170,
+					"max_hp": 1170,
 					"name": "Kasumi",
 					"part": "Vo/Gt",
-					"perf": 25,
-					"stam": 20,
-					"xp": 0
-				},
-				{
-					"hp": 100,
-					"max_hp": 100,
-					"name": "Otae",
-					"part": "Gt",
-					"perf": 30,
-					"stam": 15,
+					"perf": 560,
+					"stam": 341,
 					"xp": 0
 				},
 				{
@@ -434,17 +443,17 @@
 					"xp": 0
 				}
 			],
-			"money": 1000,
+			"money": 450,
 			"name": "Poppin'Party",
 			"relations": {
-				"Afterglow": "Neutral",
+				"Afterglow": "Rival",
 				"Ave Mujica": "Neutral",
 				"Hello Happy World": "Neutral",
 				"Morfonica": "Neutral",
 				"MyGO": "Neutral",
 				"Pastel*Palettes": "Neutral",
-				"RAISE A SUILEN": "Neutral",
-				"Roselia": "Neutral"
+				"RAISE A SUILEN": "Rival",
+				"Roselia": "Allied"
 			},
 			"supply": 50,
 			"type": ""
@@ -453,76 +462,85 @@
 			"goal": "CONQUER_MAP",
 			"members": [
 				{
-					"hp": 100,
-					"max_hp": 100,
+					"hp": 0,
+					"max_hp": 110,
 					"name": "Layer",
 					"part": "Vo/Ba",
-					"perf": 32,
-					"stam": 24,
-					"xp": 0
+					"perf": 37,
+					"stam": 27,
+					"xp": 15
 				},
 				{
-					"hp": 100,
+					"hp": 0,
 					"max_hp": 100,
 					"name": "Lock",
 					"part": "Gt",
 					"perf": 28,
 					"stam": 20,
-					"xp": 0
+					"xp": 15
 				},
 				{
-					"hp": 100,
+					"hp": 0,
 					"max_hp": 100,
 					"name": "MASKING",
 					"part": "Dr",
 					"perf": 30,
 					"stam": 25,
-					"xp": 0
+					"xp": 15
 				},
 				{
-					"hp": 100,
+					"hp": 0,
 					"max_hp": 100,
 					"name": "PAREO",
 					"part": "Key",
 					"perf": 26,
 					"stam": 18,
+					"xp": 15
+				},
+				{
+					"hp": 0,
+					"max_hp": 420,
+					"name": "CHU2",
+					"part": "DJ",
+					"perf": 185,
+					"stam": 111,
 					"xp": 0
 				},
 				{
-					"hp": 100,
+					"hp": 0,
 					"max_hp": 100,
-					"name": "CHU2",
-					"part": "DJ",
-					"perf": 25,
-					"stam": 15,
-					"xp": 0
+					"name": "Otae",
+					"part": "Gt",
+					"perf": 35,
+					"stam": 20,
+					"xp": 15
 				}
 			],
-			"money": 1000,
+			"money": 7950,
 			"name": "RAISE A SUILEN",
 			"relations": {
-				"Afterglow": "Neutral",
+				"Afterglow": "Rival",
 				"Ave Mujica": "Neutral",
 				"Hello Happy World": "Neutral",
 				"Morfonica": "Neutral",
 				"MyGO": "Neutral",
 				"Pastel*Palettes": "Neutral",
-				"Poppin'Party": "Neutral",
+				"Poppin'Party": "Rival",
 				"Roselia": "Neutral"
 			},
-			"supply": 50,
+			"supply": 0,
 			"type": ""
 		},
 		"Roselia": {
 			"goal": "CONQUER_MAP",
 			"members": [
 				{
-					"hp": 100,
-					"max_hp": 100,
+					"hp": 730,
+					"max_hp": 730,
 					"name": "Yukina",
 					"part": "Vo",
-					"perf": 35,
-					"stam": 12,
+					"perf": 350,
+					"stam": 201,
 					"xp": 0
 				},
 				{
@@ -562,26 +580,26 @@
 					"xp": 0
 				}
 			],
-			"money": 1000,
+			"money": 4800,
 			"name": "Roselia",
 			"relations": {
-				"Afterglow": "Neutral",
+				"Afterglow": "Rival",
 				"Ave Mujica": "Neutral",
 				"Hello Happy World": "Neutral",
 				"Morfonica": "Neutral",
 				"MyGO": "Neutral",
 				"Pastel*Palettes": "Neutral",
-				"Poppin'Party": "Neutral",
+				"Poppin'Party": "Allied",
 				"RAISE A SUILEN": "Neutral"
 			},
 			"supply": 50,
 			"type": ""
 		}
 	},
-	"current_band": "",
+	"current_band": "Poppin'Party",
 	"current_selected_member_name": "",
-	"current_venue": "",
-	"defender": "",
+	"current_venue": "Dub",
+	"defender": "Poppin'Party",
 	"eventPool": [
 		{
 			"actions": [
@@ -632,7 +650,7 @@
 			},
 			"desc": "RAISE A SUILEN disrupts the peace!",
 			"id": "RAS_RAID",
-			"triggered": false
+			"triggered": true
 		},
 		{
 			"actions": [
@@ -656,7 +674,7 @@
 			},
 			"desc": "An alliance is forged.",
 			"id": "FRIENDSHIP_BOND",
-			"triggered": false
+			"triggered": true
 		}
 	],
 	"free_member_pool": [
@@ -682,13 +700,20 @@
 		}
 	],
 	"is_running": true,
-	"player": "Hello Happy World",
+	"player": "Afterglow",
 	"plot_mode": "STORY",
-	"turn": 1,
-	"turn_band": "Hello Happy World",
+	"turn": 74,
+	"turn_band": "Afterglow",
 	"worldMap": {
 		"7th!": {
-			"installed_furniture": [],
+			"installed_furniture": [
+				"<RefCounted#-9223371662706079888>",
+				"<RefCounted#-9223370910533154485>",
+				"<RefCounted#-9223370112659093555>",
+				"<RefCounted#-9223369627495560677>",
+				"<RefCounted#-9223369361677350573>",
+				"<RefCounted#-9223368349155587371>"
+			],
 			"location": "Shibuya",
 			"name": "7th!",
 			"owner": "Morfonica",
@@ -698,42 +723,65 @@
 			"installed_furniture": [],
 			"location": "Asukayama",
 			"name": "Asuka Show Hall",
-			"owner": "Hello Happy World",
+			"owner": "Afterglow",
 			"type": "open_air_festival"
 		},
 		"CiRCLE": {
-			"installed_furniture": [],
+			"installed_furniture": [
+				"<RefCounted#-9223371412289353605>",
+				"<RefCounted#-9223371181501970252>",
+				"<RefCounted#-9223370522308376563>",
+				"<RefCounted#-9223370110679381730>",
+				"<RefCounted#-9223369813772990132>",
+				"<RefCounted#-9223369625515848968>",
+				"<RefCounted#-9223369475628201203>",
+				"<RefCounted#-9223369098207950371>"
+			],
 			"location": "Tokyo",
 			"name": "CiRCLE",
-			"owner": "Poppin'Party",
+			"owner": "Afterglow",
 			"type": "open_air_festival"
 		},
 		"Dub": {
-			"installed_furniture": [],
+			"installed_furniture": [
+				"<RefCounted#-9223368009635067937>"
+			],
 			"location": "West Tokyo",
 			"name": "Dub",
-			"owner": "Roselia",
+			"owner": "Poppin'Party",
 			"type": "underground_punk"
 		},
 		"Dub Studio Cafe": {
-			"installed_furniture": [],
+			"installed_furniture": [
+				"<RefCounted#-9223371661498120023>",
+				"<RefCounted#-9223371412926888027>",
+				"<RefCounted#-9223371182206613476>",
+				"<RefCounted#-9223370909325195331>",
+				"<RefCounted#-9223370523013019517>",
+				"<RefCounted#-9223370279357511417>",
+				"<RefCounted#-9223370111384024707>",
+				"<RefCounted#-9223369957838944292>",
+				"<RefCounted#-9223369626220492196>",
+				"<RefCounted#-9223369360402281946>",
+				"<RefCounted#-9223368010541037338>"
+			],
 			"location": "Shinjuku West",
 			"name": "Dub Studio Cafe",
-			"owner": "Afterglow",
+			"owner": "Pastel*Palettes",
 			"type": "symphony_hall"
 		},
 		"Edogawa Riverside Stage": {
 			"installed_furniture": [],
 			"location": "Edogawa",
 			"name": "Edogawa Riverside Stage",
-			"owner": "Poppin'Party",
+			"owner": "Afterglow",
 			"type": "open_air_festival"
 		},
 		"Galaxy": {
 			"installed_furniture": [],
 			"location": "Shinjuku",
 			"name": "Galaxy",
-			"owner": "RAISE A SUILEN",
+			"owner": "Afterglow",
 			"type": "symphony_hall"
 		},
 		"KID BOX": {
@@ -744,24 +792,41 @@
 			"type": "open_air_festival"
 		},
 		"Live House KENNEDY": {
-			"installed_furniture": [],
+			"installed_furniture": [
+				"<RefCounted#-9223371663846930539>",
+				"<RefCounted#-9223370911674005828>",
+				"<RefCounted#-9223370113867052558>",
+				"<RefCounted#-9223369628703520679>",
+				"<RefCounted#-9223369362885309566>",
+				"<RefCounted#-9223368350430655459>"
+			],
 			"location": "Shibuya Underground",
 			"name": "Live House KENNEDY",
 			"owner": "Ave Mujica",
 			"type": "underground_punk"
 		},
 		"RiNG": {
-			"installed_furniture": [],
+			"installed_furniture": [
+				"<RefCounted#-9223371662202763212>",
+				"<RefCounted#-9223370910029837854>",
+				"<RefCounted#-9223370112155776607>",
+				"<RefCounted#-9223369626992244071>",
+				"<RefCounted#-9223369361174033945>",
+				"<RefCounted#-9223368348652271275>"
+			],
 			"location": "Ikebukuro",
 			"name": "RiNG",
 			"owner": "MyGO",
 			"type": "live_house_basement"
 		},
 		"Space": {
-			"installed_furniture": [],
+			"installed_furniture": [
+				"<RefCounted#-9223371576538298325>",
+				"<RefCounted#-9223371410326419391>"
+			],
 			"location": "Kita-Senju",
 			"name": "Space",
-			"owner": "Pastel*Palettes",
+			"owner": "Afterglow",
 			"type": "symphony_hall"
 		}
 	}

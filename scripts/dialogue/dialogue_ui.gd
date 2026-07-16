@@ -31,7 +31,7 @@ func dialogue_ui_setup():
 	text_label.custom_minimum_size = Vector2(800, 200)
 
 func _on_line_received(speaker: String, text: String) -> void:
-	modal_shield.show()
+	_show()
 	_dialogue_box.texture = load(dialogue_box_path)
 	speaker_label.text = speaker
 	text_label.text = text
@@ -52,13 +52,18 @@ func _hide():
 	modal_shield.hide()
 	text_label.hide()
 	speaker_label.hide()
-	if _dialogue_box:
-		_dialogue_box.queue_free()
-		_dialogue_box.texture = null
+	_dialogue_box.hide()
 	if character_icon:
-		character_icon.queue_free()
 		character_icon.texture = null
 	hide()
+
+func _show():
+	modal_shield.show()
+	text_label.show()
+	speaker_label.show()
+	if _dialogue_box:
+		_dialogue_box.show()
+	show()
 
 func _type_out_text() -> void:
 	_is_typing = true

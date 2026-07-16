@@ -1,16 +1,26 @@
 {
   "promotions": {
-	"Gt": {
-	  "next_tier": "Super Guitarist",
-	  "level_required": 5,
-	  "cost": 1000,
-	  "perf_boost": 15
-	},
-	"Vo/Gt": {
-	  "next_tier": "Legendary Frontman",
-	  "level_required": 5,
-	  "cost": 1500,
-	  "perf_boost": 20
-	}
+	"Gt": [
+	  {
+		"next_tier": "Super Guitarist",
+		"level_required": 5,
+		"cost": 1000,
+		"perf_boost": 15
+	  },
+	  {
+		"next_tier": "Riot Guitarist",
+		"level_required": 6,
+		"cost": 1200,
+		"perf_boost": 18
+	  }
+	],
+	"Vo/Gt": [
+	  {
+		"next_tier": "Legendary Frontman",
+		"level_required": 5,
+		"cost": 1500,
+		"perf_boost": 20
+	  }
+	]
   }
 }

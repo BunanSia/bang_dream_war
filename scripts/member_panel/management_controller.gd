@@ -53,31 +53,35 @@ func get_rest_data() -> Dictionary:
 		"can_rest": can_rest
 	}
 
-## 取得升級分頁所需的狀態資料
+## 📊 取得升級分頁所需的狀態資料（支援多分支路線）
 func get_upgrade_data() -> Dictionary:
-	if not selected_member: return {}
+	if not selected_member: return { "max_tier_reached": true, "branches": [] }
 	
-	var upgrades_cfg = ConfigManager.load_upgrade().get("promotions", {})
-	var current_part = selected_member.part
-	
-	if not upgrades_cfg.has(current_part):
-		return { "max_tier_reached": true }
+	var branches = Global.event_facade.execute_action(Global.event_facade._get_promotion_branches, [selected_member.part])
+	if branches.is_empty():
+		return { "max_tier_reached": true, "branches": [] }
 		
-	var tier_data = upgrades_cfg[current_part]
-	var req_lvl = int(tier_data["level_required"])
-	var gold_cost = int(tier_data["cost"])
 	var member_lvl = int(selected_member.get("level"))
+	var processed_branches = []
 	
-	var can_upgrade = (member_lvl >= req_lvl) and (current_band.money >= gold_cost)
-	
+	# 遍歷所有分支，為 UI 計算各別的解鎖狀態
+	for branch in branches:
+		var req_lvl = int(branch.get("level_required", 1))
+		var gold_cost = int(branch.get("cost", 0))
+		
+		processed_branches.append({
+			"next_title": branch.get("next_tier", "UNKNOWN"),
+			"req_level": req_lvl,
+			"cost": gold_cost,
+			"perf_boost": int(branch.get("perf_boost", 0)),
+			"can_upgrade": (member_lvl >= req_lvl) and (current_band.money >= gold_cost)
+		})
+		
 	return {
 		"max_tier_reached": false,
-		"next_title": tier_data["next_tier"],
-		"req_level": req_lvl,
 		"current_level": member_lvl,
-		"cost": gold_cost,
 		"current_money": current_band.money,
-		"can_upgrade": can_upgrade
+		"branches": processed_branches # 💡 丟出所有分支資料供 UI 生成多個按鈕
 	}
 
 # ==========================================
